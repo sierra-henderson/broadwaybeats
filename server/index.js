@@ -19,8 +19,8 @@ app.get('/api/health-check', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/search', (req, res, next) => {
-  const { query } = req.body;
+app.get('/api/search/:query', (req, res, next) => {
+  const { query } = req.params;
   if (query === '' || query === ' ') {
     next(new ClientError('query must contain a non-whitespace character', 400));
 
@@ -31,11 +31,10 @@ app.get('/api/search', (req, res, next) => {
           "musicUrl",
           "musicalId"
       from "musicals"
-      where lower("title") like '%$1%'
+      where unaccent(lower("title")) like '%' ||  unaccent('jose') || '%'
       `;
-    const params = [query];
 
-    db.query(sql, params)
+    db.query(sql)
       .then(result => {
         res.json(result.rows);
       });
