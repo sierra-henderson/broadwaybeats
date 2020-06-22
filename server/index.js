@@ -14,9 +14,31 @@ app.use(sessionMiddleware);
 app.use(express.json());
 
 app.get('/api/health-check', (req, res, next) => {
-  db.query(`select 'successfully connected' as "message"`)
+  db.query('select \'successfully connected\' as "message"')
     .then(result => res.json(result.rows[0]))
     .catch(err => next(err));
+});
+
+app.get('/api/search/:query', (req, res, next) => {
+  const { query } = req.params;
+  if (query === '' || query === ' ') {
+    next(new ClientError('query must contain a non-whitespace character', 400));
+
+  } else {
+    const sql = `
+      select "title",
+          "imageUrl",
+          "musicUrl",
+          "musicalId"
+      from "musicals"
+      where unaccent(lower("title")) like '%' ||  unaccent('jose') || '%'
+      `;
+
+    db.query(sql)
+      .then(result => {
+        res.json(result.rows);
+      });
+  }
 });
 
 app.use('/api', (req, res, next) => {
