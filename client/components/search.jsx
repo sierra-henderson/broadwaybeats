@@ -1,5 +1,7 @@
 import React from 'react';
 import BoxedCard from './boxed-card';
+import BottomNav from './bottomNav';
+import TopNav from './topNav';
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -38,6 +40,7 @@ export default class Search extends React.Component {
     if (this.state.musicals === null) {
       return (
         <div>
+          <TopNav />
           <div className="search-and-filter">
             <input type="text" name="" id="searchBar" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
             <button id="filterButton">Filter</button>
@@ -45,11 +48,13 @@ export default class Search extends React.Component {
           <div className="search-results">
             <h3>Please search using the search bar or filter button.</h3>
           </div>
+          <BottomNav />
         </div>
       );
     } else if (this.state.musicals.length === 0) {
       return (
         <div>
+          <TopNav />
           <div className="search-and-filter">
             <input type="text" name="" id="searchBar" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
             <button id="filterButton">Filter</button>
@@ -57,11 +62,13 @@ export default class Search extends React.Component {
           <div className="search-results">
             <h3>There are no musicals that match your query.</h3>
           </div>
+          <BottomNav />
         </div>
       );
     } else {
       return (
         <div>
+          <TopNav />
           <div className="search-and-filter">
             <input type="text" name="" id="searchBar" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
             <button id="filterButton">Filter</button>
@@ -73,6 +80,7 @@ export default class Search extends React.Component {
               })
             }
           </div>
+          <BottomNav />
         </div>
       );
     }
