@@ -1,12 +1,19 @@
 import React from 'react';
+import Search from './search';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: null,
-      isLoading: true
+      view: 'search'
     };
+    this.setView = this.setView.bind(this);
+  }
+
+  setView(view) {
+    this.setState({
+      view: view
+    });
   }
 
   componentDidMount() {
@@ -18,8 +25,9 @@ export default class App extends React.Component {
   }
 
   render() {
-    return this.state.isLoading
-      ? <h1>Testing connections...</h1>
-      : <h1>{this.state.message.toUpperCase()}</h1>;
+    const appView = this.state.view === 'search'
+      ? <Search setView={this.setView} />
+      : <h1>TBD</h1>;
+    return (appView);
   }
 }
