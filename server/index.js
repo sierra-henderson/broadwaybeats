@@ -31,7 +31,7 @@ app.get('/api/search/:query', (req, res, next) => {
           "musicUrl",
           "musicalId"
       from "musicals"
-      where unaccent(lower("title")) like '%' ||  unaccent('jose') || '%'
+      where unaccent(lower("title")) like '%' ||  unaccent('${query}') || '%'
       `;
 
     db.query(sql)
