@@ -5,6 +5,7 @@ const db = require('./database');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
+const _ = require('lodash');
 
 const app = express();
 
@@ -36,7 +37,10 @@ app.get('/api/search/:query', (req, res, next) => {
 
     db.query(sql)
       .then(result => {
-        res.json(result.rows);
+        const partitioned = _.partition(result.rows, obj => {
+          return obj.title.toLowerCase().replace('the ', '').replace('a ', '').startsWith(query);
+        });
+        res.json(partitioned);
       });
   }
 });
