@@ -48,7 +48,7 @@ export default class Search extends React.Component {
           <div className="search-results">
             <h3>Please search using the search bar or filter button.</h3>
           </div>
-          <BottomNav />
+          <BottomNav setView={this.props.setView}/>
         </div>
       );
     } else if (this.state.musicals.length === 0) {

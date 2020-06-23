@@ -7,6 +7,13 @@ export default class App extends React.Component {
     this.state = {
       view: 'search'
     };
+    this.setView = this.setView.bind(this);
+  }
+
+  setView(view) {
+    this.setState({
+      view: view
+    });
   }
 
   componentDidMount() {
