@@ -37,10 +37,10 @@ app.get('/api/search/:query', (req, res, next) => {
 
     db.query(sql)
       .then(result => {
-        const partitioned = _.partition(result.rows, obj => {
+        const [one, two] = _.partition(result.rows, obj => {
           return obj.title.toLowerCase().replace('the ', '').replace('a ', '').startsWith(query);
         });
-        res.json(partitioned);
+        res.json(one.concat(two));
       });
   }
 });
