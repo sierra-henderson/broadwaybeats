@@ -17,9 +17,14 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 ALTER TABLE ONLY public.musicals DROP CONSTRAINT musicals_pkey;
+ALTER TABLE ONLY public.genres DROP CONSTRAINT genres_pkey;
 ALTER TABLE public.musicals ALTER COLUMN "musicalId" DROP DEFAULT;
+ALTER TABLE public.genres ALTER COLUMN "genreId" DROP DEFAULT;
 DROP SEQUENCE public."musicals_musicalId_seq";
 DROP TABLE public.musicals;
+DROP SEQUENCE public."genres_genreId_seq";
+DROP TABLE public.genres;
+DROP EXTENSION unaccent;
 DROP EXTENSION plpgsql;
 DROP SCHEMA public;
 --
@@ -50,9 +55,53 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: unaccent; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION unaccent; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: genres; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.genres (
+    "genreId" integer NOT NULL,
+    name text NOT NULL
+);
+
+
+--
+-- Name: genres_genreId_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public."genres_genreId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: genres_genreId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public."genres_genreId_seq" OWNED BY public.genres."genreId";
+
 
 --
 -- Name: musicals; Type: TABLE; Schema: public; Owner: -
@@ -90,10 +139,52 @@ ALTER SEQUENCE public."musicals_musicalId_seq" OWNED BY public.musicals."musical
 
 
 --
+-- Name: genres genreId; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.genres ALTER COLUMN "genreId" SET DEFAULT nextval('public."genres_genreId_seq"'::regclass);
+
+
+--
 -- Name: musicals musicalId; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.musicals ALTER COLUMN "musicalId" SET DEFAULT nextval('public."musicals_musicalId_seq"'::regclass);
+
+
+--
+-- Data for Name: genres; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.genres ("genreId", name) FROM stdin;
+1	Adaptations (Literature)
+2	Adaptations (Shakespeare)
+3	Adaptations (Stage & Screen)
+4	Adventure
+5	Biography
+6	Christmas/Holiday
+7	Comedy
+8	Dark Comedy
+9	Docudrama/Historic
+10	Drama
+11	Dramatic Comedy
+12	Experimental
+13	Fables/Folktales
+14	Family
+15	Fantasy
+16	Farce
+17	Melodrama
+18	Mystery/Thriller
+19	Parody / Spoof
+20	Period/Historical
+21	Religious
+22	Revue
+23	Romance
+24	Romantic Comedy
+25	Satire
+26	Science Fiction
+27	Theatre for Young Audiences
+\.
 
 
 --
@@ -570,10 +661,25 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 
 
 --
+-- Name: genres_genreId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."genres_genreId_seq"', 1, false);
+
+
+--
 -- Name: musicals_musicalId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('public."musicals_musicalId_seq"', 1, false);
+
+
+--
+-- Name: genres genres_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.genres
+    ADD CONSTRAINT genres_pkey PRIMARY KEY ("genreId");
 
 
 --
