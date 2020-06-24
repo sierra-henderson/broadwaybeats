@@ -71,8 +71,35 @@ app.get('/api/filter/:tag/:genre/:musicalStyle', (req, res, next) => {
         count(distinct "musicalStyleCategories"."musicalStyleId") = ${musicalStyle.length}
     `;
     db.query(sql)
-      .then(result => res.json(result.rows));
+      .then(result => res.json(result.rows))
+      .catch(err => next(err));
   }
+});
+
+app.get('/api/musicals/:musicalId', (req, res, next) => {
+  const { musicalId } = req.params;
+  const sql = `
+      select "title",
+          "imageUrl",
+          "musicUrl",
+          "musicBy",
+          "lyricsBy",
+          "plot",
+          "musicalId"
+      from "musicals"
+      where "musicalId" = $1
+      `;
+  const params = [musicalId];
+  db.query(sql, params)
+    .then(result => {
+      const musical = result.rows[0];
+      if (!musical) {
+        next(new ClientError(`musicalId ${musicalId} does not exist`, 400));
+      } else {
+        res.json(musical);
+      }
+    })
+    .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {
