@@ -5,9 +5,9 @@ export default class Filter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tag: [],
-      genre: [],
-      musicalStyle: [],
+      tag: {},
+      genre: {},
+      musicalStyle: {},
       numResults: null
     };
     this.addFilter = this.addFilter.bind(this);
@@ -16,28 +16,37 @@ export default class Filter extends React.Component {
   }
 
   addFilter(id, category, add) {
-    if (add) {
-      this.setState({
-        [category]: this.state[category].concat([id])
-      });
+    if (!add) {
+      this.setState(state => ({
+        [category]: {
+          ...state[category],
+          [id]: true
+        }
+      }));
     } else {
-      this.setState({
-        [category]: this.state[category].filter(el => el !== id)
-      });
+      this.setState(state => ({
+        [category]: {
+          ...state[category],
+          [id]: false
+        }
+      }));
     }
   }
 
   handleReset() {
     this.setState({
-      genre: [],
-      musicalStyle: [],
-      tag: []
+      genre: {},
+      musicalStyle: {},
+      tag: {}
     });
   }
 
   handleSubmit() {
-    if (this.state.genre.length > 0 && this.state.musicalStyle.length > 0 && this.state.tag.length > 0) {
-      fetch(`/api/filter/${this.state.tag.join(',')}/${this.state.genre.join(',')}/${this.state.musicalStyle.join(',')}`)
+    const genres = Object.keys(this.state.genre).filter(id => this.state.genre[id]);
+    const musicalStyles = Object.keys(this.state.musicalStyle).filter(id => this.state.musicalStyle[id]);
+    const tags = Object.keys(this.state.tag).filter(id => this.state.tag[id]);
+    if (genres.length > 0 && musicalStyles.length > 0 && tags.length > 0) {
+      fetch(`/api/filter/${tags.join(',')}/${genres.join(',')}/${musicalStyles.join(',')}`)
         .then(res => res.json())
         .then(data => {
           this.props.filterResults(data);
@@ -57,39 +66,39 @@ export default class Filter extends React.Component {
       : this.state.numResults === 0 ? 'There are no results matching your query. Try removing some filters'
         : `${this.state.numResults} results`;
     const genreArr = [
-      { id: 7, name: 'Comedy' },
-      { id: 10, name: 'Drama' },
-      { id: 20, name: 'Period/Historical' },
-      { id: 4, name: 'Adventure' },
-      { id: 14, name: 'Family' },
-      { id: 15, name: 'Fantasy' },
-      { id: 18, name: 'Mystery/Thriller' },
-      { id: 23, name: 'Romance' },
-      { id: 22, name: 'Revue' }
+      { buttonId: 1, id: 7, name: 'Comedy' },
+      { buttonId: 2, id: 10, name: 'Drama' },
+      { buttonId: 3, id: 20, name: 'Period/Historical' },
+      { buttonId: 4, id: 4, name: 'Adventure' },
+      { buttonId: 5, id: 14, name: 'Family' },
+      { buttonId: 6, id: 15, name: 'Fantasy' },
+      { buttonId: 7, id: 18, name: 'Mystery/Thriller' },
+      { buttonId: 8, id: 23, name: 'Romance' },
+      { buttonId: 9, id: 22, name: 'Revue' }
     ];
     const musicalStyleArr = [
-      { id: 17, name: 'Pop/Rock' },
-      { id: 6, name: 'Classic Broadway' },
-      { id: 7, name: 'Classical/Operetta' },
-      { id: 15, name: 'Jazz/Blues' },
-      { id: 8, name: 'Contemporary Broadway' },
-      { id: 19, name: 'World Music' },
-      { id: 11, name: 'Country/Western' },
-      { id: 12, name: 'Folk' },
-      { id: 14, name: 'Gospel' }
+      { buttonId: 10, id: 17, name: 'Pop/Rock' },
+      { buttonId: 11, id: 6, name: 'Classic Broadway' },
+      { buttonId: 12, id: 7, name: 'Classical/Operetta' },
+      { buttonId: 13, id: 15, name: 'Jazz/Blues' },
+      { buttonId: 14, id: 8, name: 'Contemporary Broadway' },
+      { buttonId: 15, id: 19, name: 'World Music' },
+      { buttonId: 16, id: 11, name: 'Country/Western' },
+      { buttonId: 17, id: 12, name: 'Folk' },
+      { buttonId: 18, id: 14, name: 'Gospel' }
     ];
     const tagArr = [
-      { id: 1, name: 'Adolescence/Childhood' },
-      { id: 42, name: 'Women\'s Interest' },
-      { id: 39, name: 'Show Business' },
-      { id: 26, name: 'Love' },
-      { id: 15, name: 'Disney Shows' },
-      { id: 33, name: 'Religious Themes' },
-      { id: 40, name: 'Tony Award Winner' },
-      { id: 23, name: 'Jewish Interest' },
-      { id: 24, name: 'Latinx Interest' },
-      { id: 8, name: 'Black Interest' },
-      { id: 25, name: 'LGBTQ+ Interest' }
+      { buttonId: 19, id: 1, name: 'Adolescence/Childhood' },
+      { buttonId: 20, id: 42, name: 'Women\'s Interest' },
+      { buttonId: 21, id: 39, name: 'Show Business' },
+      { buttonId: 22, id: 26, name: 'Love' },
+      { buttonId: 23, id: 15, name: 'Disney Shows' },
+      { buttonId: 24, id: 33, name: 'Religious Themes' },
+      { buttonId: 25, id: 40, name: 'Tony Award Winner' },
+      { buttonId: 26, id: 23, name: 'Jewish Interest' },
+      { buttonId: 27, id: 24, name: 'Latinx Interest' },
+      { buttonId: 28, id: 8, name: 'Black Interest' },
+      { buttonId: 29, id: 25, name: 'LGBTQ+ Interest' }
     ];
     return (
       <div className="filter-container">
@@ -101,7 +110,7 @@ export default class Filter extends React.Component {
             <h3 className="accordion-text">Genre</h3>
             {
               genreArr.map(el => {
-                return <FilterButton key={el.id} categoryInfo={el} category="genre" addFilter={this.addFilter}/>;
+                return <FilterButton key={el.buttonId} categoryInfo={el} category="genre" isChecked={this.state.genre[el.id]} addFilter={this.addFilter}/>;
               })
             }
           </div>
@@ -109,7 +118,7 @@ export default class Filter extends React.Component {
             <h3 className="accordion-text">Musical Style</h3>
             {
               musicalStyleArr.map(el => {
-                return <FilterButton key={el.id} categoryInfo={el} category="musicalStyle" addFilter={this.addFilter}/>;
+                return <FilterButton key={el.buttonId} categoryInfo={el} category="musicalStyle" isChecked={this.state.musicalStyle[el.id]} addFilter={this.addFilter}/>;
               })
             }
           </div>
@@ -117,7 +126,7 @@ export default class Filter extends React.Component {
             <h3 className="accordion-text">Tags</h3>
             {
               tagArr.map(el => {
-                return <FilterButton key={el.id} categoryInfo={el} category="tag" addFilter={this.addFilter}/>;
+                return <FilterButton key={el.buttonId} categoryInfo={el} category="tag" isChecked={this.state.tag[el.id]} addFilter={this.addFilter}/>;
               })
             }
           </div>
