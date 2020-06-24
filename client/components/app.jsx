@@ -26,7 +26,7 @@ export default class App extends React.Component {
 
   render() {
     const appView = this.state.view === 'search'
-      ? <Search setView={this.setView} />
+      ? <Search/>
       : <h1>TBD</h1>;
     return (appView);
   }

@@ -2,16 +2,21 @@ import React from 'react';
 import BoxedCard from './boxed-card';
 import BottomNav from './bottomNav';
 import TopNav from './topNav';
+import Filter from './filter';
 
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       musicals: null,
-      value: ''
+      value: '',
+      filter: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.queryDatabase = this.queryDatabase.bind(this);
+    this.filterResults = this.filterResults.bind(this);
+    this.toggleFilter = this.toggleFilter.bind(this);
+    this.filterResults = this.filterResults.bind(this);
   }
 
   handleChange(event) {
@@ -36,54 +41,69 @@ export default class Search extends React.Component {
     }
   }
 
-  render() {
-    if (this.state.musicals === null) {
-      return (
-        <div>
-          <TopNav />
-          <div className="search-and-filter">
-            <input type="text" name="" id="searchBar" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
-            <button id="filterButton">Filter</button>
-          </div>
-          <div className="search-results">
-            <h3>Please search using the search bar or filter button.</h3>
-          </div>
-          <BottomNav setView={this.props.setView}/>
-        </div>
-      );
-    } else if (this.state.musicals.length === 0) {
-      return (
-        <div>
-          <TopNav />
-          <div className="search-and-filter">
-            <input type="text" name="" id="searchBar" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
-            <button id="filterButton">Filter</button>
-          </div>
-          <div className="search-results">
-            <h3>There are no musicals that match your query.</h3>
-          </div>
-          <BottomNav />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <TopNav />
-          <div className="search-and-filter">
-            <input type="text" name="" id="searchBar" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
-            <button id="filterButton">Filter</button>
-          </div>
-          <div className="search-results">
-            {
-              this.state.musicals.map(musical => {
-                return <BoxedCard key={musical.musicalId} musical={musical} />;
-              })
-            }
-          </div>
-          <BottomNav />
-        </div>
-      );
-    }
+  toggleFilter() {
+    this.setState(state => ({
+      filter: !state.filter
+    }));
+  }
 
+  filterResults(data) {
+    this.setState({
+      musicals: data
+    });
+  }
+
+  render() {
+    if (this.state.filter) {
+      return <Filter toggleFilter={this.toggleFilter} filterResults={this.filterResults} />;
+    } else {
+      if (this.state.musicals === null) {
+        return (
+          <div>
+            <TopNav />
+            <div className="search-and-filter">
+              <input type="text" name="" id="searchBar" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
+              <button id="filterButton" onClick={this.toggleFilter}>Filter</button>
+            </div>
+            <div className="search-results">
+              <h3>Please search using the search bar or filter button.</h3>
+            </div>
+            <BottomNav setView={this.props.setView} />
+          </div>
+        );
+      } else if (this.state.musicals.length === 0) {
+        return (
+          <div>
+            <TopNav />
+            <div className="search-and-filter">
+              <input type="text" name="" id="searchBar" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
+              <button id="filterButton" onClick={this.toggleFilter}>Filter</button>
+            </div>
+            <div className="search-results">
+              <h3>There are no musicals that match your query.</h3>
+            </div>
+            <BottomNav />
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <TopNav />
+            <div className="search-and-filter">
+              <input type="text" name="" id="searchBar" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
+              <button id="filterButton" onClick={this.toggleFilter}>Filter</button>
+            </div>
+            <div className="search-results">
+              {
+                this.state.musicals.map(musical => {
+                  return <BoxedCard key={musical.musicalId} musical={musical} />;
+                })
+              }
+            </div>
+            <BottomNav />
+          </div>
+        );
+      }
+    }
   }
 }
