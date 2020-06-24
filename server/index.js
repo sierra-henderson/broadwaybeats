@@ -79,13 +79,7 @@ app.get('/api/filter/:tag/:genre/:musicalStyle', (req, res, next) => {
 app.get('/api/musicals/:musicalId', (req, res, next) => {
   const { musicalId } = req.params;
   const sql = `
-      select "title",
-          "imageUrl",
-          "musicUrl",
-          "musicBy",
-          "lyricsBy",
-          "plot",
-          "musicalId"
+      select *
       from "musicals"
       where "musicalId" = $1
       `;
