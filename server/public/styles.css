@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  font-family: 'Yantramanav';
+  font-family: 'Heebo';
   margin: 0;
 }
 
@@ -35,6 +35,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 50px;
 }
 
 .search-results h3 {
@@ -88,4 +89,63 @@
 
 i {
   color: white;
+}
+
+.filter-header {
+  border-bottom: 1px solid #d0d0d0;
+  padding: 0.5rem;
+}
+
+.filter-header h2 {
+  font-size: 1.7rem;
+}
+
+.accordion-container {
+  padding: 0.5rem;
+}
+
+.accordion-text {
+  text-transform: uppercase;
+}
+
+.filter-button {
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  margin: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.checked {
+  border: none;
+  background-color: #D9042B;
+  color: white;
+}
+
+.unchecked {
+  background-color: white;
+  border: 1px solid #CDC9CF;
+  color: #CDC9CF;
+}
+
+.results-display {
+  text-align: center;
+}
+
+.button-group {
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.reset {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid #09030D;
+  background-color: white;
+  color: #09030D;
+}
+
+.submit {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid #D9042B;
+  background-color: white;
+  color: #D9042B;
 }
