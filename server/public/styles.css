@@ -87,7 +87,7 @@
   padding: 0.5rem 0;
 }
 
-i {
+.bottom-nav i {
   color: white;
 }
 
@@ -148,4 +148,65 @@ i {
   border: 2px solid #D9042B;
   background-color: white;
   color: #D9042B;
+}
+
+.info-container {
+  padding: 1rem;
+}
+
+.info-container h2 {
+  margin-bottom: 0.25rem;
+}
+
+.info-container img {
+  width: 100%
+}
+
+.add-collection {
+  display: flex;
+  align-items: center;
+  color: #9A949E;
+  margin-bottom: 0.75rem;
+}
+
+.add-collection h5 {
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+}
+
+.icon-group {
+  margin: 0.75rem 0;
+}
+
+.icon-group i {
+  color: #9A949E;
+  font-size: 1.75rem;
+  margin-right: 0.5rem;
+}
+
+.icon-group .like {
+  color: #D9042B;
+}
+
+.icon-group .dislike {
+  color: #09030D;
+}
+
+.play-music {
+  margin-bottom: 50px;
+  border-radius: 100px;
+  background-color: #09030D;
+  color: white;
+  text-transform: uppercase;
+  font-size: 1rem;
+  padding: 0.3rem 2rem;
+  border: none;
+}
+
+.read-more-less {
+  color: #9A949E
+}
+
+.music-button-container {
+  text-align: center;
 }

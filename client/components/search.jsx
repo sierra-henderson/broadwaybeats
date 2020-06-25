@@ -82,7 +82,7 @@ export default class Search extends React.Component {
             <div className="search-results">
               <h3>There are no musicals that match your query.</h3>
             </div>
-            <BottomNav />
+            <BottomNav setView={this.props.setView}/>
           </div>
         );
       } else {
@@ -96,11 +96,11 @@ export default class Search extends React.Component {
             <div className="search-results">
               {
                 this.state.musicals.map(musical => {
-                  return <BoxedCard key={musical.musicalId} musical={musical} />;
+                  return <BoxedCard setView={this.props.setView} key={musical.musicalId} musical={musical} />;
                 })
               }
             </div>
-            <BottomNav />
+            <BottomNav setView={this.props.setView}/>
           </div>
         );
       }
