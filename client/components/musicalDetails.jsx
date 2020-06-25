@@ -1,5 +1,6 @@
 import React from 'react';
 import BottomNav from './bottomNav';
+import ScrollingBar from './scrollingBar';
 
 export default class MusicalDetails extends React.Component {
   constructor(props) {
@@ -8,6 +9,16 @@ export default class MusicalDetails extends React.Component {
       readMoreOpen: false
     };
     this.changePlotView = this.changePlotView.bind(this);
+  }
+
+  componentDidMount() {
+    fetch(`/api/musicals/${this.props.musical.musicalId}/related`)
+      .then(res => res.json)
+      .then(data => {
+        this.setState({
+          related: data
+        });
+      });
   }
 
   changePlotView() {
@@ -44,6 +55,7 @@ export default class MusicalDetails extends React.Component {
           <div className="music-button-container">
             <button className="play-music">Listen on Apple Music</button>
           </div>
+          <ScrollingBar setView={this.props.setView} related={this.props.related} />
           <BottomNav setView={this.props.setView} />
         </div>
       );
@@ -67,6 +79,7 @@ export default class MusicalDetails extends React.Component {
           <div className="music-button-container">
             <button className="play-music">Listen on Apple Music</button>
           </div>
+          <ScrollingBar setView={this.props.setView} related={this.props.related}/>
           <BottomNav setView={this.props.setView} />
         </div>
       );

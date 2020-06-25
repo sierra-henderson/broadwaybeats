@@ -54,6 +54,23 @@
   border-bottom: 1px solid #c4c4c4;
 }
 
+.unboxed {
+  width: 150px;
+  margin: 0.5rem;
+  border-bottom: none;
+}
+
+.related {
+  margin: 1.25rem
+}
+
+.scroll-bar {
+  width: 100vw;
+  display: flex;
+  overflow-x: auto;
+  margin-bottom: 50px;
+}
+
 .card h4 {
   text-align: center;
   margin: 0.5rem;
@@ -193,7 +210,6 @@
 }
 
 .play-music {
-  margin-bottom: 50px;
   border-radius: 100px;
   background-color: #09030D;
   color: white;

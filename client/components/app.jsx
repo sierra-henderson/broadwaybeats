@@ -7,15 +7,17 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       view: 'search',
-      params: {}
+      params: {},
+      related: []
     };
     this.setView = this.setView.bind(this);
   }
 
-  setView(view, params) {
+  setView(view, params, related) {
     this.setState({
       view: view,
-      params: params
+      params: params,
+      related: related
     });
   }
 
@@ -31,7 +33,7 @@ export default class App extends React.Component {
     const appView = this.state.view === 'search'
       ? <Search setView={this.setView}/>
       : this.state.view === 'details'
-        ? <MusicalDetails setView={this.setView} musical={this.state.params}/>
+        ? <MusicalDetails setView={this.setView} musical={this.state.params} related={this.state.related}/>
         : <h1>TBD</h1>;
     return (appView);
   }
