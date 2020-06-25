@@ -1,18 +1,21 @@
 import React from 'react';
 import Search from './search';
+import MusicalDetails from './musicalDetails';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'search'
+      view: 'search',
+      params: {}
     };
     this.setView = this.setView.bind(this);
   }
 
-  setView(view) {
+  setView(view, params) {
     this.setState({
-      view: view
+      view: view,
+      params: params
     });
   }
 
@@ -26,8 +29,10 @@ export default class App extends React.Component {
 
   render() {
     const appView = this.state.view === 'search'
-      ? <Search/>
-      : <h1>TBD</h1>;
+      ? <Search setView={this.setView}/>
+      : this.state.view === 'details'
+        ? <MusicalDetails setView={this.setView} musical={this.state.params}/>
+        : <h1>TBD</h1>;
     return (appView);
   }
 }
