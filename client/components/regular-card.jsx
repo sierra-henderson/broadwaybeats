@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class BoxedCard extends React.Component {
+export default class RegularCard extends React.Component {
   constructor(props) {
     super(props);
     this.getDetails = this.getDetails.bind(this);
@@ -19,11 +19,11 @@ export default class BoxedCard extends React.Component {
   }
 
   render() {
-    const musicalTitle = this.props.musical.title.length > 15 ? this.props.musical.title.substring(0, 14) + '...' : this.props.musical.title;
+    // const musicalTitle = this.props.musical.title.length > 15 ? this.props.musical.title.substring(0, 14) + '...' : this.props.musical.title;
     return (
-      <div className="card" onClick={this.getDetails}>
-        <img className="card-image" src={this.props.musical.imageUrl} alt=""/>
-        <h4>{musicalTitle}</h4>
+      <div className="unboxed" onClick={this.getDetails}>
+        <img className="card-image unboxed" src={this.props.musical.imageUrl} alt="" />
+        <h4>{this.props.musical.title}</h4>
       </div>
     );
   }
