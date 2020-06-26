@@ -4,13 +4,21 @@
   margin: 0;
 }
 
+.main-background {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .search-and-filter {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#searchBar {
+.input-rounded {
   border: 1px solid #c4c4c4;
   height: 2.5rem;
   max-width: 400px;
@@ -18,6 +26,62 @@
   border-radius: 100px;
   padding-left: 1.5rem;
   margin-top: 1rem;
+}
+
+.sign-in-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-in-container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-in-container h5 {
+  font-weight: 400;
+}
+
+.sign-in-container img {
+  width: 150px;
+  fill: #D9042B;
+}
+
+.sign-in-container button {
+  margin-top: 1rem;
+}
+
+.questionaire-container {
+  height: 100vh;
+  width: 100vw;
+}
+
+.questionaire-initial {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.questionaire-initial p {
+  width: 80%;
+}
+
+.questionaire-initial button {
+  margin-top: 0.75rem;
+}
+
+.percent-complete {
+  width: 100vw;
+  height: 0.5rem;
+  background-color: #9A949E;
 }
 
 #filterButton {
@@ -160,11 +224,21 @@
   color: #09030D;
 }
 
+.reset:hover {
+  background-color: #09030D;
+  color: white;
+}
+
 .submit {
   padding: 0.5rem 1.5rem;
   border: 2px solid #D9042B;
   background-color: white;
   color: #D9042B;
+}
+
+.submit:hover {
+  background-color: #D9042B;
+  color: white;
 }
 
 .info-container {
@@ -225,4 +299,8 @@
 
 .music-button-container {
   text-align: center;
+}
+
+.sign-up {
+  width: 40vw;
 }
