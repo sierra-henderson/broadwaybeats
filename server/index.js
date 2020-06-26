@@ -173,6 +173,38 @@ app.get('/api/musicals/:musicalId/related', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/signup', (req, res, next) => {
+  const { username } = req.body;
+  const sql = `
+  select "username",
+          "userId"
+    from "users"
+    where "username" = $1
+  `;
+  const params = [username];
+  db.query(sql, params)
+    .then(result => {
+      if (result.rows.length === 0) {
+        const sql = `
+          insert into "users" ("userId", "username")
+              values  (default, $1)
+            returning *
+        `;
+        return db.query(sql, params)
+          .then(result => {
+            return result.rows[0];
+          });
+      } else {
+        return result.rows[0];
+      }
+    })
+    .then(result => {
+      req.session.userId = result.userId;
+      res.json(result);
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
