@@ -4,6 +4,12 @@
   margin: 0;
 }
 
+.logo {
+  font-family: 'Cavalcade';
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
 .main-background {
   height: 100vh;
   width: 100vw;
