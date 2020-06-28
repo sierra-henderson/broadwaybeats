@@ -235,6 +235,11 @@
   margin-bottom: 50px;
 }
 
+.search-results {
+  display: flex;
+  justify-content: center;
+}
+
 .search-results h3 {
   text-align: center;
   width: 70vw;

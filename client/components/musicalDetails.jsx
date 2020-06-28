@@ -9,12 +9,21 @@ export default class MusicalDetails extends React.Component {
       readMoreOpen: false
     };
     this.changePlotView = this.changePlotView.bind(this);
+    this.handleLike = this.handleLike.bind(this);
   }
 
   changePlotView() {
     this.setState(state => ({
       readMoreOpen: !state.readMoreOpen
     }));
+  }
+
+  handleLike() {
+    if (this.props.musical.like) {
+      this.props.deleteLike(this.props.musical.musicalId);
+    } else if (this.props.musical.like === null) {
+      this.props.addLike(this.props.musical.musicalId);
+    }
   }
 
   render() {
@@ -35,7 +44,7 @@ export default class MusicalDetails extends React.Component {
             <h2>{this.props.musical.title}</h2>
             <h5>{musicAndLyrics}</h5>
             <div className="icon-group">
-              <i className={`fas fa-heart ${likeClass}`}></i>
+              <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
               <i className={`fas fa-times ${dislikeClass}`}></i>
             </div>
             <div className="add-collection">
@@ -59,7 +68,7 @@ export default class MusicalDetails extends React.Component {
             <h2>{this.props.musical.title}</h2>
             <h5>{musicAndLyrics}</h5>
             <div className="icon-group">
-              <i className={`fas fa-heart ${likeClass}`}></i>
+              <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
               <i className={`fas fa-times ${dislikeClass}`}></i>
             </div>
             <div className="add-collection">

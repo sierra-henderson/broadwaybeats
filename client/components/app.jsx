@@ -18,6 +18,7 @@ export default class App extends React.Component {
     this.setView = this.setView.bind(this);
     this.loginUser = this.loginUser.bind(this);
     this.addLike = this.addLike.bind(this);
+    this.deleteLike = this.deleteLike.bind(this);
   }
 
   setView(view, params, related) {
@@ -59,7 +60,32 @@ export default class App extends React.Component {
       fetch(`/api/musicals/${id}/like`, {
         method: 'POST'
       })
-        .then(res => res.json());
+        .then(res => res.json())
+        .then(data => {
+          this.setState(state => ({
+            params: {
+              ...state.params,
+              like: true
+            }
+          }));
+        });
+    }
+  }
+
+  deleteLike(id) {
+    if (id) {
+      fetch(`/api/musicals/${id}/like`, {
+        method: 'DELETE'
+      })
+        .then(res => res.json())
+        .then(data => {
+          this.setState(state => ({
+            params: {
+              ...state.params,
+              like: data.like
+            }
+          }));
+        });
     }
   }
 
@@ -79,7 +105,7 @@ export default class App extends React.Component {
         : this.state.view === 'search'
           ? <Search setView={this.setView}/>
           : this.state.view === 'details'
-            ? <MusicalDetails setView={this.setView} musical={this.state.params} related={this.state.related}/>
+            ? <MusicalDetails setView={this.setView} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike}/>
             : this.state.view === 'recommendation'
               ? <Recommnendation setView={this.setView} musicals={this.state.recommended} addLike={this.addLike}/>
               : <h1>TBD</h1>;
