@@ -304,6 +304,159 @@ app.get('/api/questionaire/seedMusicals/:userId', (req, res, next) => {
     });
 });
 
+app.post('/api/questionaire/like', (req, res, next) => {
+  const { likedMusicals } = req.body;
+  if (likedMusicals.length === 0) {
+    next(new ClientError('You must like at least one musical', 400));
+  } else {
+    const sql = format(`
+          insert into "likedMusicals" ("userId", "musicalId", "like")
+              values %L
+              returning *;
+          `, likedMusicals);
+    const client = new pg.Client({
+      connectionString: process.env.DATABASE_URL
+    });
+    client.connect();
+    client.query(sql)
+      .then(result => {
+        res.json(result.rows);
+      })
+      .catch(err => next(err));
+  }
+});
+
+app.get('/api/recommendations/:userId', (req, res, next) => {
+  const { userId } = req.params;
+  if (isNaN(parseInt(userId))) {
+    next(new ClientError('userId must be an integer', 400));
+  }
+  const sql = `
+  with "topCategories" as (
+  select "mt"."tagId" as "id",
+        'tag' as "category",
+        count("mt".*) as "totalInstances"
+    from "likedMusicals" as "lm"
+    join "musicalTags" as "mt" using ("musicalId")
+    where "lm"."userId" = $1
+  group by "mt"."tagId"
+union all
+select "msc"."musicalStyleId" as "id",
+      'musical style' as "category",
+      count("msc".*) as "totalInstances"
+    from "likedMusicals" as "lm"
+    join "musicalStyleCategories" as "msc" using ("musicalId")
+    where "lm"."userId" = $1
+  group by "msc"."musicalStyleId"
+union all
+select "mg"."genreId" as "id",
+      'genre' as "category",
+      count("mg".*) as "totalInstances"
+    from "likedMusicals" as "lm"
+    join "musicalGenres" as "mg" using ("musicalId")
+    where "lm"."userId" = $1
+  group by "mg"."genreId"
+  order by "totalInstances" desc
+    limit 5
+), "matchedByTag" as (
+  select "m"."musicalId",
+         "m"."title",
+         "m"."imageUrl"
+      from "musicals" as "m"
+      join "musicalTags" as "mt" using ("musicalId")
+      join "topCategories" as "tc"
+      on "mt"."tagId" = "tc"."id" and
+        "tc"."category" = 'tag'
+), "matchedByGenre" as (
+  select "m"."musicalId",
+         "m"."title",
+         "m"."imageUrl"
+      from "musicals" as "m"
+      join "musicalGenres" as "mg" using ("musicalId")
+      join "topCategories" as "tc"
+      on "mg"."genreId" = "tc"."id" and
+        "tc"."category" = 'genre'
+), "matchedByMusicalStyle" as (
+  select "m"."musicalId",
+         "m"."title",
+         "m"."imageUrl"
+      from "musicals" as "m"
+      join "musicalStyleCategories" as "msc" using ("musicalId")
+      join "topCategories" as "tc"
+      on "msc"."musicalStyleId" = "tc"."id" and
+        "tc"."category" = 'musical style'
+), "allMatches" as (
+  select *
+    from "matchedByTag"
+  union all
+  select *
+    from "matchedByGenre"
+  union all
+  select *
+    from "matchedByMusicalStyle"
+)
+select "am"."musicalId",
+       "am"."title",
+       "am"."imageUrl",
+       count(*) as "relevance"
+  from "allMatches" as "am"
+  where "am"."musicalId" not in (
+    select "musicalId"
+      from "likedMusicals"
+      where "userId" = $1
+  )
+ group by "am"."musicalId", "am"."title", "am"."imageUrl"
+ order by "relevance" desc
+ limit 20
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      if (result.rows.length === 0) {
+        next(new ClientError('You must like at least one musical to get recommendations', 400));
+      } else {
+        res.json(result.rows);
+      }
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/musicals/:musicalId/:userId/like', (req, res, next) => {
+  const { userId, musicalId } = req.params;
+  if (isNaN(parseInt(userId))) {
+    next(new ClientError('userId must be an integer', 400));
+  }
+  if (isNaN(parseInt(musicalId))) {
+    next(new ClientError('musicalId must be an integer', 400));
+  }
+  const sql = `
+  select *
+  from "likedMusicals"
+  where "userId" = $1 and
+    "musicalId" = $2 and
+    "like" = true
+  `;
+  const params = [userId, musicalId];
+  db.query(sql, params)
+    .then(result => {
+      if (result.rows.length > 0) {
+        next(new ClientError(`Musical with id ${musicalId} has already been liked by user with id ${userId}`, 400));
+      } else {
+        const sql = `
+        insert into "likedMusicals" ("userId", "musicalId", "like")
+        values ($1, $2, true)
+        returning *
+        `;
+        return db.query(sql, params)
+          .then(result => {
+            return res.json(result.rows[0]);
+          })
+          .catch(err => next(err));
+      }
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });

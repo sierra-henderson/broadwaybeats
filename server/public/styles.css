@@ -5,8 +5,8 @@
 }
 
 .logo {
-  font-family: 'Cavalcade';
-  text-transform: uppercase;
+  font-family: 'Signika';
+
   margin-bottom: 1rem;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .questionaire-initial {
-  height: 100vh;
+  height: calc(100vh - 0.5rem);
   width: 100vw;
   display: flex;
   text-align: center;
@@ -87,7 +87,74 @@
 .percent-complete {
   width: 100vw;
   height: 0.5rem;
-  background-color: #9A949E;
+  background-color: #dbdbdb;
+}
+
+.complete-bar {
+  height: 0.5rem;
+  background-color: #D9042B;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.twenty {
+  width: 20vw;
+}
+
+.forty {
+  width: 40vw;
+}
+
+.sixty {
+  width: 60vw;
+}
+
+.eighty {
+  width: 80vw;
+}
+
+.hundred {
+  width: 100vw;
+}
+
+.inner-questionaire {
+  margin: 1rem;
+}
+
+.inner-questionaire h1 {
+  font-size: 1.75rem;
+}
+
+.page-toggles {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(102, 179, 204, 0.5);
+}
+
+.musical-questionaire-card {
+  flex-basis: 96px;
+  height: 96px;
+  box-shadow: 0 0 5px 0 #C4C4C4;
+  margin: 0.5rem;
+}
+
+.musical-questionaire-card.overlay {
+  background: rgb(102, 179, 204);
+}
+
+.musical-questionaire-card img {
+  width: 100%;
+}
+
+.musical-questionaire-card.overlay img {
+  opacity: 0.4;
 }
 
 #filterButton {
@@ -101,7 +168,7 @@
   margin: 1rem auto;
 }
 
-.search-results {
+.boxed-cards-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

@@ -93,7 +93,7 @@ export default class Search extends React.Component {
               <input className="input-rounded" type="text" name="" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
               <button id="filterButton" onClick={this.toggleFilter}>Filter</button>
             </div>
-            <div className="search-results">
+            <div className="boxed-cards-container">
               {
                 this.state.musicals.map(musical => {
                   return <BoxedCard setView={this.props.setView} key={musical.musicalId} musical={musical} />;
