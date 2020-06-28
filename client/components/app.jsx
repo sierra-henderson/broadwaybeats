@@ -37,10 +37,21 @@ export default class App extends React.Component {
   }
 
   loginUser(user) {
-    this.setState({
-      view: 'questionaire',
-      user: user
-    });
+    fetch(`/api/recommendations/${user.userId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          this.setState({
+            view: 'questionaire',
+            user: user
+          });
+        } else {
+          this.setState({
+            view: 'search',
+            user: user
+          });
+        }
+      });
   }
 
   addLike(id) {
