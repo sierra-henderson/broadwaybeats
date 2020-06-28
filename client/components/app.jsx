@@ -12,7 +12,8 @@ export default class App extends React.Component {
       view: 'signin',
       params: {},
       related: [],
-      user: {}
+      user: {},
+      recommended: []
     };
     this.setView = this.setView.bind(this);
     this.loginUser = this.loginUser.bind(this);
@@ -20,11 +21,19 @@ export default class App extends React.Component {
   }
 
   setView(view, params, related) {
-    this.setState({
-      view: view,
-      params: params,
-      related: related
-    });
+    if (view === 'recommendation') {
+      this.setState({
+        view: view,
+        params: params,
+        recommended: related
+      });
+    } else {
+      this.setState({
+        view: view,
+        params: params,
+        related: related
+      });
+    }
   }
 
   loginUser(user) {
@@ -61,7 +70,7 @@ export default class App extends React.Component {
           : this.state.view === 'details'
             ? <MusicalDetails setView={this.setView} musical={this.state.params} related={this.state.related}/>
             : this.state.view === 'recommendation'
-              ? <Recommnendation setView={this.setView} musicals={this.state.related} addLike={this.addLike}/>
+              ? <Recommnendation setView={this.setView} musicals={this.state.recommended} addLike={this.addLike}/>
               : <h1>TBD</h1>;
     return (appView);
   }

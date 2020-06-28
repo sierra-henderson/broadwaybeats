@@ -16,9 +16,9 @@ export default class Recommendation extends React.Component {
       if (type === 'like') {
         this.props.addLike(id);
       }
-      this.setState(state => {
-        state.index++;
-      });
+      this.setState(state => ({
+        index: state.index + 1
+      }));
     }
   }
 
@@ -33,7 +33,7 @@ export default class Recommendation extends React.Component {
           <i className="fas fa-times faded-dislike"></i>
           <i className="fas fa-heart faded-like" onClick={() => this.nextMusical('like', this.props.musicals[this.state.index].musicalId)}></i>
         </div>
-        <p className="faded-text">I have no opinion on this musical</p>
+        <p className="faded-text" onClick={() => this.nextMusical('neither', 'n/a')}>I have no opinion on this musical</p>
       </div>
     );
   }
