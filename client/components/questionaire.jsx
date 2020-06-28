@@ -102,7 +102,6 @@ export default class Questionaire extends React.Component {
       })
         .then(res => res.json())
         .then(data => {
-          console.log(data);
           this.changePage(5);
         });
     }
@@ -112,7 +111,7 @@ export default class Questionaire extends React.Component {
     const userId = this.props.user.userId;
     fetch(`/api/recommendations/${userId}`)
       .then(res => res.json())
-      .data(data => {
+      .then(data => {
         this.props.setView('recommendation', {}, data);
       });
   }

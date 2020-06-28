@@ -23,8 +23,8 @@ export default class Recommendation extends React.Component {
   }
 
   render() {
-    console.log(this.state.index);
-    console.log(this.props.musicals[this.state.index]);
+    // console.log(this.state.index);
+    // console.log(this.props.musicals[this.state.index]);
     return (
       <div className="main-background column-center">
         <img className="recommendation-image" src={this.props.musicals[this.state.index].imageUrl} alt=""/>
