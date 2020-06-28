@@ -208,7 +208,9 @@ app.post('/api/signup', (req, res, next) => {
 });
 
 app.post('/api/questionaire/seeds', (req, res, next) => {
-  const { genreSeeds, musicalStyleSeeds } = req.body;
+  const { g, ms } = req.body;
+  const genreSeeds = g.map(el => [req.session.userId, el]);
+  const musicalStyleSeeds = ms.map(el => [req.session.userId, el]);
   if (genreSeeds.length === 0 || musicalStyleSeeds.length === 0) {
     next(new ClientError('You must choose at least one of each category', 400));
   } else {
@@ -250,7 +252,7 @@ app.post('/api/questionaire/seeds', (req, res, next) => {
   }
 });
 
-app.get('/api/questionaire/seedMusicals/:userId', (req, res, next) => {
+app.get('/api/questionaire/seedMusicals', (req, res, next) => {
   const { userId } = req.session;
   const sql = `
   with "allMatches" as (
@@ -305,7 +307,8 @@ app.get('/api/questionaire/seedMusicals/:userId', (req, res, next) => {
 });
 
 app.post('/api/questionaire/like', (req, res, next) => {
-  const { likedMusicals } = req.body;
+  const { lm } = req.body;
+  const likedMusicals = lm.map(el => [req.session.userId, el, true]);
   if (likedMusicals.length === 0) {
     next(new ClientError('You must like at least one musical', 400));
   } else {
@@ -421,8 +424,38 @@ select "am"."musicalId",
     .catch(err => next(err));
 });
 
-app.post('/api/musicals/:musicalId/:userId/like', (req, res, next) => {
-  const { userId, musicalId } = req.params;
+app.get('/api/musicals/:musicalId/like', (req, res, next) => {
+  const { musicalId } = req.params;
+  const { userId } = req.session;
+  if (isNaN(parseInt(musicalId))) {
+    next(new ClientError('musicalId must be an integer', 400));
+  }
+  const sql = `
+  select *
+  from "likedMusicals"
+  where "userId" = $1 and
+    "musicalId" = $2
+  `;
+  const params = [userId, musicalId];
+  db.query(sql, params)
+    .then(result => {
+      if (result.rows[0]) {
+        res.json(result.rows[0]);
+      } else {
+        const obj = {
+          like: null,
+          musicalId,
+          userId
+        };
+        res.json(obj);
+      }
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/musicals/:musicalId/like', (req, res, next) => {
+  const { musicalId } = req.params;
+  const { userId } = req.session;
   if (isNaN(parseInt(userId))) {
     next(new ClientError('userId must be an integer', 400));
   }
@@ -453,6 +486,33 @@ app.post('/api/musicals/:musicalId/:userId/like', (req, res, next) => {
           })
           .catch(err => next(err));
       }
+    })
+    .catch(err => next(err));
+});
+
+app.delete('/api/musicals/:musicalId/like', (req, res, next) => {
+  const { musicalId } = req.params;
+  const { userId } = req.session;
+  if (isNaN(parseInt(userId))) {
+    next(new ClientError('userId must be an integer', 400));
+  }
+  if (isNaN(parseInt(musicalId))) {
+    next(new ClientError('musicalId must be an integer', 400));
+  }
+  const sql = `
+    delete from "likedMusicals"
+      where "userId" = $1 and
+      "musicalId" = $2
+  `;
+  const params = [userId, musicalId];
+  db.query(sql, params)
+    .then(result => {
+      const obj = {
+        like: null,
+        musicalId,
+        userId
+      };
+      res.json(obj);
     })
     .catch(err => next(err));
 });
