@@ -251,7 +251,7 @@ app.post('/api/questionaire/seeds', (req, res, next) => {
 });
 
 app.get('/api/questionaire/seedMusicals/:userId', (req, res, next) => {
-  const { userId } = req.params;
+  const { userId } = req.session;
   const sql = `
   with "allMatches" as (
   select "om"."title",
@@ -327,7 +327,7 @@ app.post('/api/questionaire/like', (req, res, next) => {
 });
 
 app.get('/api/recommendations/:userId', (req, res, next) => {
-  const { userId } = req.params;
+  const { userId } = req.session;
   if (isNaN(parseInt(userId))) {
     next(new ClientError('userId must be an integer', 400));
   }
