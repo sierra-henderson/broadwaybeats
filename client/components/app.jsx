@@ -43,7 +43,7 @@ export default class App extends React.Component {
         if (data.error) {
           this.setState({
             view: 'questionaire',
-            user: user
+            user: user.username
           });
         } else {
           this.setState({
@@ -56,7 +56,7 @@ export default class App extends React.Component {
 
   addLike(id) {
     if (id) {
-      fetch(`/api/musicals/${id}/${this.state.user.userId}/like`, {
+      fetch(`/api/musicals/${id}/like`, {
         method: 'POST'
       })
         .then(res => res.json());

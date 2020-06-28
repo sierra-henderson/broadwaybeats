@@ -47,11 +47,9 @@ export default class Questionaire extends React.Component {
 
   submitSeeds() {
     const genres = Object.keys(this.state.genre)
-      .filter(id => this.state.genre[id])
-      .map(el => [this.props.user.userId, el]);
+      .filter(id => this.state.genre[id]);
     const musicalStyles = Object.keys(this.state.musicalStyle)
-      .filter(id => this.state.musicalStyle[id])
-      .map(el => [this.props.user.userId, el]);
+      .filter(id => this.state.musicalStyle[id]);
     const obj = {
       genreSeeds: genres,
       musicalStyleSeeds: musicalStyles
@@ -75,8 +73,7 @@ export default class Questionaire extends React.Component {
   }
 
   getLikedMusicals() {
-    const userId = this.props.user.userId;
-    fetch(`/api/questionaire/seedMusicals/${userId}`)
+    fetch('/api/questionaire/seedMusicals/')
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -87,8 +84,7 @@ export default class Questionaire extends React.Component {
 
   addLikedMusicals() {
     const likedMusicals = Object.keys(this.state.likedMusical)
-      .filter(id => this.state.likedMusical[id])
-      .map(el => [this.props.user.userId, el, true]);
+      .filter(id => this.state.likedMusical[id]);
     const obj = {
       likedMusicals: likedMusicals
     };
@@ -108,8 +104,7 @@ export default class Questionaire extends React.Component {
   }
 
   submitQuestionaire() {
-    const userId = this.props.user.userId;
-    fetch(`/api/recommendations/${userId}`)
+    fetch('/api/recommendations/')
       .then(res => res.json())
       .then(data => {
         this.props.setView('recommendation', {}, data);
@@ -153,7 +148,7 @@ export default class Questionaire extends React.Component {
           <div className="questionaire-container">
             <div className="percent-complete"></div>
             <div className="questionaire-initial">
-              <h1>{`Welcome, ${this.props.user.username}!`}</h1>
+              <h1>{`Welcome, ${this.props.user}!`}</h1>
               <p>We would like you to answer a few questions to get your taste in musicals</p>
               <button className="filter-button submit" onClick={() => this.changePage(1)}>Ready?</button>
             </div>

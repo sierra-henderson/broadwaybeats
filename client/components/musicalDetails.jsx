@@ -11,16 +11,6 @@ export default class MusicalDetails extends React.Component {
     this.changePlotView = this.changePlotView.bind(this);
   }
 
-  componentDidMount() {
-    fetch(`/api/musicals/${this.props.musical.musicalId}/related`)
-      .then(res => res.json)
-      .then(data => {
-        this.setState({
-          related: data
-        });
-      });
-  }
-
   changePlotView() {
     this.setState(state => ({
       readMoreOpen: !state.readMoreOpen
