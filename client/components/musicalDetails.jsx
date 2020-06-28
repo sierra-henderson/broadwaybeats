@@ -50,7 +50,7 @@ export default class MusicalDetails extends React.Component {
               <i className="fas fa-plus fa-lg"></i>
               <h5>Add to collection</h5>
             </div>
-            <p onClick={this.changePlotView}>{plot}<span className="read-more-less">Read Less</span></p>
+            <p onClick={this.changePlotView}>{plot}<span className="faded-text">Read Less</span></p>
           </div>
           <div className="music-button-container">
             <button className="play-music">Listen on Apple Music</button>

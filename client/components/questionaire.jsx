@@ -1,21 +1,24 @@
 import React from 'react';
 import QuestionaireCard from './questionaire-card';
-// import QuestionaireMusicalCard from './questionaire-musical-card';
+import QuestionaireMusicalCard from './questionaire-musical-card';
 
 export default class Questionaire extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 4,
+      page: 0,
       genre: {},
       musicalStyle: {},
       likedMusical: {},
-      questionaireMusicals: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+      questionaireMusicals: [],
+      test: null
     };
     this.changePage = this.changePage.bind(this);
     this.recordData = this.recordData.bind(this);
     this.submitSeeds = this.submitSeeds.bind(this);
+    this.submitQuestionaire = this.submitQuestionaire.bind(this);
     this.getLikedMusicals = this.getLikedMusicals.bind(this);
+    this.addLikedMusicals = this.addLikedMusicals.bind(this);
   }
 
   changePage(newPage) {
@@ -62,12 +65,18 @@ export default class Questionaire extends React.Component {
         body: JSON.stringify(obj)
       })
         .then(res => res.json())
-        .then(data => this.getLikedMusicals);
+        .then(data => {
+          this.setState({
+            test: data
+          }, this.getLikedMusicals);
+        })
+        .catch(err => console.error(err));
     }
   }
 
   getLikedMusicals() {
-    fetch(`/api/questionaire/seedMusicals/${this.props.user.userId}`)
+    const userId = this.props.user.userId;
+    fetch(`/api/questionaire/seedMusicals/${userId}`)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -91,8 +100,21 @@ export default class Questionaire extends React.Component {
         },
         body: JSON.stringify(obj)
       })
-        .then(res => res.json());
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          this.changePage(5);
+        });
     }
+  }
+
+  submitQuestionaire() {
+    const userId = this.props.user.userId;
+    fetch(`/api/recommendations/${userId}`)
+      .then(res => res.json())
+      .data(data => {
+        this.props.setView('recommendation', {}, data);
+      });
   }
 
   render() {
@@ -117,7 +139,7 @@ export default class Questionaire extends React.Component {
     const pageThree = [
       { cardId: 15, image: '/images/comedy.jpeg', name: 'Period/Historical', id: 20, category: 'genre' },
       { cardId: 16, image: '/images/drama.jpg', name: 'Religious', id: 21, category: 'genre' },
-      { cardId: 17, image: '/images/mystery.jpg', name: 'Christmas/Ho,liday', id: 6, category: 'genre' },
+      { cardId: 17, image: '/images/mystery.jpg', name: 'Christmas/Holiday', id: 6, category: 'genre' },
       { cardId: 18, image: '/images/drama.jpg', name: 'Experimental', id: 12, category: 'genre' },
       { cardId: 19, image: '/images/drama.jpg', name: 'Dark Comedy', id: 8, category: 'genre' },
       { cardId: 20, image: '/images/drama.jpg', name: 'Revue', id: 22, category: 'genre' },
@@ -207,17 +229,29 @@ export default class Questionaire extends React.Component {
             <div className="percent-complete"></div>
             <div className="complete-bar eighty"></div>
             <div className="inner-questionaire">
-              <div className="page-toggles">
+              <div className="page-toggles align-right">
                 <i className="fas fa-check fa-2x" onClick={this.addLikedMusicals}></i>
               </div>
               <h1>Almost done: pick any musicals you already love!</h1>
               <div className="boxed-cards-container">
-                {/* {
-                  this.state.questionaireMusicals.map(card => {
-                    return <QuestionaireMusicalCard key={card.cardId} isChecked={this.state.likedMusical[musical.musicalId]} musical={musical} recordData={this.recordData} />;
+                {
+                  this.state.questionaireMusicals.map(musical => {
+                    return <QuestionaireMusicalCard key={musical.musicalId} isChecked={this.state.likedMusical[musical.musicalId]} musical={musical} recordData={this.recordData} />;
                   })
-                } */}
+                }
               </div>
+            </div>
+          </div>
+        );
+      case 5:
+        return (
+          <div className="questionaire-container">
+            <div className="percent-complete"></div>
+            <div className="complete-bar hundred"></div>
+            <div className="questionaire-initial">
+              <h1 className="medium">Done!</h1>
+              <i className="big-check fas fa-check-circle"></i>
+              <button className="reset filter-button" onClick={this.submitQuestionaire}>Get my musicals!</button>
             </div>
           </div>
         );

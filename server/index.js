@@ -240,12 +240,12 @@ app.post('/api/questionaire/seeds', (req, res, next) => {
           client.connect();
           return client.query(sql)
             .then(result => {
-              return result.rows;
+              return [result[0].rows, result[1].rows];
             })
             .catch(err => next(err));
         }
       })
-      .then(data => res.json(data))
+      .then(data => res.status(201).json(data))
       .catch(err => next(err));
   }
 });
@@ -320,7 +320,7 @@ app.post('/api/questionaire/like', (req, res, next) => {
     client.connect();
     client.query(sql)
       .then(result => {
-        res.json(result.rows);
+        res.status(201).json(result.rows);
       })
       .catch(err => next(err));
   }
@@ -449,7 +449,7 @@ app.post('/api/musicals/:musicalId/:userId/like', (req, res, next) => {
         `;
         return db.query(sql, params)
           .then(result => {
-            return res.json(result.rows[0]);
+            return res.status(201).json(result.rows[0]);
           })
           .catch(err => next(err));
       }

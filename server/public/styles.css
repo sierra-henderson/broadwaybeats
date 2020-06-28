@@ -6,7 +6,6 @@
 
 .logo {
   font-family: 'Signika';
-
   margin-bottom: 1rem;
 }
 
@@ -132,6 +131,10 @@
   margin-bottom: 2rem;
 }
 
+.align-right {
+  justify-content: flex-end;
+}
+
 .overlay {
   height: 100%;
   width: 100%;
@@ -155,6 +158,63 @@
 
 .musical-questionaire-card.overlay img {
   opacity: 0.4;
+}
+
+.medium {
+  font-weight: 400;
+}
+
+.big-check {
+  color: #D9042B;
+  font-size: 10rem;
+  margin: 1rem;
+}
+
+.column-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.recommendation-image {
+  width: 75vw;
+  max-width: 300px;
+  margin-bottom: 1rem;
+}
+
+.big-icon-group {
+  margin: 1rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.faded-like {
+  color: rgba(217, 4, 43, 0.5);
+  font-size: 4rem;
+  margin-left: 2rem;
+}
+
+.faded-like:hover {
+  color: #D9042B;
+}
+
+.faded-dislike {
+  color: rgba(9, 3, 13, 0.5);
+  font-size: 5rem;
+}
+
+.faded-dislike:hover {
+  color: #09030D;
+}
+
+.faded-text {
+  color: #9A949E;
+}
+
+.faded-text:hover {
+  color: black;
 }
 
 #filterButton {
@@ -364,10 +424,6 @@
   font-size: 1rem;
   padding: 0.3rem 2rem;
   border: none;
-}
-
-.read-more-less {
-  color: #9A949E
 }
 
 .music-button-container {
