@@ -25,6 +25,8 @@ export default class MusicalDetails extends React.Component {
       : this.props.musical.musicBy.includes(this.props.musical.lyricsBy)
         ? this.props.musical.musicBy
         : this.props.musical.musicBy + ', ' + this.props.musical.lyricsBy;
+    const likeClass = this.props.musical.like ? 'like' : 'faded-text';
+    const dislikeClass = this.props.musical.like === false ? 'dislike' : 'faded-text';
     if (this.state.readMoreOpen) {
       return (
         <div>
@@ -33,8 +35,8 @@ export default class MusicalDetails extends React.Component {
             <h2>{this.props.musical.title}</h2>
             <h5>{musicAndLyrics}</h5>
             <div className="icon-group">
-              <i className="fas fa-heart like"></i>
-              <i className="fas fa-times dislike"></i>
+              <i className={`fas fa-heart ${likeClass}`}></i>
+              <i className={`fas fa-times ${dislikeClass}`}></i>
             </div>
             <div className="add-collection">
               <i className="fas fa-plus fa-lg"></i>
