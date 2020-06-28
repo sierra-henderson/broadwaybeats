@@ -39,7 +39,7 @@ export default class SignIn extends React.Component {
       <div className="main-background">
         <div className="sign-in-container">
           <img src="/images/mask.svg" alt=""/>
-          <h1>Broadway Beats</h1>
+          <h1 className="logo">Broadway Beats</h1>
           <h5>Sign up or sign in to get your musical matches!</h5>
           <form onSubmit={this.handleSubmit}>
             <input className="input-rounded" type="text" onChange={this.handleChange} value={this.state.value} placeholder="Please enter a username"/>

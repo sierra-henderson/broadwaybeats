@@ -1,5 +1,7 @@
 require('dotenv/config');
 const express = require('express');
+const pg = require('pg');
+const format = require('pg-format');
 
 const db = require('./database');
 const ClientError = require('./client-error');
@@ -201,6 +203,256 @@ app.post('/api/signup', (req, res, next) => {
     .then(result => {
       req.session.userId = result.userId;
       res.json(result);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/questionaire/seeds', (req, res, next) => {
+  const { genreSeeds, musicalStyleSeeds } = req.body;
+  if (genreSeeds.length === 0 || musicalStyleSeeds.length === 0) {
+    next(new ClientError('You must choose at least one of each category', 400));
+  } else {
+    const sql = `
+    select "userId",
+          "genreId",
+          "musicalStyleId"
+        from "genreSeeds"
+        join "musicalStyleSeeds" using ("userId")
+      where "userId" = $1;
+    `;
+    const params = [genreSeeds[0][0]];
+    db.query(sql, params)
+      .then(result => {
+        if (result.rows.length !== 0) {
+          next(new ClientError(`user with id ${params} already filled out the questionaire`, 400));
+        } else {
+          const sql = format(`
+          insert into "genreSeeds" ("userId", "genreId")
+              values %L
+              returning *;
+          insert into "musicalStyleSeeds" ("userId", "musicalStyleId")
+              values %L
+              returning *
+          `, genreSeeds, musicalStyleSeeds);
+          const client = new pg.Client({
+            connectionString: process.env.DATABASE_URL
+          });
+          client.connect();
+          return client.query(sql)
+            .then(result => {
+              return [result[0].rows, result[1].rows];
+            })
+            .catch(err => next(err));
+        }
+      })
+      .then(data => res.status(201).json(data))
+      .catch(err => next(err));
+  }
+});
+
+app.get('/api/questionaire/seedMusicals/:userId', (req, res, next) => {
+  const { userId } = req.session;
+  const sql = `
+  with "allMatches" as (
+  select "om"."title",
+         "om"."musicalId",
+         "om"."imageUrl",
+         count (distinct "msc"."musicalStyleId") as "matches"
+    from "musicals" as "om"
+    join "musicalStyleCategories" as "msc"
+      on "om"."musicalId" = "msc"."musicalId"
+    join (
+      select "musicalStyleId"
+        from "musicalStyleSeeds"
+       where "musicalStyleSeeds"."userId" = $1
+    ) as "userStyleSeeds"
+      on "userStyleSeeds"."musicalStyleId" = "msc"."musicalStyleId"
+   group by "om"."musicalId"
+  union all
+  select "om"."title",
+         "om"."musicalId",
+         "om"."imageUrl",
+         count (distinct "mg"."genreId") as "matches"
+    from "musicals" as "om"
+    join "musicalGenres" as "mg"
+      on "om"."musicalId" = "mg"."musicalId"
+    join (
+      select "genreId"
+        from "genreSeeds"
+       where "genreSeeds"."userId" = $1
+    ) as "userGenreSeeds"
+      on "userGenreSeeds"."genreId" = "mg"."genreId"
+   group by "om"."musicalId"
+  )
+  select "musicalId",
+         "title",
+         "imageUrl",
+         sum("matches") as "relevance"
+    from "allMatches"
+   group by "musicalId", "title", "imageUrl"
+   order by "relevance" desc
+   limit 30
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      if (result.rows.length === 0) {
+        next(new ClientError(`userlId ${userId} has not provided enough information to get recommendations`, 400));
+      } else {
+        res.json(result.rows);
+      }
+    });
+});
+
+app.post('/api/questionaire/like', (req, res, next) => {
+  const { likedMusicals } = req.body;
+  if (likedMusicals.length === 0) {
+    next(new ClientError('You must like at least one musical', 400));
+  } else {
+    const sql = format(`
+          insert into "likedMusicals" ("userId", "musicalId", "like")
+              values %L
+              returning *;
+          `, likedMusicals);
+    const client = new pg.Client({
+      connectionString: process.env.DATABASE_URL
+    });
+    client.connect();
+    client.query(sql)
+      .then(result => {
+        res.status(201).json(result.rows);
+      })
+      .catch(err => next(err));
+  }
+});
+
+app.get('/api/recommendations/:userId', (req, res, next) => {
+  const { userId } = req.session;
+  if (isNaN(parseInt(userId))) {
+    next(new ClientError('userId must be an integer', 400));
+  }
+  const sql = `
+  with "topCategories" as (
+  select "mt"."tagId" as "id",
+        'tag' as "category",
+        count("mt".*) as "totalInstances"
+    from "likedMusicals" as "lm"
+    join "musicalTags" as "mt" using ("musicalId")
+    where "lm"."userId" = $1
+  group by "mt"."tagId"
+union all
+select "msc"."musicalStyleId" as "id",
+      'musical style' as "category",
+      count("msc".*) as "totalInstances"
+    from "likedMusicals" as "lm"
+    join "musicalStyleCategories" as "msc" using ("musicalId")
+    where "lm"."userId" = $1
+  group by "msc"."musicalStyleId"
+union all
+select "mg"."genreId" as "id",
+      'genre' as "category",
+      count("mg".*) as "totalInstances"
+    from "likedMusicals" as "lm"
+    join "musicalGenres" as "mg" using ("musicalId")
+    where "lm"."userId" = $1
+  group by "mg"."genreId"
+  order by "totalInstances" desc
+    limit 5
+), "matchedByTag" as (
+  select "m"."musicalId",
+         "m"."title",
+         "m"."imageUrl"
+      from "musicals" as "m"
+      join "musicalTags" as "mt" using ("musicalId")
+      join "topCategories" as "tc"
+      on "mt"."tagId" = "tc"."id" and
+        "tc"."category" = 'tag'
+), "matchedByGenre" as (
+  select "m"."musicalId",
+         "m"."title",
+         "m"."imageUrl"
+      from "musicals" as "m"
+      join "musicalGenres" as "mg" using ("musicalId")
+      join "topCategories" as "tc"
+      on "mg"."genreId" = "tc"."id" and
+        "tc"."category" = 'genre'
+), "matchedByMusicalStyle" as (
+  select "m"."musicalId",
+         "m"."title",
+         "m"."imageUrl"
+      from "musicals" as "m"
+      join "musicalStyleCategories" as "msc" using ("musicalId")
+      join "topCategories" as "tc"
+      on "msc"."musicalStyleId" = "tc"."id" and
+        "tc"."category" = 'musical style'
+), "allMatches" as (
+  select *
+    from "matchedByTag"
+  union all
+  select *
+    from "matchedByGenre"
+  union all
+  select *
+    from "matchedByMusicalStyle"
+)
+select "am"."musicalId",
+       "am"."title",
+       "am"."imageUrl",
+       count(*) as "relevance"
+  from "allMatches" as "am"
+  where "am"."musicalId" not in (
+    select "musicalId"
+      from "likedMusicals"
+      where "userId" = $1
+  )
+ group by "am"."musicalId", "am"."title", "am"."imageUrl"
+ order by "relevance" desc
+ limit 20
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      if (result.rows.length === 0) {
+        next(new ClientError('You must like at least one musical to get recommendations', 400));
+      } else {
+        res.json(result.rows);
+      }
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/musicals/:musicalId/:userId/like', (req, res, next) => {
+  const { userId, musicalId } = req.params;
+  if (isNaN(parseInt(userId))) {
+    next(new ClientError('userId must be an integer', 400));
+  }
+  if (isNaN(parseInt(musicalId))) {
+    next(new ClientError('musicalId must be an integer', 400));
+  }
+  const sql = `
+  select *
+  from "likedMusicals"
+  where "userId" = $1 and
+    "musicalId" = $2 and
+    "like" = true
+  `;
+  const params = [userId, musicalId];
+  db.query(sql, params)
+    .then(result => {
+      if (result.rows.length > 0) {
+        next(new ClientError(`Musical with id ${musicalId} has already been liked by user with id ${userId}`, 400));
+      } else {
+        const sql = `
+        insert into "likedMusicals" ("userId", "musicalId", "like")
+        values ($1, $2, true)
+        returning *
+        `;
+        return db.query(sql, params)
+          .then(result => {
+            return res.status(201).json(result.rows[0]);
+          })
+          .catch(err => next(err));
+      }
     })
     .catch(err => next(err));
 });

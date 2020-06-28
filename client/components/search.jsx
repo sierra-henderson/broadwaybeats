@@ -62,7 +62,7 @@ export default class Search extends React.Component {
           <div>
             <TopNav />
             <div className="search-and-filter">
-              <input type="text" name="" id="searchBar" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
+              <input type="text" name="" className="input-rounded" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
               <button id="filterButton" onClick={this.toggleFilter}>Filter</button>
             </div>
             <div className="search-results">
@@ -76,7 +76,7 @@ export default class Search extends React.Component {
           <div>
             <TopNav />
             <div className="search-and-filter">
-              <input type="text" name="" id="searchBar" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
+              <input type="text" name="" className="input-rounded" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
               <button id="filterButton" onClick={this.toggleFilter}>Filter</button>
             </div>
             <div className="search-results">
@@ -90,10 +90,10 @@ export default class Search extends React.Component {
           <div>
             <TopNav />
             <div className="search-and-filter">
-              <input type="text" name="" className="input-rounded" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
+              <input className="input-rounded" type="text" name="" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
               <button id="filterButton" onClick={this.toggleFilter}>Filter</button>
             </div>
-            <div className="search-results">
+            <div className="boxed-cards-container">
               {
                 this.state.musicals.map(musical => {
                   return <BoxedCard setView={this.props.setView} key={musical.musicalId} musical={musical} />;

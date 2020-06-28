@@ -18,18 +18,28 @@ SET row_security = off;
 
 ALTER TABLE ONLY public."musicalTags" DROP CONSTRAINT "musicalTags_tagId_fkey";
 ALTER TABLE ONLY public."musicalTags" DROP CONSTRAINT "musicalTags_musicalId_fkey";
+ALTER TABLE ONLY public."musicalStyleSeeds" DROP CONSTRAINT "musicalStyleSeeds_userId_fkey";
+ALTER TABLE ONLY public."musicalStyleSeeds" DROP CONSTRAINT "musicalStyleSeeds_musicalStyleId_fkey";
 ALTER TABLE ONLY public."musicalStyleCategories" DROP CONSTRAINT "musicalStyleCategories_musicalStyleId_fkey";
 ALTER TABLE ONLY public."musicalStyleCategories" DROP CONSTRAINT "musicalStyleCategories_musicalId_fkey";
 ALTER TABLE ONLY public."musicalGenres" DROP CONSTRAINT "musicalGenres_musicalId_fkey";
 ALTER TABLE ONLY public."musicalGenres" DROP CONSTRAINT "musicalGenres_genreId_fkey";
+ALTER TABLE ONLY public."likedMusicals" DROP CONSTRAINT "likedMusicals_userId_fkey";
+ALTER TABLE ONLY public."likedMusicals" DROP CONSTRAINT "likedMusicals_musicalId_fkey";
+ALTER TABLE ONLY public."genreSeeds" DROP CONSTRAINT "genreSeeds_userId_fkey";
+ALTER TABLE ONLY public."genreSeeds" DROP CONSTRAINT "genreSeeds_genreId_fkey";
+ALTER TABLE ONLY public.users DROP CONSTRAINT users_pkey;
 ALTER TABLE ONLY public.tags DROP CONSTRAINT tags_pkey;
 ALTER TABLE ONLY public.musicals DROP CONSTRAINT musicals_pkey;
 ALTER TABLE ONLY public."musicalStyles" DROP CONSTRAINT "musicalStyles_pkey";
 ALTER TABLE ONLY public.genres DROP CONSTRAINT genres_pkey;
+ALTER TABLE public.users ALTER COLUMN "userId" DROP DEFAULT;
 ALTER TABLE public.tags ALTER COLUMN "tagId" DROP DEFAULT;
 ALTER TABLE public.musicals ALTER COLUMN "musicalId" DROP DEFAULT;
 ALTER TABLE public."musicalStyles" ALTER COLUMN "musicalStyleId" DROP DEFAULT;
 ALTER TABLE public.genres ALTER COLUMN "genreId" DROP DEFAULT;
+DROP SEQUENCE public."users_userId_seq";
+DROP TABLE public.users;
 DROP SEQUENCE public."tags_tagId_seq";
 DROP TABLE public.tags;
 DROP SEQUENCE public."musicals_musicalId_seq";
@@ -37,10 +47,13 @@ DROP TABLE public.musicals;
 DROP TABLE public."musicalTags";
 DROP SEQUENCE public."musicalStyles_musicalStyleId_seq";
 DROP TABLE public."musicalStyles";
+DROP TABLE public."musicalStyleSeeds";
 DROP TABLE public."musicalStyleCategories";
 DROP TABLE public."musicalGenres";
+DROP TABLE public."likedMusicals";
 DROP SEQUENCE public."genres_genreId_seq";
 DROP TABLE public.genres;
+DROP TABLE public."genreSeeds";
 DROP EXTENSION unaccent;
 DROP EXTENSION plpgsql;
 DROP SCHEMA public;
@@ -91,6 +104,16 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: genreSeeds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public."genreSeeds" (
+    "userId" integer,
+    "genreId" integer
+);
+
+
+--
 -- Name: genres; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -121,6 +144,16 @@ ALTER SEQUENCE public."genres_genreId_seq" OWNED BY public.genres."genreId";
 
 
 --
+-- Name: likedMusicals; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public."likedMusicals" (
+    "userId" integer,
+    "musicalId" integer
+);
+
+
+--
 -- Name: musicalGenres; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -136,6 +169,16 @@ CREATE TABLE public."musicalGenres" (
 
 CREATE TABLE public."musicalStyleCategories" (
     "musicalId" integer,
+    "musicalStyleId" integer
+);
+
+
+--
+-- Name: musicalStyleSeeds; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public."musicalStyleSeeds" (
+    "userId" integer,
     "musicalStyleId" integer
 );
 
@@ -246,6 +289,36 @@ ALTER SEQUENCE public."tags_tagId_seq" OWNED BY public.tags."tagId";
 
 
 --
+-- Name: users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.users (
+    "userId" integer NOT NULL,
+    username text NOT NULL
+);
+
+
+--
+-- Name: users_userId_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public."users_userId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: users_userId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public."users_userId_seq" OWNED BY public.users."userId";
+
+
+--
 -- Name: genres genreId; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -271,6 +344,23 @@ ALTER TABLE ONLY public.musicals ALTER COLUMN "musicalId" SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.tags ALTER COLUMN "tagId" SET DEFAULT nextval('public."tags_tagId_seq"'::regclass);
+
+
+--
+-- Name: users userId; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN "userId" SET DEFAULT nextval('public."users_userId_seq"'::regclass);
+
+
+--
+-- Data for Name: genreSeeds; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public."genreSeeds" ("userId", "genreId") FROM stdin;
+2	7
+2	14
+\.
 
 
 --
@@ -305,6 +395,14 @@ COPY public.genres ("genreId", name) FROM stdin;
 25	Satire
 26	Science Fiction
 27	Theatre for Young Audiences
+\.
+
+
+--
+-- Data for Name: likedMusicals; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public."likedMusicals" ("userId", "musicalId") FROM stdin;
 \.
 
 
@@ -2388,6 +2486,16 @@ COPY public."musicalStyleCategories" ("musicalId", "musicalStyleId") FROM stdin;
 
 
 --
+-- Data for Name: musicalStyleSeeds; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public."musicalStyleSeeds" ("userId", "musicalStyleId") FROM stdin;
+2	17
+2	8
+\.
+
+
+--
 -- Data for Name: musicalStyles; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -4073,6 +4181,20 @@ COPY public.tags ("tagId", name) FROM stdin;
 
 
 --
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.users ("userId", username) FROM stdin;
+1	sierra
+2	testuser
+3	anothertestuser
+4	bob
+5	sam
+12	testing
+\.
+
+
+--
 -- Name: genres_genreId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -4098,6 +4220,13 @@ SELECT pg_catalog.setval('public."musicals_musicalId_seq"', 1, false);
 --
 
 SELECT pg_catalog.setval('public."tags_tagId_seq"', 1, false);
+
+
+--
+-- Name: users_userId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."users_userId_seq"', 12, true);
 
 
 --
@@ -4133,6 +4262,46 @@ ALTER TABLE ONLY public.tags
 
 
 --
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY ("userId");
+
+
+--
+-- Name: genreSeeds genreSeeds_genreId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."genreSeeds"
+    ADD CONSTRAINT "genreSeeds_genreId_fkey" FOREIGN KEY ("genreId") REFERENCES public.genres("genreId");
+
+
+--
+-- Name: genreSeeds genreSeeds_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."genreSeeds"
+    ADD CONSTRAINT "genreSeeds_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users("userId");
+
+
+--
+-- Name: likedMusicals likedMusicals_musicalId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."likedMusicals"
+    ADD CONSTRAINT "likedMusicals_musicalId_fkey" FOREIGN KEY ("musicalId") REFERENCES public.musicals("musicalId");
+
+
+--
+-- Name: likedMusicals likedMusicals_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."likedMusicals"
+    ADD CONSTRAINT "likedMusicals_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users("userId");
+
+
+--
 -- Name: musicalGenres musicalGenres_genreId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -4162,6 +4331,22 @@ ALTER TABLE ONLY public."musicalStyleCategories"
 
 ALTER TABLE ONLY public."musicalStyleCategories"
     ADD CONSTRAINT "musicalStyleCategories_musicalStyleId_fkey" FOREIGN KEY ("musicalStyleId") REFERENCES public."musicalStyles"("musicalStyleId");
+
+
+--
+-- Name: musicalStyleSeeds musicalStyleSeeds_musicalStyleId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."musicalStyleSeeds"
+    ADD CONSTRAINT "musicalStyleSeeds_musicalStyleId_fkey" FOREIGN KEY ("musicalStyleId") REFERENCES public."musicalStyles"("musicalStyleId");
+
+
+--
+-- Name: musicalStyleSeeds musicalStyleSeeds_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."musicalStyleSeeds"
+    ADD CONSTRAINT "musicalStyleSeeds_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users("userId");
 
 
 --
