@@ -271,14 +271,13 @@ iframe {
 }
 
 .related {
-  margin: 1.25rem
+  margin: 1.25rem 0 0 0.5rem;
 }
 
 .scroll-bar {
   width: 100vw;
   display: flex;
   overflow-x: auto;
-  margin-bottom: 50px;
 }
 
 .card h4 {
@@ -445,4 +444,13 @@ iframe {
 
 .sign-up {
   width: 40vw;
+}
+
+.card-box {
+  height: 158px;
+}
+
+.musical-details-container,
+.home-container {
+  margin-bottom: 50px;
 }

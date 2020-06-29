@@ -68,7 +68,7 @@ export default class Search extends React.Component {
             <div className="search-results">
               <h3>Please search using the search bar or filter button.</h3>
             </div>
-            <BottomNav setView={this.props.setView} />
+            <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} />
           </div>
         );
       } else if (this.state.musicals.length === 0) {
@@ -82,7 +82,7 @@ export default class Search extends React.Component {
             <div className="search-results">
               <h3>There are no musicals that match your query.</h3>
             </div>
-            <BottomNav setView={this.props.setView}/>
+            <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView}/>
           </div>
         );
       } else {
@@ -100,7 +100,7 @@ export default class Search extends React.Component {
                 })
               }
             </div>
-            <BottomNav setView={this.props.setView}/>
+            <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView}/>
           </div>
         );
       }

@@ -10,8 +10,7 @@ export default class Recommendation extends React.Component {
 
   nextMusical(type, id) {
     if (this.state.index === this.props.musicals.length - 1) {
-      // Temporary until home page made
-      this.props.setView('search', {}, []);
+      this.props.getAllRecommendations();
     } else {
       if (type === 'like') {
         this.props.addLike(id);
