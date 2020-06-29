@@ -61,35 +61,37 @@ export default class MusicalDetails extends React.Component {
               sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
               src={musicUrl}></iframe>
           </div>
-          <ScrollingBar setView={this.props.setView} related={this.props.related} />
-          <BottomNav setView={this.props.setView} />
+          <ScrollingBar setView={this.props.setView} related={this.props.related} header="Related"/>
+          <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} />
         </div>
       );
     } else {
       return (
         <div>
-          <div className="info-container">
-            <img className="details-image" src={this.props.musical.imageUrl} alt="" />
-            <h2>{this.props.musical.title}</h2>
-            <h5>{musicAndLyrics}</h5>
-            <div className="icon-group">
-              <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
-              <i className={`fas fa-times ${dislikeClass}`}></i>
+          <div className="musical-details-container">
+            <div className="info-container">
+              <img className="details-image" src={this.props.musical.imageUrl} alt="" />
+              <h2>{this.props.musical.title}</h2>
+              <h5>{musicAndLyrics}</h5>
+              <div className="icon-group">
+                <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
+                <i className={`fas fa-times ${dislikeClass}`}></i>
+              </div>
+              <div className="add-collection">
+                <i className="fas fa-plus fa-lg"></i>
+                <h5>Add to collection</h5>
+              </div>
+              <p onClick={this.changePlotView}>{plot}<span className="read-more-less">Read More</span></p>
             </div>
-            <div className="add-collection">
-              <i className="fas fa-plus fa-lg"></i>
-              <h5>Add to collection</h5>
+            <div className="music-button-container">
+              <button className="play-music">Listen on Apple Music</button>
+              <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
+                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+                src={musicUrl}></iframe>
             </div>
-            <p onClick={this.changePlotView}>{plot}<span className="read-more-less">Read More</span></p>
+            <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
           </div>
-          <div className="music-button-container">
-            <button className="play-music">Listen on Apple Music</button>
-            <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-              src={musicUrl}></iframe>
-          </div>
-          <ScrollingBar setView={this.props.setView} related={this.props.related}/>
-          <BottomNav setView={this.props.setView} />
+          <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} />
         </div>
       );
     }

@@ -4,12 +4,13 @@ import MusicalDetails from './musicalDetails';
 import SignIn from './signin';
 import Questionaire from './questionaire';
 import Recommnendation from './recommendation';
+import Home from './home';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'search',
+      view: 'signin',
       params: {},
       related: [],
       user: {},
@@ -19,10 +20,11 @@ export default class App extends React.Component {
     this.loginUser = this.loginUser.bind(this);
     this.addLike = this.addLike.bind(this);
     this.deleteLike = this.deleteLike.bind(this);
+    this.getAllRecommendations = this.getAllRecommendations.bind(this);
   }
 
   setView(view, params, related) {
-    if (view === 'recommendation') {
+    if (view === 'recommendation' || view === 'home') {
       this.setState({
         view: view,
         params: params,
@@ -38,7 +40,7 @@ export default class App extends React.Component {
   }
 
   loginUser(user) {
-    fetch(`/api/recommendations/${user.userId}`)
+    fetch('/api/recommendations/')
       .then(res => res.json())
       .then(data => {
         if (data.error) {
@@ -48,9 +50,8 @@ export default class App extends React.Component {
           });
         } else {
           this.setState({
-            view: 'search',
-            user: user
-          });
+            user: user.username
+          }, this.getAllRecommendations);
         }
       });
   }
@@ -89,6 +90,12 @@ export default class App extends React.Component {
     }
   }
 
+  getAllRecommendations() {
+    fetch('/api/home')
+      .then(res => res.json())
+      .then(data => this.setView('home', {}, data));
+  }
+
   componentDidMount() {
     fetch('/api/health-check')
       .then(res => res.json())
@@ -102,13 +109,15 @@ export default class App extends React.Component {
       ? <SignIn loginUser={this.loginUser}/>
       : this.state.view === 'questionaire'
         ? <Questionaire setView={this.setView} user={this.state.user} />
-        : this.state.view === 'search'
-          ? <Search setView={this.setView}/>
-          : this.state.view === 'details'
-            ? <MusicalDetails setView={this.setView} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike}/>
-            : this.state.view === 'recommendation'
-              ? <Recommnendation setView={this.setView} musicals={this.state.recommended} addLike={this.addLike}/>
-              : <h1>TBD</h1>;
+        : this.state.view === 'home'
+          ? <Home setView={this.setView} getAllRecommendations={this.getAllRecommendations} musicalList={this.state.recommended}/>
+          : this.state.view === 'search'
+            ? <Search setView={this.setView} getAllRecommendations={this.getAllRecommendations}/>
+            : this.state.view === 'details'
+              ? <MusicalDetails setView={this.setView} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} getAllRecommendations={this.getAllRecommendations}/>
+              : this.state.view === 'recommendation'
+                ? <Recommnendation setView={this.setView} musicals={this.state.recommended} addLike={this.addLike} getAllRecommendations={this.getAllRecommendations}/>
+                : <h1>TBD</h1>;
     return (appView);
   }
 }

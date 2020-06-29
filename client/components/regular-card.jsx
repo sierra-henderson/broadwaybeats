@@ -22,7 +22,9 @@ export default class RegularCard extends React.Component {
     // const musicalTitle = this.props.musical.title.length > 15 ? this.props.musical.title.substring(0, 14) + '...' : this.props.musical.title;
     return (
       <div className="unboxed" onClick={this.getDetails}>
-        <img className="card-image unboxed" src={this.props.musical.imageUrl} alt="" />
+        <div className="card-box">
+          <img className="card-image unboxed" src={this.props.musical.imageUrl} alt="" />
+        </div>
         <h4>{this.props.musical.title}</h4>
       </div>
     );
