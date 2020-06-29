@@ -256,6 +256,14 @@
   border-bottom: 1px solid #c4c4c4;
 }
 
+iframe {
+  width:80%;
+  max-width:660px;
+  overflow:hidden;
+  background:transparent;
+  margin-top: 1.25rem;
+}
+
 .unboxed {
   width: 150px;
   margin: 0.5rem;
