@@ -104,7 +104,7 @@ export default class Questionaire extends React.Component {
   }
 
   submitQuestionaire() {
-    fetch('/api/recommendations/')
+    fetch('/api/recommendations')
       .then(res => res.json())
       .then(data => {
         this.props.setView('recommendation', {}, data);

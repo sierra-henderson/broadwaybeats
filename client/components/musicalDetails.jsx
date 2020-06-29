@@ -36,6 +36,7 @@ export default class MusicalDetails extends React.Component {
         : this.props.musical.musicBy + ', ' + this.props.musical.lyricsBy;
     const likeClass = this.props.musical.like ? 'like' : '';
     const dislikeClass = this.props.musical.like === false ? 'dislike' : '';
+    const musicUrl = this.props.musical.musicUrl.replace('https://music.apple.com/', 'https://embed.music.apple.com/');
     if (this.state.readMoreOpen) {
       return (
         <div>
@@ -55,6 +56,10 @@ export default class MusicalDetails extends React.Component {
           </div>
           <div className="music-button-container">
             <button className="play-music">Listen on Apple Music</button>
+            <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
+              style="width:100%;max-width:660px;overflow:hidden;background:transparent;"
+              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+              src={musicUrl}></iframe>
           </div>
           <ScrollingBar setView={this.props.setView} related={this.props.related} />
           <BottomNav setView={this.props.setView} />
@@ -79,6 +84,9 @@ export default class MusicalDetails extends React.Component {
           </div>
           <div className="music-button-container">
             <button className="play-music">Listen on Apple Music</button>
+            <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
+              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+              src={musicUrl}></iframe>
           </div>
           <ScrollingBar setView={this.props.setView} related={this.props.related}/>
           <BottomNav setView={this.props.setView} />
