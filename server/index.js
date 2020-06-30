@@ -891,6 +891,27 @@ select "am"."musicalId",
     .catch(err => next(err));
 });
 
+app.post('/api/collection', (req, res, next) => {
+  const { userId } = req.session;
+  const { collectionName } = req.body;
+  if (isNaN(parseInt(userId))) {
+    next(new ClientError('userId must be an integer', 400));
+  }
+  if (collectionName === '' || collectionName === ' ') {
+    next(new ClientError('The collection must be given a name', 400));
+  }
+  const sql = `
+    insert into "collections" ("collectionId", "userId", "imageUrl", "name")
+    values (default, $1, '/images/empty-collection.png', $2)
+    returning *;
+  `;
+  const params = [userId, collectionName];
+  db.query(sql, params)
+    .then(result => {
+      res.status(204).json();
+    });
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
