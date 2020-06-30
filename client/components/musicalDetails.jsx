@@ -7,13 +7,21 @@ export default class MusicalDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: '',
       readMoreOpen: false,
-      addCollectionOpen: false
+      addCollectionOpen: false,
+      newCollectionButton: false
     };
     this.changePlotView = this.changePlotView.bind(this);
     this.handleLike = this.handleLike.bind(this);
     this.handleAddCollection = this.handleAddCollection.bind(this);
+    this.handleCollectionClick = this.handleCollectionClick.bind(this);
+    this.addToCollection = this.addToCollection.bind(this);
+    this.openButtonModal = this.openButtonModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleReset = this.handleReset.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   changePlotView() {
@@ -36,10 +44,56 @@ export default class MusicalDetails extends React.Component {
     }, () => this.props.getAllCollections(false));
   }
 
+  addToCollection(musicalId, collectionName, numMusicals) {
+    const obj = {
+      collectionName,
+      numMusicals
+    };
+    fetch(`/api/collections/${musicalId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(obj)
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.closeModal();
+      });
+  }
+
+  handleChange(event) {
+    this.setState({
+      value: event.target.value
+    });
+  }
+
   closeModal() {
     this.setState({
       addCollectionOpen: false
     });
+  }
+
+  openButtonModal() {
+    this.setState({
+      newCollectionButton: true
+    });
+  }
+
+  handleReset(event) {
+    event.preventDefault();
+    this.setState({
+      newCollectionButton: false
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.addToCollection(this.props.musical.musicalId, this.state.value, 'n/a');
+  }
+
+  handleCollectionClick(collection) {
+    this.addToCollection(this.props.musical.musicalId, collection.name, collection.numMusicals);
   }
 
   render() {
@@ -53,6 +107,7 @@ export default class MusicalDetails extends React.Component {
     const likeClass = this.props.musical.like ? 'like' : '';
     const dislikeClass = this.props.musical.like === false ? 'dislike' : '';
     const musicUrl = this.props.musical.musicUrl.replace('https://music.apple.com/', 'https://embed.music.apple.com/');
+    const newCollectionVisible = !this.state.newCollectionButton ? 'hidden' : '';
     if (this.state.readMoreOpen && this.state.addCollectionOpen) {
       return (
         <div>
@@ -73,7 +128,6 @@ export default class MusicalDetails extends React.Component {
           <div className="music-button-container">
             <button className="play-music">Listen on Apple Music</button>
             <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-              style="width:100%;max-width:660px;overflow:hidden;background:transparent;"
               sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
               src={musicUrl}></iframe>
           </div>
@@ -84,13 +138,25 @@ export default class MusicalDetails extends React.Component {
               <i id="closeModalButton" className="fas fa-times" onClick={this.closeModal}></i>
               <h3>Add to Collections</h3>
               <div className="center">
-                <button className="filter-button add-to-collection-button">New Collection</button>
+                <button className="filter-button add-to-collection-button" onClick={this.openButtonModal}>New Collection</button>
               </div>
               {
                 this.props.collections.map(collection => {
-                  return <CollectionCard key={collection.collectionId} collection={collection} />;
+                  return <CollectionCard callback={this.handleCollectionClick} key={collection.collectionId} collection={collection} />;
                 })
               }
+            </div>
+          </div>
+          <div className={`modal-overlay button-modal ${newCollectionVisible}`}>
+            <div className="button-modal-content">
+              <h2>New Collection</h2>
+              <form onSubmit={this.handleSubmit} onReset={this.handleReset}>
+                <input type="text" className="add-collection-input" placeholder="Collection Name" value={this.state.value} onChange={this.handleChange} />
+                <div className="button-group collection">
+                  <button className="reset filter-button" type="reset">Cancel</button>
+                  <button className="submit filter-button" type="submit">Confirm</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -183,13 +249,25 @@ export default class MusicalDetails extends React.Component {
               <i id="closeModalButton" className="fas fa-times" onClick={this.closeModal}></i>
               <h3>Add to Collections</h3>
               <div className="center">
-                <button className="filter-button add-to-collection-button">New Collection</button>
+                <button className="filter-button add-to-collection-button" onClick={this.openButtonModal}>New Collection</button>
               </div>
               {
                 this.props.collections.map(collection => {
-                  return <CollectionCard key={collection.collectionId} collection={collection} />;
+                  return <CollectionCard callback={this.handleCollectionClick} key={collection.collectionId} collection={collection} />;
                 })
               }
+            </div>
+          </div>
+          <div className={`modal-overlay button-modal ${newCollectionVisible}`}>
+            <div className="button-modal-content">
+              <h2>New Collection</h2>
+              <form onSubmit={this.handleSubmit}>
+                <input type="text" className="add-collection-input" placeholder="Collection Name" value={this.state.value} onChange={this.handleChange} />
+                <div className="button-group collection">
+                  <button className="reset filter-button" onClick={this.handleReset}>Cancel</button>
+                  <button className="submit filter-button" type="submit">Confirm</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

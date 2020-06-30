@@ -998,7 +998,7 @@ app.post('/api/collections/:musicalId', (req, res, next) => {
         });
     })
     .then(result => {
-      res.status(204).json(result);
+      res.json(result);
     })
     .catch(err => next(err));
 });
