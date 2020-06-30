@@ -28,16 +28,21 @@ ALTER TABLE ONLY public."likedMusicals" DROP CONSTRAINT "likedMusicals_userId_fk
 ALTER TABLE ONLY public."likedMusicals" DROP CONSTRAINT "likedMusicals_musicalId_fkey";
 ALTER TABLE ONLY public."genreSeeds" DROP CONSTRAINT "genreSeeds_userId_fkey";
 ALTER TABLE ONLY public."genreSeeds" DROP CONSTRAINT "genreSeeds_genreId_fkey";
+ALTER TABLE ONLY public.collections DROP CONSTRAINT "collections_userId_fkey";
+ALTER TABLE ONLY public."collectionItems" DROP CONSTRAINT "collectionItems_musicalId_fkey";
+ALTER TABLE ONLY public."collectionItems" DROP CONSTRAINT "collectionItems_collectionId_fkey";
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_pkey;
 ALTER TABLE ONLY public.tags DROP CONSTRAINT tags_pkey;
 ALTER TABLE ONLY public.musicals DROP CONSTRAINT musicals_pkey;
 ALTER TABLE ONLY public."musicalStyles" DROP CONSTRAINT "musicalStyles_pkey";
 ALTER TABLE ONLY public.genres DROP CONSTRAINT genres_pkey;
+ALTER TABLE ONLY public.collections DROP CONSTRAINT collections_pkey;
 ALTER TABLE public.users ALTER COLUMN "userId" DROP DEFAULT;
 ALTER TABLE public.tags ALTER COLUMN "tagId" DROP DEFAULT;
 ALTER TABLE public.musicals ALTER COLUMN "musicalId" DROP DEFAULT;
 ALTER TABLE public."musicalStyles" ALTER COLUMN "musicalStyleId" DROP DEFAULT;
 ALTER TABLE public.genres ALTER COLUMN "genreId" DROP DEFAULT;
+ALTER TABLE public.collections ALTER COLUMN "collectionId" DROP DEFAULT;
 DROP SEQUENCE public."users_userId_seq";
 DROP TABLE public.users;
 DROP SEQUENCE public."tags_tagId_seq";
@@ -54,6 +59,9 @@ DROP TABLE public."likedMusicals";
 DROP SEQUENCE public."genres_genreId_seq";
 DROP TABLE public.genres;
 DROP TABLE public."genreSeeds";
+DROP SEQUENCE public."collections_collectionId_seq";
+DROP TABLE public.collections;
+DROP TABLE public."collectionItems";
 DROP EXTENSION unaccent;
 DROP EXTENSION plpgsql;
 DROP SCHEMA public;
@@ -104,6 +112,48 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: collectionItems; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public."collectionItems" (
+    "collectionId" integer,
+    "musicalId" integer
+);
+
+
+--
+-- Name: collections; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.collections (
+    "collectionId" integer NOT NULL,
+    "userId" integer,
+    name text NOT NULL,
+    "imageUrl" text NOT NULL
+);
+
+
+--
+-- Name: collections_collectionId_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public."collections_collectionId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: collections_collectionId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public."collections_collectionId_seq" OWNED BY public.collections."collectionId";
+
+
+--
 -- Name: genreSeeds; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -149,7 +199,8 @@ ALTER SEQUENCE public."genres_genreId_seq" OWNED BY public.genres."genreId";
 
 CREATE TABLE public."likedMusicals" (
     "userId" integer,
-    "musicalId" integer
+    "musicalId" integer,
+    "like" boolean NOT NULL
 );
 
 
@@ -319,6 +370,13 @@ ALTER SEQUENCE public."users_userId_seq" OWNED BY public.users."userId";
 
 
 --
+-- Name: collections collectionId; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collections ALTER COLUMN "collectionId" SET DEFAULT nextval('public."collections_collectionId_seq"'::regclass);
+
+
+--
 -- Name: genres genreId; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -354,12 +412,40 @@ ALTER TABLE ONLY public.users ALTER COLUMN "userId" SET DEFAULT nextval('public.
 
 
 --
+-- Data for Name: collectionItems; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public."collectionItems" ("collectionId", "musicalId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: collections; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.collections ("collectionId", "userId", name, "imageUrl") FROM stdin;
+5	5	Test Collection	/images/empty-collection.png
+6	5	Another Collection	/images/empty-collection.png
+7	5	One More	/images/empty-collection.png
+\.
+
+
+--
 -- Data for Name: genreSeeds; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."genreSeeds" ("userId", "genreId") FROM stdin;
 2	7
 2	14
+4	4
+4	18
+4	20
+3	10
+3	15
+3	20
+5	3
+5	4
+5	15
 \.
 
 
@@ -402,7 +488,43 @@ COPY public.genres ("genreId", name) FROM stdin;
 -- Data for Name: likedMusicals; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public."likedMusicals" ("userId", "musicalId") FROM stdin;
+COPY public."likedMusicals" ("userId", "musicalId", "like") FROM stdin;
+4	9	t
+4	63	t
+4	101	t
+2	227	t
+2	66	t
+2	74	t
+2	55	t
+2	81	t
+2	184	t
+4	446	t
+4	269	t
+4	35	t
+4	422	t
+4	132	t
+4	426	t
+3	101	t
+3	159	t
+3	192	t
+3	222	t
+3	253	t
+3	397	t
+3	435	t
+3	80	t
+3	384	t
+3	339	t
+5	114	t
+5	303	t
+5	315	t
+5	139	t
+5	135	t
+5	387	t
+5	293	t
+5	253	t
+5	246	t
+5	52	t
+5	55	t
 \.
 
 
@@ -2492,6 +2614,11 @@ COPY public."musicalStyleCategories" ("musicalId", "musicalStyleId") FROM stdin;
 COPY public."musicalStyleSeeds" ("userId", "musicalStyleId") FROM stdin;
 2	17
 2	8
+4	11
+4	12
+3	7
+3	12
+5	8
 \.
 
 
@@ -4195,6 +4322,13 @@ COPY public.users ("userId", username) FROM stdin;
 
 
 --
+-- Name: collections_collectionId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."collections_collectionId_seq"', 7, true);
+
+
+--
 -- Name: genres_genreId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -4227,6 +4361,14 @@ SELECT pg_catalog.setval('public."tags_tagId_seq"', 1, false);
 --
 
 SELECT pg_catalog.setval('public."users_userId_seq"', 12, true);
+
+
+--
+-- Name: collections collections_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collections
+    ADD CONSTRAINT collections_pkey PRIMARY KEY ("collectionId");
 
 
 --
@@ -4267,6 +4409,30 @@ ALTER TABLE ONLY public.tags
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY ("userId");
+
+
+--
+-- Name: collectionItems collectionItems_collectionId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."collectionItems"
+    ADD CONSTRAINT "collectionItems_collectionId_fkey" FOREIGN KEY ("collectionId") REFERENCES public.collections("collectionId");
+
+
+--
+-- Name: collectionItems collectionItems_musicalId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."collectionItems"
+    ADD CONSTRAINT "collectionItems_musicalId_fkey" FOREIGN KEY ("musicalId") REFERENCES public.musicals("musicalId");
+
+
+--
+-- Name: collections collections_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.collections
+    ADD CONSTRAINT "collections_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users("userId");
 
 
 --
