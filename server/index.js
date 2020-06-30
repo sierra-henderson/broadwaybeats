@@ -1008,6 +1008,7 @@ app.get('/api/collections', (req, res, next) => {
   const sql = `
     select "c"."name",
            "c"."collectionId",
+           "c"."imageUrl",
            count("ci"."musicalId") as "numMusicals"
       from "collections" as "c"
       left join "collectionItems" as "ci" using ("collectionId")
