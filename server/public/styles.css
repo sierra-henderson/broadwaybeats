@@ -491,11 +491,23 @@ iframe {
   width: 80px;
 }
 
+.collection-item-image {
+  width: 100px;
+}
+
+.collection-item-paragraph {
+  margin-bottom: 0.5rem;
+}
+
 .collection-card-text {
   margin-left: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.pointer-icon {
+  margin-right: 0.5rem;
 }
 
 .musical-details-container,
