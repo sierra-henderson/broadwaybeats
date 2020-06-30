@@ -91,7 +91,7 @@ export default class MusicalDetails extends React.Component {
             </div>
             <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
           </div>
-          <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} />
+          <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
         </div>
       );
     }

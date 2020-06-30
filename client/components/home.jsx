@@ -19,7 +19,7 @@ export default class Home extends React.Component {
             })
           }
         </div>
-        <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} />
+        <BottomNav getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} setView={this.props.setView} />
       </div>
     );
   }
