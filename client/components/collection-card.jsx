@@ -9,7 +9,7 @@ export default class CollectionCard extends React.Component {
       ? `${this.props.collection.numMusicals} album`
       : `${this.props.collection.numMusicals} albums`;
     return (
-      <div className="collection-card-container">
+      <div className="collection-card-container" onClick={() => this.props.callback(this.props.collection)}>
         <img className="rounded-image collection-image" src={this.props.collection.imageUrl} alt=""/>
         <div className="collection-card-text">
           <h3>{collectionName}</h3>
