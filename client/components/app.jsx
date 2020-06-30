@@ -11,7 +11,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'signin',
+      view: 'search',
       params: {},
       related: [],
       user: {},
@@ -105,10 +105,18 @@ export default class App extends React.Component {
       .then(data => this.setView('home', {}, data));
   }
 
-  getAllCollections() {
-    fetch('/api/collections')
-      .then(res => res.json())
-      .then(data => this.setView('collections', {}, data));
+  getAllCollections(boolean) {
+    if (boolean) {
+      fetch('/api/collections')
+        .then(res => res.json())
+        .then(data => this.setView('collections', {}, data));
+    } else {
+      fetch('/api/collections')
+        .then(res => res.json())
+        .then(data => this.setState({
+          collections: data
+        }));
+    }
   }
 
   componentDidMount() {
@@ -131,7 +139,7 @@ export default class App extends React.Component {
             : this.state.view === 'collections'
               ? <Collections collections={this.state.collections} setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />
               : this.state.view === 'details'
-                ? <MusicalDetails setView={this.setView} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections}/>
+                ? <MusicalDetails collections={this.state.collections} setView={this.setView} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections}/>
                 : this.state.view === 'recommendation'
                   ? <Recommnendation setView={this.setView} musicals={this.state.recommended} addLike={this.addLike} getAllRecommendations={this.getAllRecommendations}/>
                   : <h1>TBD</h1>;

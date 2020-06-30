@@ -257,7 +257,7 @@
 }
 
 iframe {
-  width:80%;
+  width:90%;
   max-width:660px;
   overflow:hidden;
   background:transparent;
@@ -341,7 +341,8 @@ iframe {
   font-size: 0.9rem;
 }
 
-.checked {
+.checked,
+.add-to-collection-button {
   border: none;
   background-color: #D9042B;
   color: white;
@@ -482,4 +483,45 @@ iframe {
 .collections-container,
 .home-container {
   margin-bottom: 50px;
+}
+
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  height: 100vh;
+  width: 100%;
+  z-index: 3;
+}
+
+.modal-background {
+  background-color: white;
+  position: relative;
+  width: 100%;
+  height: 70%;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  overflow: scroll;
+}
+
+.modal-background h3 {
+  text-align: center;
+  margin: 0.75rem 0;
+}
+
+.modal-background button {
+  margin-bottom: 2rem;
+}
+
+#closeModalButton {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+}
+
+.center {
+  text-align: center;
 }
