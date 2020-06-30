@@ -891,7 +891,7 @@ select "am"."musicalId",
     .catch(err => next(err));
 });
 
-app.post('/api/collection', (req, res, next) => {
+app.post('/api/collections', (req, res, next) => {
   const { userId } = req.session;
   const { collectionName } = req.body;
   if (isNaN(parseInt(userId))) {
@@ -912,7 +912,7 @@ app.post('/api/collection', (req, res, next) => {
     });
 });
 
-app.post('/api/collection/:musicalId', (req, res, next) => {
+app.post('/api/collections/:musicalId', (req, res, next) => {
   const { userId } = req.session;
   const { musicalId } = req.params;
   const { collectionName } = req.body;
@@ -998,7 +998,26 @@ app.post('/api/collection/:musicalId', (req, res, next) => {
         });
     })
     .then(result => {
-      res.json(result);
+      res.status(204).json(result);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/collections', (req, res, next) => {
+  const { userId } = req.session;
+  const sql = `
+    select "c"."name",
+           "c"."collectionId",
+           count("ci"."musicalId") as "numMusicals"
+      from "collections" as "c"
+      left join "collectionItems" as "ci" using ("collectionId")
+    where "c"."userId" = $1
+    group by "c"."name", "c"."collectionId"
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
     })
     .catch(err => next(err));
 });
