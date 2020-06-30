@@ -450,7 +450,36 @@ iframe {
   height: 158px;
 }
 
+.collections-container {
+  margin: 1.5rem
+}
+
+.collections-container h1 {
+  margin-bottom: 1.25rem;
+}
+
+.collection-card-container {
+  margin-bottom: 2rem;
+  display: flex;
+}
+
+.rounded-image {
+  border-radius: 0.25rem
+}
+
+.collection-image {
+  width: 80px;
+}
+
+.collection-card-text {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .musical-details-container,
+.collections-container,
 .home-container {
   margin-bottom: 50px;
 }
