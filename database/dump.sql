@@ -33,12 +33,14 @@ ALTER TABLE ONLY public."collectionItems" DROP CONSTRAINT "collectionItems_music
 ALTER TABLE ONLY public."collectionItems" DROP CONSTRAINT "collectionItems_collectionId_fkey";
 ALTER TABLE ONLY public.users DROP CONSTRAINT users_pkey;
 ALTER TABLE ONLY public.tags DROP CONSTRAINT tags_pkey;
+ALTER TABLE ONLY public.suggestions DROP CONSTRAINT suggestions_pkey;
 ALTER TABLE ONLY public.musicals DROP CONSTRAINT musicals_pkey;
 ALTER TABLE ONLY public."musicalStyles" DROP CONSTRAINT "musicalStyles_pkey";
 ALTER TABLE ONLY public.genres DROP CONSTRAINT genres_pkey;
 ALTER TABLE ONLY public.collections DROP CONSTRAINT collections_pkey;
 ALTER TABLE public.users ALTER COLUMN "userId" DROP DEFAULT;
 ALTER TABLE public.tags ALTER COLUMN "tagId" DROP DEFAULT;
+ALTER TABLE public.suggestions ALTER COLUMN "suggestionId" DROP DEFAULT;
 ALTER TABLE public.musicals ALTER COLUMN "musicalId" DROP DEFAULT;
 ALTER TABLE public."musicalStyles" ALTER COLUMN "musicalStyleId" DROP DEFAULT;
 ALTER TABLE public.genres ALTER COLUMN "genreId" DROP DEFAULT;
@@ -47,6 +49,8 @@ DROP SEQUENCE public."users_userId_seq";
 DROP TABLE public.users;
 DROP SEQUENCE public."tags_tagId_seq";
 DROP TABLE public.tags;
+DROP SEQUENCE public."suggestions_suggestionId_seq";
+DROP TABLE public.suggestions;
 DROP SEQUENCE public."musicals_musicalId_seq";
 DROP TABLE public.musicals;
 DROP TABLE public."musicalTags";
@@ -310,6 +314,38 @@ ALTER SEQUENCE public."musicals_musicalId_seq" OWNED BY public.musicals."musical
 
 
 --
+-- Name: suggestions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.suggestions (
+    "suggestionId" integer NOT NULL,
+    title text NOT NULL,
+    composer text NOT NULL,
+    notes text NOT NULL
+);
+
+
+--
+-- Name: suggestions_suggestionId_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public."suggestions_suggestionId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: suggestions_suggestionId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public."suggestions_suggestionId_seq" OWNED BY public.suggestions."suggestionId";
+
+
+--
 -- Name: tags; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -398,6 +434,13 @@ ALTER TABLE ONLY public.musicals ALTER COLUMN "musicalId" SET DEFAULT nextval('p
 
 
 --
+-- Name: suggestions suggestionId; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.suggestions ALTER COLUMN "suggestionId" SET DEFAULT nextval('public."suggestions_suggestionId_seq"'::regclass);
+
+
+--
 -- Name: tags tagId; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -416,6 +459,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN "userId" SET DEFAULT nextval('public.
 --
 
 COPY public."collectionItems" ("collectionId", "musicalId") FROM stdin;
+11	81
 \.
 
 
@@ -424,9 +468,10 @@ COPY public."collectionItems" ("collectionId", "musicalId") FROM stdin;
 --
 
 COPY public.collections ("collectionId", "userId", name, "imageUrl") FROM stdin;
-5	5	Test Collection	/images/empty-collection.png
-6	5	Another Collection	/images/empty-collection.png
-7	5	One More	/images/empty-collection.png
+8	5	Pick Me Up	/images/empty-collection.png
+11	5	Angsty Musicals	https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/26/22/46/262246c5-92a3-6c2d-c481-c0e516725dac/791558966039.jpg/1000x1000bb.jpg
+7	5	Audition Song Ideas	/images/empty-collection.png
+10	5	Considerations for 2021	/images/empty-collection.png
 \.
 
 
@@ -4255,6 +4300,14 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 
 
 --
+-- Data for Name: suggestions; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.suggestions ("suggestionId", title, composer, notes) FROM stdin;
+\.
+
+
+--
 -- Data for Name: tags; Type: TABLE DATA; Schema: public; Owner: -
 --
 
@@ -4325,7 +4378,7 @@ COPY public.users ("userId", username) FROM stdin;
 -- Name: collections_collectionId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."collections_collectionId_seq"', 7, true);
+SELECT pg_catalog.setval('public."collections_collectionId_seq"', 12, true);
 
 
 --
@@ -4350,6 +4403,13 @@ SELECT pg_catalog.setval('public."musicals_musicalId_seq"', 1, false);
 
 
 --
+-- Name: suggestions_suggestionId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."suggestions_suggestionId_seq"', 1, false);
+
+
+--
 -- Name: tags_tagId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -4360,7 +4420,7 @@ SELECT pg_catalog.setval('public."tags_tagId_seq"', 1, false);
 -- Name: users_userId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."users_userId_seq"', 12, true);
+SELECT pg_catalog.setval('public."users_userId_seq"', 14, true);
 
 
 --
@@ -4393,6 +4453,14 @@ ALTER TABLE ONLY public."musicalStyles"
 
 ALTER TABLE ONLY public.musicals
     ADD CONSTRAINT musicals_pkey PRIMARY KEY ("musicalId");
+
+
+--
+-- Name: suggestions suggestions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.suggestions
+    ADD CONSTRAINT suggestions_pkey PRIMARY KEY ("suggestionId");
 
 
 --
