@@ -1055,6 +1055,12 @@ app.get('/api/collections/:collectionId', (req, res, next) => {
 
 app.delete('/api/collections/:collectionId/:musicalId', (req, res, next) => {
   const { collectionId, musicalId } = req.params;
+  if (isNaN(parseInt(collectionId))) {
+    next(new ClientError('collectionId must be an integer', 400));
+  }
+  if (isNaN(parseInt(musicalId))) {
+    next(new ClientError('musicalId must be an integer', 400));
+  }
   const sql = `
   with "collectionImage" as (
   select "m"."musicalId"
@@ -1136,6 +1142,35 @@ app.delete('/api/collections/:collectionId/:musicalId', (req, res, next) => {
     })
     .then(result => {
       res.json(result[0]);
+    })
+    .catch(err => next(err));
+});
+
+app.delete('/api/collections/:collectionId', (req, res, next) => {
+  const { collectionId } = req.params;
+  if (isNaN(parseInt(collectionId))) {
+    next(new ClientError('collectionId must be an integer', 400));
+  }
+  const sql = `
+  delete from "collectionItems"
+    where "collectionId" = $1
+    returning *
+  `;
+  const params = [collectionId];
+  db.query(sql, params)
+    .then(result => {
+      const sql = `
+      delete from "collections"
+        where "collectionId" = $1
+        returning *
+      `;
+      return db.query(sql, params)
+        .then(result => {
+          return result.rows[0];
+        });
+    })
+    .then(result => {
+      res.json(result);
     })
     .catch(err => next(err));
 });
