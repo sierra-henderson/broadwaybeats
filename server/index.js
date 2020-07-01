@@ -1175,6 +1175,25 @@ app.delete('/api/collections/:collectionId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.put('/api/collections/:collectionId', (req, res, next) => {
+  const { collectionId } = req.params;
+  const { collectionName } = req.body;
+  if (isNaN(parseInt(collectionId))) {
+    next(new ClientError('collectionId must be an integer', 400));
+  }
+  const sql = `
+    update "collections"
+      set "name" = $1
+    where "collectionId" = $2
+  `;
+  const params = [collectionName, collectionId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
