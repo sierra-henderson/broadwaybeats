@@ -580,6 +580,17 @@ iframe {
   justify-content: flex-end;
   align-items: center;
   height: 80px;
+  position: relative;
+}
+
+.update-delete-modal {
+  position: absolute;
+  top: 6px;
+  right: 16px;
+  background-color: white;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
+  width: 150px;
+  padding: 0.5rem;
 }
 
 .flex-container {
@@ -595,7 +606,7 @@ iframe {
 .update-delete-modal-choice {
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .update-delete-modal-choice i {
