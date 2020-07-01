@@ -9,11 +9,14 @@ export default class Collections extends React.Component {
     this.state = {
       collectionOpen: false,
       activeCollection: [],
-      activeCollectionName: ''
+      activeCollectionName: '',
+      buttonModal: {}
     };
     this.openCollection = this.openCollection.bind(this);
     this.deleteMusicalFromCollection = this.deleteMusicalFromCollection.bind(this);
     this.backToCollections = this.backToCollections.bind(this);
+    this.renderModal = this.renderModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   openCollection(collection) {
@@ -47,6 +50,18 @@ export default class Collections extends React.Component {
       });
   }
 
+  renderModal() {
+    this.setState({
+      modalOpen: true
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      modalOpen: false
+    });
+  }
+
   render() {
     if (this.state.collectionOpen) {
       if (this.state.activeCollection.length > 0) {
@@ -72,17 +87,47 @@ export default class Collections extends React.Component {
         );
       }
     } else {
-      return (
-        <div className="collections-container">
-          <h1>My Collections</h1>
-          {
-            this.props.collections.map(collection => {
-              return <CollectionCard key={collection.collectionId} collection={collection} callback={this.openCollection} />;
-            })
-          }
-          <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
-        </div>
-      );
+      if (this.state.modalOpen) {
+        return (
+          <div>
+            <div className="collections-container">
+              <h1>My Collections</h1>
+              {
+                this.props.collections.map(collection => {
+                  return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} />;
+                })
+              }
+              <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            </div>
+            <div className="modal-overlay">
+              <div className="modal-background twenty-five">
+                <i id="closeModalButton" className="fas fa-times" onClick={this.closeModal}></i>
+                <div className="update-delete-modal-choice" onClick={this.openButtonModal}>
+                  <i className="fas fa-pen fa-lg"></i>
+                  <h3>Edit collection</h3>
+                </div>
+                <div className="update-delete-modal-choice" onClick={this.openButtonModal}>
+                  <i className="fas fa-trash fa-lg"></i>
+                  <h3>Delete collection</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div className="collections-container">
+            <h1>My Collections</h1>
+            {
+              this.props.collections.map(collection => {
+                return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} />;
+              })
+            }
+            <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+          </div>
+        );
+      }
+
     }
   }
 }

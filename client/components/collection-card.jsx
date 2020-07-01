@@ -9,11 +9,16 @@ export default class CollectionCard extends React.Component {
       ? `${this.props.collection.numMusicals} album`
       : `${this.props.collection.numMusicals} albums`;
     return (
-      <div className="collection-card-container" onClick={() => this.props.callback(this.props.collection)}>
-        <img className="rounded-image collection-image" src={this.props.collection.imageUrl} alt=""/>
-        <div className="collection-card-text">
-          <h3>{collectionName}</h3>
-          <p className="faded-text">{numAlbums}</p>
+      <div className="flex-container">
+        <div className="collection-card-container" onClick={() => this.props.callback(this.props.collection)}>
+          <img className="rounded-image collection-image" src={this.props.collection.imageUrl} alt="" />
+          <div className="collection-card-text">
+            <h3>{collectionName}</h3>
+            <p className="faded-text">{numAlbums}</p>
+          </div>
+        </div>
+        <div className="update-delete-modal-button">
+          <i className="fas fa-ellipsis-v faded-text" onClick={this.props.renderModal}></i>
         </div>
       </div>
     );

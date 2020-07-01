@@ -574,3 +574,30 @@ iframe {
 .no-items {
   margin-bottom: 1.25rem;
 }
+
+.update-delete-modal-button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 80px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.twenty-five {
+  height: 25%;
+  padding: 2rem;
+}
+
+.update-delete-modal-choice {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.update-delete-modal-choice i {
+  margin-right: 0.5rem;
+}
