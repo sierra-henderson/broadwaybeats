@@ -416,7 +416,7 @@ select "am"."musicalId",
   db.query(sql, params)
     .then(result => {
       if (result.rows.length === 0) {
-        next(new ClientError('You must like at least one musical to get recommendations', 400));
+        res.json({ error: 'You must like at least one musical to get recommendations' });
       } else {
         res.json(result.rows);
       }
@@ -1083,7 +1083,7 @@ app.delete('/api/collections/:collectionId/:musicalId', (req, res, next) => {
         if (el.musicalId === parseInt(musicalId)) {
           isImageUrl = true;
         }
-        if (el.numMusicals > 1) {
+        if (el.musicalId === null) {
           isOnlyMusical = false;
         }
       });
