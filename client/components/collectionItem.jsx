@@ -30,7 +30,7 @@ export default class CollectionItem extends React.Component {
         <div className="collection-card-text">
           <h4>{this.props.item.title}</h4>
           <p className="collection-item-paragraph">{musicAndLyrics}</p>
-          <i className="fas fa-trash fa-lg"></i>
+          <i className="fas fa-trash fa-lg" onClick={() => this.props.deleteMusicalFromCollection(this.props.item.musicalId)}></i>
         </div>
       </div>
     );

@@ -12,6 +12,7 @@ export default class Collections extends React.Component {
     };
     this.openCollection = this.openCollection.bind(this);
     this.backToCollections = this.backToCollections.bind(this);
+    this.deleteMusicalFromCollection = this.deleteMusicalFromCollection.bind(this);
   }
 
   openCollection(collection) {
@@ -31,20 +32,44 @@ export default class Collections extends React.Component {
     });
   }
 
+  deleteMusicalFromCollection(id) {
+    const collectionId = this.state.activeCollection[0].collectionId;
+    fetch(`/api/collections/${collectionId}/${id}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState(state => ({
+          activeCollection: state.activeCollection.filter(el => el.musicalId !== id)
+        }));
+      });
+  }
+
   render() {
     if (this.state.collectionOpen) {
-      return (
-        <div className="collections-container">
-          <h1>{this.state.activeCollection[0].collectionName}</h1>
-          {
-            this.state.activeCollection.map(item => {
-              return <CollectionItem key={item.musicalId} item={item} setView={this.props.setView}/>;
-            })
-          }
-          <button className="filter-button submit" onClick={this.backToCollections}><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
-          <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
-        </div>
-      );
+      if (this.state.activeCollection.length > 0) {
+        return (
+          <div className="collections-container">
+            <h1>{this.state.activeCollection[0].collectionName}</h1>
+            {
+              this.state.activeCollection.map(item => {
+                return <CollectionItem key={item.musicalId} item={item} setView={this.props.setView} deleteMusicalFromCollection={this.deleteMusicalFromCollection} />;
+              })
+            }
+            <button className="filter-button submit" onClick={this.backToCollections}><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
+            <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+          </div>
+        );
+      } else {
+        return (
+          <div className="collections-container">
+            <h1>{this.state.activeCollection[0].collectionName}</h1>
+            <p>You don&apos;t have any musicals in here yet!</p>
+            <button className="filter-button submit" onClick={this.backToCollections}><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
+            <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+          </div>
+        );
+      }
     } else {
       return (
         <div className="collections-container">
