@@ -460,6 +460,10 @@ ALTER TABLE ONLY public.users ALTER COLUMN "userId" SET DEFAULT nextval('public.
 
 COPY public."collectionItems" ("collectionId", "musicalId") FROM stdin;
 11	81
+7	53
+15	416
+16	42
+16	369
 \.
 
 
@@ -470,8 +474,11 @@ COPY public."collectionItems" ("collectionId", "musicalId") FROM stdin;
 COPY public.collections ("collectionId", "userId", name, "imageUrl") FROM stdin;
 8	5	Pick Me Up	/images/empty-collection.png
 11	5	Angsty Musicals	https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/26/22/46/262246c5-92a3-6c2d-c481-c0e516725dac/791558966039.jpg/1000x1000bb.jpg
-7	5	Audition Song Ideas	/images/empty-collection.png
 10	5	Considerations for 2021	/images/empty-collection.png
+7	5	Audition Song Ideas	https://is5-ssl.mzstatic.com/image/thumb/Music128/v4/a1/70/ea/a170ea2d-1ec2-231e-51f2-3024b21c8b17/791558948332.jpg/1000x1000bb.jpeg
+14	1	Folksy Musicals	/images/empty-collection.png
+15	12	Interesting	https://is5-ssl.mzstatic.com/image/thumb/Music20/v4/7a/8c/c8/7a8cc883-a733-0c33-b8c5-821f4bdf61dd/803607163525_cover.jpg/1000x1000bb.jpeg
+16	16	I've Been In This	https://is5-ssl.mzstatic.com/image/thumb/Music128/v4/fe/08/60/fe0860b2-8784-2a30-9f50-8ab25623217c/791558945232.jpg/1000x1000bb.jpeg
 \.
 
 
@@ -491,6 +498,22 @@ COPY public."genreSeeds" ("userId", "genreId") FROM stdin;
 5	3
 5	4
 5	15
+1	1
+1	10
+1	12
+1	20
+1	23
+12	4
+12	12
+12	15
+15	1
+15	10
+15	18
+15	20
+16	7
+16	8
+16	22
+16	23
 \.
 
 
@@ -570,6 +593,59 @@ COPY public."likedMusicals" ("userId", "musicalId", "like") FROM stdin;
 5	246	t
 5	52	t
 5	55	t
+1	98	t
+1	159	t
+1	192	t
+1	219	t
+1	222	t
+1	253	t
+1	397	t
+1	426	t
+1	194	t
+1	384	t
+1	63	t
+1	139	t
+1	85	t
+1	153	t
+12	35	t
+12	77	t
+12	101	t
+12	159	t
+12	253	t
+12	422	t
+12	446	t
+12	81	t
+12	120	t
+12	222	t
+12	246	t
+12	63	t
+12	435	t
+12	85	t
+15	103	t
+15	132	t
+15	339	t
+15	392	t
+15	426	t
+15	448	t
+15	85	t
+15	21	t
+15	78	t
+15	300	t
+15	72	t
+15	253	t
+15	196	t
+16	86	t
+16	176	t
+16	319	t
+16	324	t
+16	459	t
+16	18	t
+16	171	t
+16	273	t
+16	327	t
+16	260	t
+16	9	t
+16	344	t
 \.
 
 
@@ -2664,6 +2740,18 @@ COPY public."musicalStyleSeeds" ("userId", "musicalStyleId") FROM stdin;
 3	7
 3	12
 5	8
+1	7
+1	8
+1	12
+12	11
+12	12
+12	14
+12	15
+15	6
+15	11
+16	6
+16	8
+16	15
 \.
 
 
@@ -3910,7 +3998,6 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 75	Camelot	Frederick Loewe	Alan Jay Lerner	Borrowing from the Arthurian legends, Lerner and Loewe’s Camelot is the duo’s fantastical masterpiece which triumphed on Broadway in a legendary original production that lead to a film version, and numerous revivals in New York, London and across the globe. Its Original Broadway Cast Album topped the charts  for 60 weeks, with a rich score boasting such gems  as "If Ever I Would Leave You," “I Loved You Once in Silence,” "The Lusty Month of May," and of course, "Camelot." An idealistic young King Arthur hopes to create a kingdom built on honor and dignity, embodied by his Knights of The Round Table.  His Ideals, however are tested when his lovely queen, Guenevere, falls in love with the young Knight, Lancelot and the fate of the kingdom hangs in the balance.	https://music.apple.com/us/album/camelot-original-1960-broadway-cast-recording/158476378	https://is3-ssl.mzstatic.com/image/thumb/Features/b5/34/43/dj.fwnabeui.jpg/1000x1000bb.jpeg
 76	Candide (1999 Version)	Leonard Bernstein	John Latouche, Richard Wilbur	A score by legendary Leonard Bernstein is but the tip of the iceberg when it comes to Candide and its theatrical offerings. With a book from Hugh Wheeler and lyrical contributions from the incomparable Stephen Sondheim, Candide is a masterpiece for the ages. Candide – the bastard cousin of Baron Thunder-Ten-Tonck – is expelled from home, dragged into the Bulgarian army, brought before the Spanish Inquisition, swindled out of a fortune, shipwrecked on a desert isle and separated time and again from his true love, Cunegonde. She, too, bears a barrage of misfortunes, including – but not limited to – sale into prostitution, forced marriage to an exorbitantly wealthy man and slavery. Through it all, however, they try remember the lessons of their dear master, Dr. Pangloss: "Everything is for the best in this best of all possible worlds." Elements of the original 1953 version – along with songs that had been dropped, rewritten or re-conceived – have been added or altered in this version in an effort to create a slightly reimagined version of the classic Candide. This version requires a large ensemble with a strong female lead. It is the perfect opportunity to showcase your trained singers of varying ages.	https://music.apple.com/us/album/candide-original-broadway-cast-recording/158824188	https://is1-ssl.mzstatic.com/image/thumb/Music/81/22/25/mzi.jpszpgfd.jpg/1000x1000bb.jpeg
 77	Cannibal! The Musical	Trey Parker	Trey Parker	Cannibal! The Musical is the true story of the only person convicted of cannibalism in America - Alfred Packer. The sole survivor of an ill-fated trip to the Colorado Territory, he tells his side of the harrowing tale to news reporter Polly Pry as he awaits his execution. And his story goes like this: While searching for gold and love in the Colorado Territory, he and his companions lost their way and resorted to unthinkable horrors, including toe-tapping songs!	https://music.apple.com/us/album/cannibal-the-musical-original-motion-picture-soundtrack/872683716	https://is4-ssl.mzstatic.com/image/thumb/Music6/v4/d0/25/8f/d0258fba-29da-8124-4d54-9f0dd45acbb5/888831001188.jpg/1000x1000bb.jpeg
-78	Carmen Jones	Oscar Hammerstein II, Georges Bizet	Oscar Hammerstein II, Georges Bizet	In a Southern town during World War II, an army corporal named Joe is stationed near a parachute factory where Carmen Jones is employed. Fickle and flirtatious, Carmen manages to steal Joe away from his fiancée, and the army as well, and they run off to Chicago together. But Carmen loses interest in Joe when she meets and successfully woos Husky Miller, a prize fighter on his way to the top. Mad with jealousy, Joe waits for Carmen outside the stadium the night of Husky's big fight to make a last desperate plea for her love. When she denies him resolutely, he stabs her to death in a rage of passion, to the eerie accompaniment of the crowd inside the stadium cheering Husky's victory.Carmen Jones opened at the Brodway Theatre on December 2, 1943, starrring Muriel Smith as Carmen. The production ran for 503 performances. Otto Preminger directed a film adaptation of the musical in 1954, starring Dorothy Dandridge, Harry Belafonte and Pearl Bailey. In 2018, the Classic Stage Company revived Carmen Jones, under the direction of John Doyle, with Anika Noni Rose in the title role.	https://music.apple.com/us/album/carmen-jones-1943-original-broadway-cast-recording/1452590021	ttps://is3-ssl.mzstatic.com/image/thumb/Music114/v4/43/91/8f/43918f89-cda9-2c33-18dc-c81de37eb869/00044006678023.rgb.jpg/1000x1000bb.jpeg
 79	Caroline, or Change	Jeanine Tesori	Tony Kushner	Set in one of the most pivotal times in America's history, the Tony-nominated Caroline, or Change is riveting, moving and awe-inspiring. Featuring a virtuosic score by Jeanine Tesori (Shrek The Musical, Thoroughly Modern Millie), it blends blues, gospel and traditional Jewish melodies, creating a breathtaking medium for Kushner's provocative and personal story. In 1963, the Gellman family and their African-American maid, Caroline, live in sleepy Lake Charles, Louisiana. Caroline is drifting through life as a single mother of four working in a service job to a white family. A fragile, yet beautiful friendship develops between the young Gellman son, Noah, and Caroline. Noah's stepmother, Rose, unable to give Caroline a raise, tells Caroline that she may keep the money that Noah leaves in his pockets. Caroline balks and refuses to take money from a child but her own children desperately need food, clothing and shoes. Outside of the laundry room, some of the greatest social advancements that the country has seen are being set in motion, and change is knocking on the door. Caroline, or Change, produces a valuable theatrical experience that continues to thrill audiences the world over. It is a story that must be shared and will touch hearts. It is a story that will open minds. It is a story that will change theatergoers for the better. Featuring one of the most powerful female roles in musical theatre, Caroline, or Change is a true tour de force that will leave audiences breathless. "...'Of anything I've ever done, I'm proudest of Caroline, or Change,' said Mr. Kushner..." – The New York Times	https://music.apple.com/us/album/caroline-or-change-original-broadway-cast-recording/1452788115	https://is4-ssl.mzstatic.com/image/thumb/Music124/v4/4a/d3/6d/4ad36d9c-47c6-6c82-0c53-ae0163c3621f/00720616243621.rgb.jpg/1000x1000bb.jpeg
 81	Carrie: The Musical	Michael Gore	Dean Pitchford	Carrie White is a teenage outcast who longs to fit in. At school, she’s bullied by the popular crowd, and virtually invisible to everyone else. At home, she's dominated by her loving but cruelly controlling mother. What none of them know is that Carrie’s just discovered she’s got a special power, and if pushed too far, she’s not afraid to use it.	https://music.apple.com/us/album/carrie-the-musical-premiere-cast-recording/1308285522	https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/26/22/46/262246c5-92a3-6c2d-c481-c0e516725dac/791558966039.jpg/1000x1000bb.jpg
 82	Catch Me If You Can	Marc Shaiman	Marc Shaiman	Based on the hit film and the incredible true story, Catch Me If You Can is the high-flying musical comedy about chasing your dreams and not getting caught. Nominated for four Tony awards, including Best Musical, this delightfully entertaining show was created by a Tony Award-winning "dream team," with a book by Terrence McNally (The Full Monty, Ragtime) and a swinging score by Marc Shaiman and Scott Wittman (Hairspray). Seeking fame and fortune, precocious teenager, Frank Abignale, Jr., runs away from home to begin an unforgettable adventure. With nothing more than his boyish charm, a big imagination and millions of dollars in forged checks, Frank successfully poses as a pilot, a doctor and a lawyer – living the high life and winning the girl of his dreams. When Frank's lies catch the attention of FBI agent, Carl Hanratty, though, Carl pursues Frank across the country to make him pay for his crimes. Catch Me If You Can is a big and bright spectacle with high-energy dance numbers and a riveting story, making it an ideal choice for Community and Professional theatres. High School performers will enjoy portraying characters of a similar age and will relish the opportunity to sing Shaiman's and Wittman's sparkling new songs.	https://music.apple.com/us/album/catch-me-if-you-can-original-broadway-cast-recording/1309242341	https://is5-ssl.mzstatic.com/image/thumb/Music128/v4/0d/c1/3d/0dc13d1d-35f8-aa2b-4ee0-3271d2d4ef81/791558944938.jpg/1000x1000bb.jpeg
@@ -4296,6 +4383,7 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 462	Young Frankenstein	Mel Brooks	Mel Brooks	From the creators of the record-breaking Broadway sensation, The Producers, comes this monster new musical comedy. The comedy genius, Mel Brooks, adapts his legendarily funny film into a brilliant stage creation – Young Frankenstein! Grandson of the infamous Victor Frankenstein, Frederick Frankenstein (pronounced "Fronk-en-steen") inherits his family's estate in Transylvania. With the help of a hunchbacked sidekick, Igor (pronounced "Eye-gore"), and a leggy lab assistant, Inga (pronounced normally), Frederick finds himself in the mad scientist shoes of his ancestors. "It's alive!" he exclaims as he brings to life a creature to rival his grandfather's. Eventually, of course, the monster escapes and hilarity continuously abounds. Every bit as relevant to audience members who will remember the original as it will be to newcomers, Young Frankenstein has all the of panache of the screen sensation with a little extra theatrical flair added. It will surely be the perfect opportunity for a production company to showcase an array of talents. With such memorable tunes as "The Transylvania Mania," "He Vas My Boyfriend" and "Puttin' on the Ritz," Young Frankenstein is scientifically proven, monstrously good entertainment.	https://music.apple.com/us/album/young-frankenstein-the-new-mel-brooks-musical/1440728422	https://is5-ssl.mzstatic.com/image/thumb/Music118/v4/ee/c9/35/eec93561-78c3-1450-5e1b-20f9ca240ec7/00602517599604.rgb.jpg/1000x1000bb.jpeg
 463	Your Own Thing	Hal Hester and Danny Apolinar	Hal Hester and Danny Apolinar	Your Own Thing is a rock musical loosely based on William Shakespeare’s Twelfth Night. Set in the late 1960s in the land of Illyria (which looks very much like New York City), it is a tale of separated twins, mistaken identities, love triangles and “doing your own thing.”Your Own Thing opened off-Broadway at the Orpheum Theatre on January 13, 1968 and played for 933 performances. The original cast included Leland Palmer, Marcia Rodd, Marian Mercer, Rusty (Russ) Thacker, Tom Ligon, John Kuhner, Michael Valenti, Igors Gavin, Imogene Bliss and Danny Apolinar.	https://music.apple.com/us/album/your-own-thing-original-off-broadway-cast-recording/332595114	https://is2-ssl.mzstatic.com/image/thumb/Features/03/8b/9c/dj.spbiojwy.jpg/1000x1000bb.jpeg
 464	Zombie Prom	Dana P. Rowe	John Dempsey	ZOMBIE PROM was produced at The Red Barn Theatre in Key West, Florida in February, 1993.  Joy Hawkins, director; Dana P. Rowe, musical director.	https://music.apple.com/us/album/zombie-prom-original-off-broadway-cast-recording/539771528	https://is1-ssl.mzstatic.com/image/thumb/Music/v4/f8/b3/17/f8b31799-9697-c7a2-57d9-9dc0fe42e4e5/Cover.jpg/1000x1000bb.jpeg
+78	Carmen Jones	Oscar Hammerstein II, Georges Bizet	Oscar Hammerstein II, Georges Bizet	In a Southern town during World War II, an army corporal named Joe is stationed near a parachute factory where Carmen Jones is employed. Fickle and flirtatious, Carmen manages to steal Joe away from his fiancée, and the army as well, and they run off to Chicago together. But Carmen loses interest in Joe when she meets and successfully woos Husky Miller, a prize fighter on his way to the top. Mad with jealousy, Joe waits for Carmen outside the stadium the night of Husky's big fight to make a last desperate plea for her love. When she denies him resolutely, he stabs her to death in a rage of passion, to the eerie accompaniment of the crowd inside the stadium cheering Husky's victory.Carmen Jones opened at the Brodway Theatre on December 2, 1943, starrring Muriel Smith as Carmen. The production ran for 503 performances. Otto Preminger directed a film adaptation of the musical in 1954, starring Dorothy Dandridge, Harry Belafonte and Pearl Bailey. In 2018, the Classic Stage Company revived Carmen Jones, under the direction of John Doyle, with Anika Noni Rose in the title role.	https://music.apple.com/us/album/carmen-jones-1943-original-broadway-cast-recording/1452590021	https://is3-ssl.mzstatic.com/image/thumb/Music114/v4/43/91/8f/43918f89-cda9-2c33-18dc-c81de37eb869/00044006678023.rgb.jpg/1000x1000bb.jpeg
 \.
 
 
@@ -4304,6 +4392,10 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 --
 
 COPY public.suggestions ("suggestionId", title, composer, notes) FROM stdin;
+1	Dear Evan Hansen	Pasek and Paul	contemporary pop feel, deals with teenagers, mental health
+2	Six: The Musical	Lucy Moss, Toby Marlow	definite pop/rock feel, like a rock concert
+3	Moulin Rouge	Various	80-00s pop songs
+4	Jersey Boys	Four Seasons	jukebox musical with Four Seasons songs
 \.
 
 
@@ -4371,6 +4463,8 @@ COPY public.users ("userId", username) FROM stdin;
 4	bob
 5	sam
 12	testing
+15	new
+16	sutton
 \.
 
 
@@ -4378,7 +4472,7 @@ COPY public.users ("userId", username) FROM stdin;
 -- Name: collections_collectionId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."collections_collectionId_seq"', 12, true);
+SELECT pg_catalog.setval('public."collections_collectionId_seq"', 16, true);
 
 
 --
@@ -4406,7 +4500,7 @@ SELECT pg_catalog.setval('public."musicals_musicalId_seq"', 1, false);
 -- Name: suggestions_suggestionId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."suggestions_suggestionId_seq"', 1, false);
+SELECT pg_catalog.setval('public."suggestions_suggestionId_seq"', 4, true);
 
 
 --
@@ -4420,7 +4514,7 @@ SELECT pg_catalog.setval('public."tags_tagId_seq"', 1, false);
 -- Name: users_userId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."users_userId_seq"', 14, true);
+SELECT pg_catalog.setval('public."users_userId_seq"', 16, true);
 
 
 --
