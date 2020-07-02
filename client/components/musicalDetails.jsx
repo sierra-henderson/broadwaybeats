@@ -119,7 +119,7 @@ export default class MusicalDetails extends React.Component {
     const musicVisible = !this.state.musicVisible ? 'hidden' : '';
     if (this.state.readMoreOpen && this.state.addCollectionOpen) {
       return (
-        <div>
+        <div className="musical-details-container">
           <div className="info-container">
             <img className="details-image" src={this.props.musical.imageUrl} alt="" />
             <h2>{this.props.musical.title}</h2>
@@ -171,7 +171,7 @@ export default class MusicalDetails extends React.Component {
       );
     } else if (this.state.readMoreOpen && !this.state.addCollectionOpen) {
       return (
-        <div>
+        <div className="musical-details-container">
           <div className="info-container">
             <img className="details-image" src={this.props.musical.imageUrl} alt="" />
             <h2>{this.props.musical.title}</h2>
