@@ -136,7 +136,7 @@ export default class MusicalDetails extends React.Component {
           <div className="music-button-container">
             <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
             <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
               src={musicUrl}></iframe>
           </div>
           <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related"/>
@@ -188,7 +188,7 @@ export default class MusicalDetails extends React.Component {
           <div className="music-button-container">
             <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
             <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
               src={musicUrl}></iframe>
           </div>
           <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
@@ -216,7 +216,7 @@ export default class MusicalDetails extends React.Component {
             <div className="music-button-container">
               <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
               <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
                 src={musicUrl}></iframe>
             </div>
             <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
@@ -246,7 +246,7 @@ export default class MusicalDetails extends React.Component {
 
               <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
               <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
                 src={musicUrl}></iframe>
             </div>
             <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
