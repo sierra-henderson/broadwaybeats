@@ -181,7 +181,7 @@ app.post('/api/signup', (req, res, next) => {
   select "username",
           "userId"
     from "users"
-    where "username" = $1
+    where lower("username") = lower($1)
   `;
   const params = [username];
   db.query(sql, params)

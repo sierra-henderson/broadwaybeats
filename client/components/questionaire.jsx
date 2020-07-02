@@ -51,8 +51,8 @@ export default class Questionaire extends React.Component {
     const musicalStyles = Object.keys(this.state.musicalStyle)
       .filter(id => this.state.musicalStyle[id]);
     const obj = {
-      genreSeeds: genres,
-      musicalStyleSeeds: musicalStyles
+      g: genres,
+      ms: musicalStyles
     };
     if (genres.length > 0 && musicalStyles.length > 0) {
       fetch('/api/questionaire/seeds', {
@@ -86,7 +86,7 @@ export default class Questionaire extends React.Component {
     const likedMusicals = Object.keys(this.state.likedMusical)
       .filter(id => this.state.likedMusical[id]);
     const obj = {
-      likedMusicals: likedMusicals
+      lm: likedMusicals
     };
     if (likedMusicals.length > 0) {
       fetch('/api/questionaire/like', {
