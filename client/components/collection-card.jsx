@@ -30,6 +30,7 @@ export default class CollectionCard extends React.Component {
       ? `${this.props.collection.numMusicals} album`
       : `${this.props.collection.numMusicals} albums`;
     const hiddenOrNot = !this.state.modalOpen ? 'hidden' : '';
+    const updateDeleteAbility = !this.props.viewModal ? 'hidden' : '';
     return (
       <div className="flex-container">
         <div className="collection-card-container" onClick={() => this.props.callback(this.props.collection)}>
@@ -39,7 +40,7 @@ export default class CollectionCard extends React.Component {
             <p className="faded-text">{numAlbums}</p>
           </div>
         </div>
-        <div className="update-delete-modal-button">
+        <div className={`update-delete-modal-button ${updateDeleteAbility}`}>
           <i className="fas fa-ellipsis-v faded-text" onClick={this.toggleModal}></i>
           <div className={`update-delete-modal ${hiddenOrNot}`}>
             <div className="update-delete-modal-choice" onClick={() => this.handleModalClick('update')}>

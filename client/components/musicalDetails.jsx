@@ -22,6 +22,7 @@ export default class MusicalDetails extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.stopPropagation = this.stopPropagation.bind(this);
   }
 
   changePlotView() {
@@ -40,7 +41,8 @@ export default class MusicalDetails extends React.Component {
 
   handleAddCollection() {
     this.setState({
-      addCollectionOpen: true
+      addCollectionOpen: true,
+      newCollectionButton: false
     }, () => this.props.getAllCollections(false));
   }
 
@@ -96,6 +98,10 @@ export default class MusicalDetails extends React.Component {
     this.addToCollection(this.props.musical.musicalId, collection.name, collection.numMusicals);
   }
 
+  stopPropagation(event) {
+    event.preventDefault();
+  }
+
   render() {
     const plot = this.state.readMoreOpen ? this.props.musical.plot
       : `${this.props.musical.plot.substring(0, 100)}...`;
@@ -105,7 +111,6 @@ export default class MusicalDetails extends React.Component {
         ? this.props.musical.musicBy
         : this.props.musical.musicBy + ', ' + this.props.musical.lyricsBy;
     const likeClass = this.props.musical.like ? 'like' : '';
-    const dislikeClass = this.props.musical.like === false ? 'dislike' : '';
     const musicUrl = this.props.musical.musicUrl.replace('https://music.apple.com/', 'https://embed.music.apple.com/');
     const newCollectionVisible = !this.state.newCollectionButton ? 'hidden' : '';
     if (this.state.readMoreOpen && this.state.addCollectionOpen) {
@@ -117,7 +122,6 @@ export default class MusicalDetails extends React.Component {
             <h5>{musicAndLyrics}</h5>
             <div className="icon-group">
               <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
-              <i className={`fas fa-times ${dislikeClass}`}></i>
             </div>
             <div className="add-collection">
               <i className="fas fa-plus fa-lg"></i>
@@ -126,13 +130,12 @@ export default class MusicalDetails extends React.Component {
             <p onClick={this.changePlotView}>{plot}<span className="faded-text">Read Less</span></p>
           </div>
           <div className="music-button-container">
-            <button className="play-music">Listen on Apple Music</button>
             <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-              src={musicUrl}></iframe>
+              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+              src={musicUrl} onClick={this.stopPropagation}></iframe>
           </div>
           <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related"/>
-          <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} />
+          <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} getAllCollections={this.props.getAllCollections}/>
           <div className="modal-overlay">
             <div className="modal-background">
               <i id="closeModalButton" className="fas fa-times" onClick={this.closeModal}></i>
@@ -142,7 +145,7 @@ export default class MusicalDetails extends React.Component {
               </div>
               {
                 this.props.collections.map(collection => {
-                  return <CollectionCard callback={this.handleCollectionClick} key={collection.collectionId} collection={collection} />;
+                  return <CollectionCard callback={this.handleCollectionClick} key={collection.collectionId} collection={collection} viewModal={false}/>;
                 })
               }
             </div>
@@ -170,7 +173,6 @@ export default class MusicalDetails extends React.Component {
             <h5>{musicAndLyrics}</h5>
             <div className="icon-group">
               <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
-              <i className={`fas fa-times ${dislikeClass}`}></i>
             </div>
             <div className="add-collection" onClick={this.handleAddCollection}>
               <i className="fas fa-plus fa-lg"></i>
@@ -179,13 +181,12 @@ export default class MusicalDetails extends React.Component {
             <p onClick={this.changePlotView}>{plot}<span className="faded-text">Read Less</span></p>
           </div>
           <div className="music-button-container">
-            <button className="play-music">Listen on Apple Music</button>
             <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-              src={musicUrl}></iframe>
+              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+              src={musicUrl} onClick={this.stopPropagation}></iframe>
           </div>
           <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
-          <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} />
+          <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} getAllCollections={this.props.getAllCollections}/>
         </div>
       );
     } else if (!this.state.readMoreOpen && !this.state.addCollectionOpen) {
@@ -198,7 +199,7 @@ export default class MusicalDetails extends React.Component {
               <h5>{musicAndLyrics}</h5>
               <div className="icon-group">
                 <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
-                <i className={`fas fa-times ${dislikeClass}`}></i>
+
               </div>
               <div className="add-collection" onClick={this.handleAddCollection}>
                 <i className="fas fa-plus fa-lg"></i>
@@ -207,10 +208,9 @@ export default class MusicalDetails extends React.Component {
               <p onClick={this.changePlotView}>{plot}<span className="read-more-less">Read More</span></p>
             </div>
             <div className="music-button-container">
-              <button className="play-music">Listen on Apple Music</button>
               <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-                src={musicUrl}></iframe>
+                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+                src={musicUrl} onClick={this.stopPropagation}></iframe>
             </div>
             <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
           </div>
@@ -227,7 +227,7 @@ export default class MusicalDetails extends React.Component {
               <h5>{musicAndLyrics}</h5>
               <div className="icon-group">
                 <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
-                <i className={`fas fa-times ${dislikeClass}`}></i>
+
               </div>
               <div className="add-collection">
                 <i className="fas fa-plus fa-lg"></i>
@@ -236,10 +236,10 @@ export default class MusicalDetails extends React.Component {
               <p onClick={this.changePlotView}>{plot}<span className="read-more-less">Read More</span></p>
             </div>
             <div className="music-button-container">
-              <button className="play-music">Listen on Apple Music</button>
+
               <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-                src={musicUrl}></iframe>
+                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+                src={musicUrl} onClick={this.stopPropagation}></iframe>
             </div>
             <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
           </div>

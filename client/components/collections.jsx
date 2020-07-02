@@ -145,14 +145,24 @@ export default class Collections extends React.Component {
         );
       }
     } else {
-      if (this.state.buttonModal.open && this.state.buttonModal.mode === 'update') {
+      if (this.props.collections.length === 0) {
+        return (
+          <div>
+            <div className="collections-container">
+              <h1>My Collections</h1>
+              <h3>You currently have no collections!</h3>
+              <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            </div>
+          </div>
+        );
+      } else if (this.state.buttonModal.open && this.state.buttonModal.mode === 'update') {
         return (
           <div>
             <div className="collections-container">
               <h1>My Collections</h1>
               {
                 this.props.collections.map(collection => {
-                  return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} openButtonModal={this.openButtonModal}/>;
+                  return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} openButtonModal={this.openButtonModal} viewModal={true}/>;
                 })
               }
               <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
@@ -178,7 +188,7 @@ export default class Collections extends React.Component {
               <h1>My Collections</h1>
               {
                 this.props.collections.map(collection => {
-                  return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} />;
+                  return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} viewModal={true}/>;
                 })
               }
               <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
@@ -200,7 +210,7 @@ export default class Collections extends React.Component {
             <h1>My Collections</h1>
             {
               this.props.collections.map(collection => {
-                return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} openButtonModal={this.openButtonModal}/>;
+                return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} openButtonModal={this.openButtonModal} viewModal={true}/>;
               })
             }
             <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />

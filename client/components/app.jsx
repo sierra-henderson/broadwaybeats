@@ -6,6 +6,7 @@ import Questionaire from './questionaire';
 import Recommnendation from './recommendation';
 import Home from './home';
 import Collections from './collections';
+import Suggestion from './suggestion';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -142,7 +143,9 @@ export default class App extends React.Component {
                 ? <MusicalDetails collections={this.state.collections} setView={this.setView} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections}/>
                 : this.state.view === 'recommendation'
                   ? <Recommnendation setView={this.setView} musicals={this.state.recommended} addLike={this.addLike} getAllRecommendations={this.getAllRecommendations}/>
-                  : <h1>TBD</h1>;
+                  : this.state.view === 'suggestion'
+                    ? <Suggestion setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />
+                    : <h1>TBD</h1>;
     return (appView);
   }
 }

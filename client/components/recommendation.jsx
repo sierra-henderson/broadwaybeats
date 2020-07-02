@@ -29,7 +29,6 @@ export default class Recommendation extends React.Component {
         <img className="recommendation-image" src={this.props.musicals[this.state.index].imageUrl} alt=""/>
         <h1>{this.props.musicals[this.state.index].title}</h1>
         <div className="big-icon-group">
-          <i className="fas fa-times faded-dislike"></i>
           <i className="fas fa-heart faded-like" onClick={() => this.nextMusical('like', this.props.musicals[this.state.index].musicalId)}></i>
         </div>
         <p className="faded-text" onClick={() => this.nextMusical('neither', 'n/a')}>I have no opinion on this musical</p>
