@@ -151,8 +151,10 @@
 }
 
 .musical-questionaire-card {
-  flex-basis: 96px;
-  height: 96px;
+  flex-basis: 26vw;
+  height: 26vw;
+  max-height: 200px;
+  max-width: 200px;
   box-shadow: 0 0 5px 0 #C4C4C4;
   margin: 0.5rem;
 }
@@ -255,6 +257,7 @@
 
 .card {
   flex-basis: 44%;
+  max-width: 400px;
   box-shadow: 0 0 5px 0 #C4C4C4;
   margin: 0.5rem;
 }
@@ -392,7 +395,9 @@ iframe {
 }
 
 .info-container img {
-  width: 100%
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .add-collection {
@@ -437,6 +442,9 @@ iframe {
 
 .music-button-container {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sign-up {
@@ -577,6 +585,7 @@ iframe {
 .flex-container {
   display: flex;
   justify-content: space-between;
+  max-width: 300px;
 }
 
 .twenty-five {
@@ -626,8 +635,12 @@ iframe {
 }
 
 .questionaire-container .card img {
-  height: 100px;
   overflow: hidden;
+}
+
+.suggestion-container form {
+  display: flex;
+  flex-direction: column;
 }
 
 .hidden {
