@@ -625,7 +625,10 @@ iframe {
   text-align: left;
 }
 
-
+.questionaire-container .card img {
+  height: 100px;
+  overflow: hidden;
+}
 
 .hidden {
   display: none;

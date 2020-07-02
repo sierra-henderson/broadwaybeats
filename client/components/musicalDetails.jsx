@@ -10,7 +10,8 @@ export default class MusicalDetails extends React.Component {
       value: '',
       readMoreOpen: false,
       addCollectionOpen: false,
-      newCollectionButton: false
+      newCollectionButton: false,
+      musicVisible: false
     };
     this.changePlotView = this.changePlotView.bind(this);
     this.handleLike = this.handleLike.bind(this);
@@ -22,7 +23,7 @@ export default class MusicalDetails extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.stopPropagation = this.stopPropagation.bind(this);
+    this.viewMusic = this.viewMusic.bind(this);
   }
 
   changePlotView() {
@@ -98,8 +99,10 @@ export default class MusicalDetails extends React.Component {
     this.addToCollection(this.props.musical.musicalId, collection.name, collection.numMusicals);
   }
 
-  stopPropagation(event) {
-    event.preventDefault();
+  viewMusic() {
+    this.setState(state => ({
+      musicVisible: !state.musicVisible
+    }));
   }
 
   render() {
@@ -113,6 +116,7 @@ export default class MusicalDetails extends React.Component {
     const likeClass = this.props.musical.like ? 'like' : '';
     const musicUrl = this.props.musical.musicUrl.replace('https://music.apple.com/', 'https://embed.music.apple.com/');
     const newCollectionVisible = !this.state.newCollectionButton ? 'hidden' : '';
+    const musicVisible = !this.state.musicVisible ? 'hidden' : '';
     if (this.state.readMoreOpen && this.state.addCollectionOpen) {
       return (
         <div>
@@ -130,9 +134,10 @@ export default class MusicalDetails extends React.Component {
             <p onClick={this.changePlotView}>{plot}<span className="faded-text">Read Less</span></p>
           </div>
           <div className="music-button-container">
-            <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
+            <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
+            <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
               sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-              src={musicUrl} onClick={this.stopPropagation}></iframe>
+              src={musicUrl}></iframe>
           </div>
           <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related"/>
           <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} getAllCollections={this.props.getAllCollections}/>
@@ -181,9 +186,10 @@ export default class MusicalDetails extends React.Component {
             <p onClick={this.changePlotView}>{plot}<span className="faded-text">Read Less</span></p>
           </div>
           <div className="music-button-container">
-            <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
+            <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
+            <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
               sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-              src={musicUrl} onClick={this.stopPropagation}></iframe>
+              src={musicUrl}></iframe>
           </div>
           <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
           <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} getAllCollections={this.props.getAllCollections}/>
@@ -208,9 +214,10 @@ export default class MusicalDetails extends React.Component {
               <p onClick={this.changePlotView}>{plot}<span className="read-more-less">Read More</span></p>
             </div>
             <div className="music-button-container">
-              <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
+              <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
+              <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
                 sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-                src={musicUrl} onClick={this.stopPropagation}></iframe>
+                src={musicUrl}></iframe>
             </div>
             <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
           </div>
@@ -237,9 +244,10 @@ export default class MusicalDetails extends React.Component {
             </div>
             <div className="music-button-container">
 
-              <iframe allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
+              <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
+              <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
                 sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-                src={musicUrl} onClick={this.stopPropagation}></iframe>
+                src={musicUrl}></iframe>
             </div>
             <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
           </div>
