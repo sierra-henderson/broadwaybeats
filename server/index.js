@@ -813,7 +813,6 @@ select "am"."musicalId",
         join "genres" as "g" using ("genreId")
         where "lm"."userId" = $1
       group by "mg"."genreId", "g"."name"
-      having count("mg".*) > 3
     order by "totalInstances"
     limit 1
     ), "musicalStyleSuggestion" as (
@@ -825,7 +824,6 @@ select "am"."musicalId",
         join "musicalStyles" as "ms" using ("musicalStyleId")
         where "lm"."userId" = $1
       group by "msc"."musicalStyleId", "ms"."name"
-      having count("msc".*) > 4
       order by "totalInstances"
       limit 1
     ), "musicalStyleTen" as (
