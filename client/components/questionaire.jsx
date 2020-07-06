@@ -17,7 +17,6 @@ export default class Questionaire extends React.Component {
     this.changePage = this.changePage.bind(this);
     this.recordData = this.recordData.bind(this);
     this.submitSeeds = this.submitSeeds.bind(this);
-    this.submitQuestionaire = this.submitQuestionaire.bind(this);
     this.getLikedMusicals = this.getLikedMusicals.bind(this);
     this.addLikedMusicals = this.addLikedMusicals.bind(this);
   }
@@ -108,14 +107,6 @@ export default class Questionaire extends React.Component {
         musicalError: true
       });
     }
-  }
-
-  submitQuestionaire() {
-    fetch('/api/recommendations')
-      .then(res => res.json())
-      .then(data => {
-        this.props.setView('recommendation', {}, data);
-      });
   }
 
   render() {
@@ -260,7 +251,7 @@ export default class Questionaire extends React.Component {
             <div className="questionaire-initial">
               <h1 className="medium">Done!</h1>
               <i className="big-check fas fa-check-circle"></i>
-              <button className="reset filter-button" onClick={this.submitQuestionaire}>Get my musicals!</button>
+              <button className="reset filter-button" onClick={this.props.getAllRecommendations}>Get my musicals!</button>
             </div>
           </div>
         );
