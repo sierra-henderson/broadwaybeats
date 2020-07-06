@@ -42,7 +42,7 @@ app.get('/api/health-check', (req, res, next) => {
 
 app.get('/api/search/:query', getQuery);
 
-app.get('/api/filter/:tag/:genre/:musicalStyle', getFiltered);
+app.get('/api/filter', getFiltered);
 
 app.get('/api/musicals/:musicalId', getMusicalDetails);
 

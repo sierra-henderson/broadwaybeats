@@ -14,10 +14,10 @@ const getQuery = (req, res, next) => {
           "musicUrl",
           "musicalId"
       from "musicals"
-      where unaccent(lower("title")) ilike '%' ||  unaccent('${query}') || '%'
+      where unaccent(lower("title")) ilike '%' ||  unaccent($1) || '%'
       `;
-
-    db.query(sql)
+    const params = [query];
+    db.query(sql, params)
       .then(result => {
         const [one, two] = _.partition(result.rows, obj => {
           return obj.title.toLowerCase().replace('the ', '').replace('a ', '').startsWith(query);

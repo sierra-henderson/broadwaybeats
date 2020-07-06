@@ -42,27 +42,48 @@ export default class Filter extends React.Component {
   }
 
   handleSubmit() {
+    const searchParams = new URLSearchParams();
     const genres = Object.keys(this.state.genre).filter(id => this.state.genre[id]);
+    genres.forEach((el, i) => {
+      if (i === 0) {
+        searchParams.append('genre[]', el);
+      } else {
+        searchParams.append('genre', el);
+      }
+    });
     const musicalStyles = Object.keys(this.state.musicalStyle).filter(id => this.state.musicalStyle[id]);
+    musicalStyles.forEach((el, i) => {
+      if (i === 0) {
+        searchParams.append('musicalStyle[]', el);
+      } else {
+        searchParams.append('musicalStyle', el);
+      }
+    });
     const tags = Object.keys(this.state.tag).filter(id => this.state.tag[id]);
-    if (genres.length > 0 && musicalStyles.length > 0 && tags.length > 0) {
-      fetch(`/api/filter/${tags.join(',')}/${genres.join(',')}/${musicalStyles.join(',')}`)
-        .then(res => res.json())
-        .then(data => {
-          this.props.filterResults(data);
-          this.setState({
-            numResults: data.length
-          }, () => {
-            if (this.state.numResults > 0) {
-              this.props.toggleFilter();
-            }
-          });
+    tags.forEach((el, i) => {
+      if (i === 0) {
+        searchParams.append('tag[]', el);
+      } else {
+        searchParams.append('tag', el);
+      }
+    });
+    const queryString = searchParams.toString();
+    fetch(`/api/filter?${queryString}`)
+      .then(res => res.json())
+      .then(data => {
+        this.props.filterResults(data);
+        this.setState({
+          numResults: data.length
+        }, () => {
+          if (this.state.numResults > 0) {
+            this.props.toggleFilter();
+          }
         });
-    }
+      });
   }
 
   render() {
-    const resultsDisplay = this.state.numResults === null ? 'Please select at least one option from each category'
+    const resultsDisplay = this.state.numResults === null ? 'Please select at least one option'
       : this.state.numResults === 0 ? 'There are no results matching your query. Try removing some filters'
         : `${this.state.numResults} results`;
     const genreArr = [
