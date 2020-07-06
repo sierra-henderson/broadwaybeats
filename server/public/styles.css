@@ -643,6 +643,14 @@ iframe {
   flex-direction: column;
 }
 
+.fail-message {
+  border: 1px solid #D9042B;
+  background-color: rgba(217, 4, 43, 0.5);
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+}
+
 .hidden {
   display: none;
 }

@@ -11,12 +11,12 @@ export default class Questionaire extends React.Component {
       musicalStyle: {},
       likedMusical: {},
       questionaireMusicals: [],
-      test: null
+      musicalError: null,
+      seedsError: null
     };
     this.changePage = this.changePage.bind(this);
     this.recordData = this.recordData.bind(this);
     this.submitSeeds = this.submitSeeds.bind(this);
-    this.submitQuestionaire = this.submitQuestionaire.bind(this);
     this.getLikedMusicals = this.getLikedMusicals.bind(this);
     this.addLikedMusicals = this.addLikedMusicals.bind(this);
   }
@@ -64,11 +64,13 @@ export default class Questionaire extends React.Component {
       })
         .then(res => res.json())
         .then(data => {
-          this.setState({
-            test: data
-          }, this.getLikedMusicals);
+          this.getLikedMusicals();
         })
         .catch(err => console.error(err));
+    } else {
+      this.setState({
+        seedsError: true
+      });
     }
   }
 
@@ -88,7 +90,7 @@ export default class Questionaire extends React.Component {
     const obj = {
       lm: likedMusicals
     };
-    if (likedMusicals.length > 0) {
+    if (likedMusicals.length > 1) {
       fetch('/api/questionaire/like', {
         method: 'POST',
         headers: {
@@ -100,15 +102,11 @@ export default class Questionaire extends React.Component {
         .then(data => {
           this.changePage(5);
         });
-    }
-  }
-
-  submitQuestionaire() {
-    fetch('/api/recommendations')
-      .then(res => res.json())
-      .then(data => {
-        this.props.setView('recommendation', {}, data);
+    } else {
+      this.setState({
+        musicalError: true
       });
+    }
   }
 
   render() {
@@ -142,6 +140,8 @@ export default class Questionaire extends React.Component {
       { cardId: 23, image: '/images/adaptations-literature.jpg', name: 'Adaptations (Literature)', id: 1, category: 'genre' },
       { cardId: 24, image: '/images/science-fiction.jpg', name: 'Science Fiction', id: 26, category: 'genre' }
     ];
+    const modalClassLikes = !this.state.musicalError ? 'hidden' : '';
+    const modalClassSeeds = !this.state.seedsError ? 'hidden' : '';
     switch (this.state.page) {
       case 0:
         return (
@@ -207,6 +207,9 @@ export default class Questionaire extends React.Component {
                 <i className="fas fa-check fa-2x" onClick={this.submitSeeds}></i>
               </div>
               <h1>Is there anything else you look for in a musical?</h1>
+              <div className={`fail-message ${modalClassSeeds}`}>
+                <p>Please choose at least one genre and musical style.</p>
+              </div>
               <div className="boxed-cards-container">
                 {
                   pageThree.map(card => {
@@ -226,7 +229,10 @@ export default class Questionaire extends React.Component {
               <div className="page-toggles align-right">
                 <i className="fas fa-check fa-2x" onClick={this.addLikedMusicals}></i>
               </div>
-              <h1>Almost done: pick any musicals you already love!</h1>
+              <h1>Almost done: pick any musicals you already love! (pick at least two)</h1>
+              <div className={`fail-message ${modalClassLikes}`}>
+                <p>Please like at least two musicals before moving on.</p>
+              </div>
               <div className="boxed-cards-container">
                 {
                   this.state.questionaireMusicals.map(musical => {
@@ -245,7 +251,7 @@ export default class Questionaire extends React.Component {
             <div className="questionaire-initial">
               <h1 className="medium">Done!</h1>
               <i className="big-check fas fa-check-circle"></i>
-              <button className="reset filter-button" onClick={this.submitQuestionaire}>Get my musicals!</button>
+              <button className="reset filter-button" onClick={this.props.getAllRecommendations}>Get my musicals!</button>
             </div>
           </div>
         );
