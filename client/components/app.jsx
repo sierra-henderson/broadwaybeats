@@ -27,7 +27,7 @@ export default class App extends React.Component {
   }
 
   setView(view, params, related) {
-    if (view === 'recommendation' || view === 'home') {
+    if (view === 'home') {
       this.setState({
         view: view,
         params: params,
