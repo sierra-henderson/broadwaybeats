@@ -14,6 +14,7 @@ const postSignup = require('./modules/postSignup');
 const postQuestionnaireSeeds = require('./modules/postQuestionnaireSeeds');
 const getSeedMusicals = require('./modules/getSeedMusicals');
 const postQuestionnaireLikes = require('./modules/postQuestionnaireLikes');
+const getRecommendations = require('./modules/getRecommendations');
 const getLikedMusical = require('./modules/getLikedMusical');
 const postLikedMusical = require('./modules/postLikedMusical');
 const deleteLikedMusical = require('./modules/deleteLikedMusical');
@@ -54,6 +55,8 @@ app.post('/api/questionaire/seeds', postQuestionnaireSeeds);
 app.get('/api/questionaire/seedMusicals', getSeedMusicals);
 
 app.post('/api/questionaire/like', postQuestionnaireLikes);
+
+app.get('/api/recommendations', getRecommendations);
 
 app.get('/api/musicals/:musicalId/like', getLikedMusical);
 
