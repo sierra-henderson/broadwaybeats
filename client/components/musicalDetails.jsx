@@ -1,4 +1,5 @@
 import React from 'react';
+import TopNav from './topNav';
 import BottomNav from './bottomNav';
 import ScrollingBar from './scrollingBar';
 import CollectionCard from './collection-card';
@@ -119,100 +120,112 @@ export default class MusicalDetails extends React.Component {
     const musicVisible = !this.state.musicVisible ? 'hidden' : '';
     if (this.state.readMoreOpen && this.state.addCollectionOpen) {
       return (
-        <div className="musical-details-container">
-          <div className="info-container">
-            <img className="details-image" src={this.props.musical.imageUrl} alt="" />
-            <h2>{this.props.musical.title}</h2>
-            <h5>{musicAndLyrics}</h5>
-            <div className="icon-group">
-              <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
-            </div>
-            <div className="add-collection">
-              <i className="fas fa-plus fa-lg"></i>
-              <h5>Add to collection</h5>
-            </div>
-            <p onClick={this.changePlotView}>{plot}<span className="faded-text">Read Less</span></p>
-          </div>
-          <div className="music-button-container">
-            <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
-            <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-              src={musicUrl}></iframe>
-          </div>
-          <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related"/>
-          <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} getAllCollections={this.props.getAllCollections}/>
-          <div className="modal-overlay">
-            <div className="modal-background">
-              <i id="closeModalButton" className="fas fa-times" onClick={this.closeModal}></i>
-              <h3>Add to Collections</h3>
-              <div className="center">
-                <button className="filter-button add-to-collection-button" onClick={this.openButtonModal}>New Collection</button>
-              </div>
-              {
-                this.props.collections.map(collection => {
-                  return <CollectionCard callback={this.handleCollectionClick} key={collection.collectionId} collection={collection} viewModal={false}/>;
-                })
-              }
-            </div>
-          </div>
-          <div className={`modal-overlay button-modal ${newCollectionVisible}`}>
-            <div className="button-modal-content">
-              <h2>New Collection</h2>
-              <form onSubmit={this.handleSubmit} onReset={this.handleReset}>
-                <input type="text" className="add-collection-input" placeholder="Collection Name" value={this.state.value} onChange={this.handleChange} />
-                <div className="button-group collection">
-                  <button className="reset filter-button" type="reset">Cancel</button>
-                  <button className="submit filter-button" type="submit">Confirm</button>
+        <div>
+          <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+          <div className="musical-details-container">
+            <div className="info-container">
+              <img className="details-image" src={this.props.musical.imageUrl} alt="" />
+              <div className="details-text">
+                <h2>{this.props.musical.title}</h2>
+                <h5>{musicAndLyrics}</h5>
+                <div className="icon-group">
+                  <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
                 </div>
-              </form>
+                <div className="add-collection">
+                  <i className="fas fa-plus fa-lg"></i>
+                  <h5>Add to collection</h5>
+                </div>
+              </div>
+            </div>
+            <p className="plot" onClick={this.changePlotView}>{plot}<span className="read-more-less">Read More</span></p>
+            <div className="music-button-container">
+              <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
+              <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
+                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+                src={musicUrl}></iframe>
+            </div>
+            <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
+            <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} getAllCollections={this.props.getAllCollections} />
+            <div className="modal-overlay">
+              <div className="modal-background">
+                <i id="closeModalButton" className="fas fa-times" onClick={this.closeModal}></i>
+                <h3>Add to Collections</h3>
+                <div className="center">
+                  <button className="filter-button add-to-collection-button" onClick={this.openButtonModal}>New Collection</button>
+                </div>
+                {
+                  this.props.collections.map(collection => {
+                    return <CollectionCard callback={this.handleCollectionClick} key={collection.collectionId} collection={collection} viewModal={false} />;
+                  })
+                }
+              </div>
+            </div>
+            <div className={`modal-overlay button-modal ${newCollectionVisible}`}>
+              <div className="button-modal-content">
+                <h2>New Collection</h2>
+                <form onSubmit={this.handleSubmit} onReset={this.handleReset}>
+                  <input type="text" className="add-collection-input" placeholder="Collection Name" value={this.state.value} onChange={this.handleChange} />
+                  <div className="button-group collection">
+                    <button className="reset filter-button" type="reset">Cancel</button>
+                    <button className="submit filter-button" type="submit">Confirm</button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       );
     } else if (this.state.readMoreOpen && !this.state.addCollectionOpen) {
       return (
-        <div className="musical-details-container">
-          <div className="info-container">
-            <img className="details-image" src={this.props.musical.imageUrl} alt="" />
-            <h2>{this.props.musical.title}</h2>
-            <h5>{musicAndLyrics}</h5>
-            <div className="icon-group">
-              <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
+        <div>
+          <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+          <div className="musical-details-container">
+            <div className="info-container">
+              <img className="details-image" src={this.props.musical.imageUrl} alt="" />
+              <div className="details-text">
+                <h2>{this.props.musical.title}</h2>
+                <h5>{musicAndLyrics}</h5>
+                <div className="icon-group">
+                  <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
+                </div>
+                <div className="add-collection">
+                  <i className="fas fa-plus fa-lg"></i>
+                  <h5>Add to collection</h5>
+                </div>
+              </div>
             </div>
-            <div className="add-collection" onClick={this.handleAddCollection}>
-              <i className="fas fa-plus fa-lg"></i>
-              <h5>Add to collection</h5>
+            <p className="plot" onClick={this.changePlotView}>{plot}<span className="read-more-less">Read More</span></p>
+            <div className="music-button-container">
+              <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
+              <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
+                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+                src={musicUrl}></iframe>
             </div>
-            <p onClick={this.changePlotView}>{plot}<span className="faded-text">Read Less</span></p>
+            <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
+            <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} getAllCollections={this.props.getAllCollections} />
           </div>
-          <div className="music-button-container">
-            <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
-            <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
-              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-              src={musicUrl}></iframe>
-          </div>
-          <ScrollingBar setView={this.props.setView} list={this.props.related} header="Related" />
-          <BottomNav getAllRecommendations={this.props.getAllRecommendations} setView={this.props.setView} getAllCollections={this.props.getAllCollections}/>
         </div>
       );
     } else if (!this.state.readMoreOpen && !this.state.addCollectionOpen) {
       return (
         <div>
+          <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
           <div className="musical-details-container">
             <div className="info-container">
               <img className="details-image" src={this.props.musical.imageUrl} alt="" />
-              <h2>{this.props.musical.title}</h2>
-              <h5>{musicAndLyrics}</h5>
-              <div className="icon-group">
-                <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
-
+              <div className="details-text">
+                <h2>{this.props.musical.title}</h2>
+                <h5>{musicAndLyrics}</h5>
+                <div className="icon-group">
+                  <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
+                </div>
+                <div className="add-collection">
+                  <i className="fas fa-plus fa-lg"></i>
+                  <h5>Add to collection</h5>
+                </div>
               </div>
-              <div className="add-collection" onClick={this.handleAddCollection}>
-                <i className="fas fa-plus fa-lg"></i>
-                <h5>Add to collection</h5>
-              </div>
-              <p onClick={this.changePlotView}>{plot}<span className="read-more-less">Read More</span></p>
             </div>
+            <p className="plot" onClick={this.changePlotView}>{plot}<span className="read-more-less">Read More</span></p>
             <div className="music-button-container">
               <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>
               <iframe className={`${musicVisible}`} allow="autoplay *; encrypted-media *;" frameBorder="0" height="450"
@@ -227,21 +240,23 @@ export default class MusicalDetails extends React.Component {
     } else if (!this.state.readMoreOpen && this.state.addCollectionOpen) {
       return (
         <div>
+          <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
           <div className="musical-details-container">
             <div className="info-container">
               <img className="details-image" src={this.props.musical.imageUrl} alt="" />
-              <h2>{this.props.musical.title}</h2>
-              <h5>{musicAndLyrics}</h5>
-              <div className="icon-group">
-                <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
-
+              <div className="details-text">
+                <h2>{this.props.musical.title}</h2>
+                <h5>{musicAndLyrics}</h5>
+                <div className="icon-group">
+                  <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
+                </div>
+                <div className="add-collection">
+                  <i className="fas fa-plus fa-lg"></i>
+                  <h5>Add to collection</h5>
+                </div>
               </div>
-              <div className="add-collection">
-                <i className="fas fa-plus fa-lg"></i>
-                <h5>Add to collection</h5>
-              </div>
-              <p onClick={this.changePlotView}>{plot}<span className="read-more-less">Read More</span></p>
             </div>
+            <p className="plot" onClick={this.changePlotView}>{plot}<span className="read-more-less">Read More</span></p>
             <div className="music-button-container">
 
               <button className="play-music" onClick={this.viewMusic}>Listen on Apple Music</button>

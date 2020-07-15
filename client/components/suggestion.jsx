@@ -1,5 +1,6 @@
 import React from 'react';
 import BottomNav from './bottomNav';
+import TopNav from './topNav';
 
 export default class Suggestion extends React.Component {
   constructor(props) {
@@ -62,21 +63,25 @@ export default class Suggestion extends React.Component {
   render() {
     const modalClass = !this.state.messageModal ? 'hidden' : '';
     return (
-      <div className="suggestion-container">
-        <h1>Can&apos;t find the musical you want?</h1>
-        <h4>Tell us a little about it and we&apos;ll try to add it to the site as soon as possible.</h4>
-        <div className={`success-message ${modalClass}`}>
-          <p>Thanks for submitting! We&apos;ll review your suggestion shortly.</p>
+      <div>
+        <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+        <div className="suggestion-container">
+          <h1>Can&apos;t find the musical you want?</h1>
+          <h4>Tell us a little about it and we&apos;ll try to add it to the site as soon as possible.</h4>
+          <div className={`success-message ${modalClass}`}>
+            <p>Thanks for submitting! We&apos;ll review your suggestion shortly.</p>
+          </div>
+          <form onSubmit={this.handleSubmit}>
+            <input type="text" className="input-rounded" onChange={this.handleChangeTitle} value={this.state.title} placeholder="Title" />
+            <input type="text" className="input-rounded" onChange={this.handleChangeComposer} value={this.state.composer} placeholder="Composer" />
+            <input type="text" className="input-rounded" onChange={this.handleChangeNotes} value={this.state.notes} placeholder="Any notes on genre, musical style" />
+            <p className="faded-text">*At this time, we only support musicals available on Apple Music</p>
+            <button className="filter-button reset" type="submit">Submit</button>
+          </form>
+          <BottomNav getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} setView={this.props.setView} />
         </div>
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" className="input-rounded" onChange={this.handleChangeTitle} value={this.state.title} placeholder="Title"/>
-          <input type="text" className="input-rounded" onChange={this.handleChangeComposer} value={this.state.composer} placeholder="Composer"/>
-          <input type="text" className="input-rounded" onChange={this.handleChangeNotes} value={this.state.notes} placeholder="Any notes on genre, musical style"/>
-          <p className="faded-text">*At this time, we only support musicals available on Apple Music</p>
-          <button className="filter-button reset" type="submit">Submit</button>
-        </form>
-        <BottomNav getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} setView={this.props.setView} />
       </div>
+
     );
   }
 }
