@@ -1,4 +1,5 @@
 import React from 'react';
+import TopNav from './topNav';
 import BottomNav from './bottomNav';
 import ScrollingBar from './scrollingBar';
 
@@ -6,6 +7,7 @@ export default class Home extends React.Component {
   render() {
     return (
       <div>
+        <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
         <div className="home-container">
           <ScrollingBar setView={this.props.setView} list={this.props.musicalList.recommendations} header="Your Recommendations" />
           {

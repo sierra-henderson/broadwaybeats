@@ -291,6 +291,10 @@ iframe {
   overflow-x: auto;
 }
 
+.musical-details-container .scroll-bar {
+  max-width: 1200px;
+}
+
 .card h4 {
   text-align: center;
   margin: 0.5rem;
@@ -387,7 +391,7 @@ iframe {
 }
 
 .info-container {
-  padding: 1rem;
+  padding: 1rem 1rem 0 1rem;
 }
 
 .info-container h2 {
@@ -396,7 +400,6 @@ iframe {
 
 .info-container img {
   width: 100%;
-  max-width: 500px;
   margin: 0 auto;
 }
 
@@ -430,6 +433,10 @@ iframe {
   color: #09030D;
 }
 
+.plot {
+  margin: 0 1rem;
+}
+
 .play-music {
   border-radius: 100px;
   background-color: #09030D;
@@ -438,6 +445,7 @@ iframe {
   font-size: 1rem;
   padding: 0.3rem 2rem;
   border: none;
+  margin-top: 1rem;
 }
 
 .music-button-container {
@@ -496,6 +504,11 @@ iframe {
 
 .pointer-icon {
   margin-right: 0.5rem;
+}
+
+.musical-details-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .musical-details-container,
@@ -651,6 +664,89 @@ iframe {
   padding: 0.75rem;
 }
 
+.top-nav {
+  display: none;
+}
+
+.top-nav-container {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand img {
+  height: 2.5rem;
+  margin-right: 0.5rem
+}
+
+.brand h3 {
+  font-size: 1.5rem;
+}
+
+.top-nav h3 {
+  margin-bottom: 0;
+  margin-right: 2rem;
+}
+
+.nav-options {
+  margin-top: 0.3rem;
+}
+
 .hidden {
   display: none;
+}
+
+@media only screen and (min-width: 550px) {
+  .info-container {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .info-container img {
+    margin: 0;
+    margin-right: 1rem;
+    width: 40vw;
+    max-width: 300px;
+  }
+
+  .info-container h2,
+  .info-container h5,
+  .info-container i {
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .info-container h2 {
+    font-size: 2rem;
+  }
+
+  .info-container h5 {
+    font-size: 1.1rem;
+  }
+
+  .icon-group i {
+    font-size: 2rem;
+  }
+
+  h3.related {
+    font-size: 1.5rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .top-nav {
+    display: block;
+    border-bottom: 1px solid #ebebeb;
+  }
+
+  .bottom-nav {
+    display: none;
+  }
 }

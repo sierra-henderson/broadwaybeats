@@ -1,6 +1,8 @@
 # Broadway Beats
 A dynamic web application for musical theatre lovers who want to receive personalized recommendations based on the type of musicals they listen to. **Work In Progress**
 
+[Live Site](https://broadwaybeats.sierrahenderson.com/)
+
 ## Features
 1. User can submit their preferred genres and musical styles in the form of a questionnaire
 2. User can view their recommendations

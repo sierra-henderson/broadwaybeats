@@ -1,5 +1,6 @@
 import React from 'react';
 import BottomNav from './bottomNav';
+import TopNav from './topNav';
 import CollectionCard from './collection-card';
 import CollectionItem from './collectionItem';
 
@@ -124,23 +125,31 @@ export default class Collections extends React.Component {
     if (this.state.collectionOpen) {
       if (this.state.activeCollection.length > 0) {
         return (
-          <div className="collections-container">
-            <h1>{this.state.activeCollectionName}</h1>
-            {
-              this.state.activeCollection.map(item => {
-                return <CollectionItem key={item.musicalId} item={item} setView={this.props.setView} deleteMusicalFromCollection={this.deleteMusicalFromCollection} />;
-              })
-            }
-            <button className="filter-button submit" onClick={this.backToCollections}><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
-            <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+          <div>
+            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <div className="collections-container">
+              <h1>{this.state.activeCollectionName}</h1>
+              {
+                this.state.activeCollection.map(item => {
+                  return <CollectionItem key={item.musicalId} item={item} setView={this.props.setView} deleteMusicalFromCollection={this.deleteMusicalFromCollection} />;
+                })
+              }
+              <button className="filter-button submit" onClick={this.backToCollections}><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
+              <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            </div>
           </div>
+
         );
       } else {
         return (
-          <div className="collections-container">
-            <h1>{this.state.activeCollectionName}</h1>
-            <p className="no-items">You don&apos;t have any musicals in here yet!</p>
-            <button className="filter-button submit" onClick={this.backToCollections}><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
+          <div>
+            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <div className="collections-container">
+              <h1>{this.state.activeCollectionName}</h1>
+              <p className="no-items">You don&apos;t have any musicals in here yet!</p>
+              <button className="filter-button submit" onClick={this.backToCollections}><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
+              <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            </div>
           </div>
         );
       }
@@ -148,6 +157,7 @@ export default class Collections extends React.Component {
       if (this.props.collections.length === 0) {
         return (
           <div>
+            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
             <div className="collections-container">
               <h1>My Collections</h1>
               <h3>You currently have no collections!</h3>
@@ -158,6 +168,7 @@ export default class Collections extends React.Component {
       } else if (this.state.buttonModal.open && this.state.buttonModal.mode === 'update') {
         return (
           <div>
+            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
             <div className="collections-container">
               <h1>My Collections</h1>
               {
@@ -184,6 +195,7 @@ export default class Collections extends React.Component {
       } else if (this.state.buttonModal.open && this.state.buttonModal.mode === 'delete') {
         return (
           <div>
+            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
             <div className="collections-container">
               <h1>My Collections</h1>
               {
@@ -206,14 +218,17 @@ export default class Collections extends React.Component {
         );
       } else {
         return (
-          <div className="collections-container">
-            <h1>My Collections</h1>
-            {
-              this.props.collections.map(collection => {
-                return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} openButtonModal={this.openButtonModal} viewModal={true}/>;
-              })
-            }
-            <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+          <div>
+            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <div className="collections-container">
+              <h1>My Collections</h1>
+              {
+                this.props.collections.map(collection => {
+                  return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} openButtonModal={this.openButtonModal} viewModal={true} />;
+                })
+              }
+              <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            </div>
           </div>
         );
       }
