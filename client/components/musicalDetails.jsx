@@ -131,7 +131,7 @@ export default class MusicalDetails extends React.Component {
                 <div className="icon-group">
                   <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
                 </div>
-                <div className="add-collection">
+                <div className="add-collection" onClick={this.handleAddCollection}>
                   <i className="fas fa-plus fa-lg"></i>
                   <h5>Add to collection</h5>
                 </div>
@@ -188,7 +188,7 @@ export default class MusicalDetails extends React.Component {
                 <div className="icon-group">
                   <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
                 </div>
-                <div className="add-collection">
+                <div className="add-collection" onClick={this.handleAddCollection}>
                   <i className="fas fa-plus fa-lg"></i>
                   <h5>Add to collection</h5>
                 </div>
@@ -219,7 +219,7 @@ export default class MusicalDetails extends React.Component {
                 <div className="icon-group">
                   <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
                 </div>
-                <div className="add-collection">
+                <div className="add-collection" onClick={this.handleAddCollection}>
                   <i className="fas fa-plus fa-lg"></i>
                   <h5>Add to collection</h5>
                 </div>
@@ -250,7 +250,7 @@ export default class MusicalDetails extends React.Component {
                 <div className="icon-group">
                   <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
                 </div>
-                <div className="add-collection">
+                <div className="add-collection" onClick={this.handleAddCollection}>
                   <i className="fas fa-plus fa-lg"></i>
                   <h5>Add to collection</h5>
                 </div>
