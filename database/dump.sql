@@ -460,10 +460,8 @@ ALTER TABLE ONLY public.users ALTER COLUMN "userId" SET DEFAULT nextval('public.
 
 COPY public."collectionItems" ("collectionId", "musicalId") FROM stdin;
 11	81
-7	53
-15	416
-16	42
-16	369
+18	360
+7	161
 \.
 
 
@@ -472,13 +470,10 @@ COPY public."collectionItems" ("collectionId", "musicalId") FROM stdin;
 --
 
 COPY public.collections ("collectionId", "userId", name, "imageUrl") FROM stdin;
-8	5	Pick Me Up	/images/empty-collection.png
+7	5	Audition Song Ideas	https://is4-ssl.mzstatic.com/image/thumb/Features/77/7b/7d/dj.xdqznyyn.jpg/1000x1000bb.jpg
 11	5	Angsty Musicals	https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/26/22/46/262246c5-92a3-6c2d-c481-c0e516725dac/791558966039.jpg/1000x1000bb.jpg
 10	5	Considerations for 2021	/images/empty-collection.png
-7	5	Audition Song Ideas	https://is5-ssl.mzstatic.com/image/thumb/Music128/v4/a1/70/ea/a170ea2d-1ec2-231e-51f2-3024b21c8b17/791558948332.jpg/1000x1000bb.jpeg
-14	1	Folksy Musicals	/images/empty-collection.png
-15	12	Interesting	https://is5-ssl.mzstatic.com/image/thumb/Music20/v4/7a/8c/c8/7a8cc883-a733-0c33-b8c5-821f4bdf61dd/803607163525_cover.jpg/1000x1000bb.jpeg
-16	16	I've Been In This	https://is5-ssl.mzstatic.com/image/thumb/Music128/v4/fe/08/60/fe0860b2-8784-2a30-9f50-8ab25623217c/791558945232.jpg/1000x1000bb.jpeg
+18	1	Folk Musicals	https://is3-ssl.mzstatic.com/image/thumb/Music128/v4/27/b7/84/27b784a9-0611-dba8-ddc6-d1beca4d1046/00888072041752.rgb.jpg/1000x1000bb.jpeg
 \.
 
 
@@ -487,14 +482,6 @@ COPY public.collections ("collectionId", "userId", name, "imageUrl") FROM stdin;
 --
 
 COPY public."genreSeeds" ("userId", "genreId") FROM stdin;
-2	7
-2	14
-4	4
-4	18
-4	20
-3	10
-3	15
-3	20
 5	3
 5	4
 5	15
@@ -503,17 +490,6 @@ COPY public."genreSeeds" ("userId", "genreId") FROM stdin;
 1	12
 1	20
 1	23
-12	4
-12	12
-12	15
-15	1
-15	10
-15	18
-15	20
-16	7
-16	8
-16	22
-16	23
 \.
 
 
@@ -557,31 +533,6 @@ COPY public.genres ("genreId", name) FROM stdin;
 --
 
 COPY public."likedMusicals" ("userId", "musicalId", "like") FROM stdin;
-4	9	t
-4	63	t
-4	101	t
-2	227	t
-2	66	t
-2	74	t
-2	55	t
-2	81	t
-2	184	t
-4	446	t
-4	269	t
-4	35	t
-4	422	t
-4	132	t
-4	426	t
-3	101	t
-3	159	t
-3	192	t
-3	222	t
-3	253	t
-3	397	t
-3	435	t
-3	80	t
-3	384	t
-3	339	t
 5	114	t
 5	303	t
 5	315	t
@@ -607,45 +558,8 @@ COPY public."likedMusicals" ("userId", "musicalId", "like") FROM stdin;
 1	139	t
 1	85	t
 1	153	t
-12	35	t
-12	77	t
-12	101	t
-12	159	t
-12	253	t
-12	422	t
-12	446	t
-12	81	t
-12	120	t
-12	222	t
-12	246	t
-12	63	t
-12	435	t
-12	85	t
-15	103	t
-15	132	t
-15	339	t
-15	392	t
-15	426	t
-15	448	t
-15	85	t
-15	21	t
-15	78	t
-15	300	t
-15	72	t
-15	253	t
-15	196	t
-16	86	t
-16	176	t
-16	319	t
-16	324	t
-16	459	t
-16	18	t
-16	171	t
-16	273	t
-16	327	t
-16	260	t
-16	9	t
-16	344	t
+1	81	t
+1	435	t
 \.
 
 
@@ -2733,25 +2647,10 @@ COPY public."musicalStyleCategories" ("musicalId", "musicalStyleId") FROM stdin;
 --
 
 COPY public."musicalStyleSeeds" ("userId", "musicalStyleId") FROM stdin;
-2	17
-2	8
-4	11
-4	12
-3	7
-3	12
 5	8
 1	7
 1	8
 1	12
-12	11
-12	12
-12	14
-12	15
-15	6
-15	11
-16	6
-16	8
-16	15
 \.
 
 
@@ -4043,7 +3942,6 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 120	Falsettos	William Finn	William Finn	Updated version! Materials are based on the 2016 Broadway revival.A seamless pairing of March of the Falsettos and Falsettoland, two acclaimed Off-Broadway musicals written nearly a decade apart, Falsettos is the tale of a neurotic New Yorker named Marvin, who leaves his wife Trina and young son Jason to live with his lover, Whizzer. In time, Trina marries his psychiatrist, Whizzer leaves him, and Marvin ends up alone. Two years later, Marvin and Whizzer reunite on the eve of Jason’s bar mitzvah, just as AIDS is beginning its insidious spread. With the help of their neighbors, Charlotte and Cordelia, Marvin and his entire family learn to grow up and face their future with love and dignity.	https://music.apple.com/us/album/falsettos-2016-broadway-cast-recording/1271833110	https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/a1/77/d6/a177d64a-cd1a-1ef4-b62d-a8b2d4ad115b/791558450934.jpg/1000x1000bb.jpeg
 167	Heathers The Musical	Kevin Murphy & Laurence O’Keefe	Kevin Murphy & Laurence O’Keefe	Heathers The Musical is the darkly delicious story of Veronica Sawyer, a brainy, beautiful teenage misfit who hustles her way into the most powerful and ruthless clique at Westerberg High: the Heathers. But before she can get comfortable atop the high school food chain, Veronica falls in love with the dangerously sexy new kid J.D. When Heather Chandler, the Almighty, kicks her out of the group, Veronica decides to bite the bullet and kiss Heather’s aerobicized ass...but J.D. has another plan for that bullet.	https://music.apple.com/us/album/heathers-the-musical-world-premiere-cast-recording/887521244	https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/0d/3d/b8/0d3db88c-f42f-4ff8-4074-97a0eb7ea735/859712752819_cover.jpg/1000x1000bb.jpeg
 121	Fame The Musical	Steve Margoshes	Jacques Levy	An unmistakable title from the unforgettable film and television franchise, Fame The Musical inspired generations to fight for fame and light up the sky like a flame! Conceived and developed by David De Silva – now known affectionately to the planet as "Father Fame" – this high-octane musical features the Academy Award-winning title song and a host of other catchy pop numbers. The show follows the final class of New York City's celebrated High School for the Performing Arts from their admission in 1980 to their graduation in 1984. All of the struggles, fears and triumphs – from prejudice to substance abuse – are depicted with razor-sharp focus as the young artists navigate the worlds of music, drama and dance. Fame is an international sensation that continues to reach new generations of performers and audience members. The show provides great opportunities to feature a diverse talent pool and showcase artistic mediums like dancing, singing, acting, rapping and musicianship.	https://music.apple.com/us/album/fame-the-musical/15865869	https://is3-ssl.mzstatic.com/image/thumb/Music/y2004/m06/d21/h12/s05.rwjsxjmd.jpg/1000x1000bb.jpeg
-122	Fanny	Harold Rome	Harold Rome	Based on Marcel Pagnol’s stage and film trilogy Marius, Fanny and César, Fanny is a romantic tale of love, secrets and passion set in the seaport milieu of old Marseille.Fanny opened on Broadway at the Majestic Theatre on November 4, 1954, starring Ezio Pinza, Walter Slezak, Florence Henderson and William Tabbert. The show later moved to the Belasco Theatre, playing a total of 888 performances.	https://music.apple.com/us/album/funny-thing-happened-on-way-to-forum-original-broadway/463188376	https://is2-ssl.mzstatic.com/image/thumb/Music/5a/33/9c/mzi.mutxeuwt.jpg/1000x1000bb.jpeg
 123	Far From Heaven	Scott Frankel	Michael Korie	Cathy Whitaker seems to be the picture-perfect wife and mother in 1957 suburban Connecticut. But roiling beneath the surface, secret longings and forbidden desires cause her world to unravel, with incendiary consequences.	https://music.apple.com/us/album/far-from-heaven-original-cast-recording/737925128	https://is1-ssl.mzstatic.com/image/thumb/Music/v4/df/25/d4/df25d4af-3cea-0e2b-823f-51c69022a79a/803607131920_cover.tif/1000x1000bb.jpeg
 124	Fiddler on the Roof	Jerry Bock	Sheldon Harnick	Winner of nine Tony Awards when it debuted in 1964, Fiddler on the Roof is the brainchild of Broadway legends, Jerome Robbins and Harold Prince; songwriters, Jerry Bock and Sheldon Harnick; and bookwriter, Joseph Stein. Touching audiences worldwide with its humor, warmth and honesty, this universal show is a staple of the musical theatre canon. Set in the little village of Anatevka, the story centers on Tevye, a poor milkman, and his five daughters. With the help of a colorful and tight-knit Jewish community, Tevye tries to protect his daughters and instill them with traditional values in the face of changing social mores and the growing anti-Semitism of Czarist Russia. Rich in historical and ethnic detail, Fiddler on the Roof's universal theme of tradition cuts across barriers of race, class, nationality and religion, leaving audiences crying tears of laughter, joy and sadness.	https://music.apple.com/us/album/fiddler-on-the-roof-original-broadway-cast-recording/401383466	https://is3-ssl.mzstatic.com/image/thumb/Music/fa/08/86/mzi.yyapvphc.jpg/1000x1000bb.jpeg
 125	Finian’s Rainbow	Burton Lane	E. Y. Harburg	Aging Irish dreamer Finian McLonerghan and his savvy daughter Sharon travel to America to bury a small pot of gold, which Finian believes will grow to yield millions. When they arrive in fictional Rainbow Valley in Missitucky, the McLonerghans encounter goodhearted sharecroppers, bigoted blowhard politicians... and a romantic leprechaun! One of America's classic and most original musicals, FINIAN'S RAINBOW remains as timely now as when it was first written.	https://music.apple.com/us/album/finians-rainbow-new-broadway-cast-recording/892827397	https://is2-ssl.mzstatic.com/image/thumb/Music/v4/37/55/32/375532a6-fa88-4225-78b0-11ecdbaf5690/803607108823_cover.tif/1000x1000bb.jpg
@@ -4097,7 +3995,6 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 175	How Now, Dow Jones	Elmer Bernstein	Carolyn Leigh	This musical comedy follows Kate, the voice of Dow Jones, whose fiance won't marry her until the Dow Jones Averages hit 1,000. Bribery, adultery, and neurotic Republicans abound in this madcap and timely tale set in the heart of Wall Street.The original Broadway production of How Now, Dow Jones opened on December 7, 1967 starring Tony Roberts, Marlyn Mason, and Brenda Vaccaro. The David Merrick production was directed by George Abbott, with choreography by Gillian Lynne (and an uncredited Michael Bennett). It played 220 performances and was nominated for six Tony® Awards, including Best Musical, winning one for co-star Hiram Sherman.	https://music.apple.com/us/album/how-now-dow-jones-original-broadway-cast-recording/258594511	https://is3-ssl.mzstatic.com/image/thumb/Music/6c/5f/84/mzi.etjjrjsl.jpg/1000x1000bb.jpeg
 176	How to Succeed in Business without Really Trying	Frank Loesser	Frank Loesser	Big business means big laughs in this delightfully clever lampoon of life on the corporate ladder. A tune-filled comic gem that took Broadway by storm, winning both the Tony Award for Best Musical and a Pulitzer Prize, How to Succeed in Business without Really Trying boasts an exhilarating score by Frank Loesser, including "I Believe in You," "Brotherhood of Man" and "The Company Way." A satire of big business and all it holds sacred, How to Succeed in Business without Really Trying follows the rise of J. Pierrepont Finch, who uses a little handbook called How to Succeed in Business without Really Trying to climb the corporate ladder from lowly window washer to high-powered executive, tackling such familiar but potent dangers as the aggressively compliant "company man," the office party, backstabbing coworkers, caffeine addiction and, of course, true love. An irreverent and tuneful romp, jam-packed with sly, swift and sharp jabs to the funny bone, How to Succeed in Business without Really Trying is a surefire hit! This show requires a large cast, featuring many roles for all types of performers and a great opportunity to showcase your male ensemble.	https://music.apple.com/us/album/how-to-succeed-in-business-without-really-trying-new/358399543	https://is2-ssl.mzstatic.com/image/thumb/Music/6c/a8/00/mzi.uxsbqmju.jpg/1000x1000bb.jpeg
 177	I Can Get It For You Wholesale	Harold Rome	Harold Rome	Based on Jerome Weidman’s bestselling novel, I Can Get It For You Wholesale is the story of an ambitious young businessman artfully clawing his way to the top of the garment industry in 1930s New York. With humor and frankness, the show explores the perils of ambition and the price of success. Contrasting the swinging, jazzy rhythms of big city business with the earthy, traditional sounds of the characters’ Eastern European origins, I Can Get It For You Wholesale captures the energy and promise of a pivotal time in Jewish American history.I Can Get It For You Wholesale opened on Broadway at the Shubert Theatre on March 22, 1962, starring Elliott Gould, Lilian Roth and Marilyn Cooper. The show transferred to the Broadway Theatre and ran for a total of 300 performances. Barbra Streisand, who made her Broadway debut as Miss Marmelstein, earned a Tony nomination for Best Featured Actress in a Musical.	https://music.apple.com/us/album/i-can-get-it-for-you-wholesale-original-broadway-cast/289325523	https://is3-ssl.mzstatic.com/image/thumb/Music3/v4/90/e7/cf/90e7cf67-997a-4bbf-78f0-d54457081396/dj.zelkgbci.jpg/1000x1000bb.jpeg
-178	I Do! I Do!	Harvey Schmidt	Tom Jones	The story of a marriage is at the center of I Do! I Do!, an intimate and nostalgic work by Harvey Schmidt and Tom Jones (The Fantasticks). Written as a star vehicle for theatre legends, Mary Martin and Robert Preston, the original Broadway production received seven Tony Award nominations. The show begins with Michael and Agnes on their wedding day. Their vows behind them, they look forward to spending the rest of their lives together. We watch as they go through their wedding night jitters, raise a family and negotiate midlife crises. Michael eventually admits to his infidelity, and, although Agnes is angered by his actions, she forgives him and the couple reconciles. They rediscover how much they really need each other. Then, after 50 years of marriage, the couple leaves their house to the next pair of newlyweds. This touching story of two soul mates navigating the perils of life is set to a tuneful, charming score. With minimal set and costume requirements, I Do! I Do! is ideal for regional theatre companies with smaller troupes on a limited budget.	https://music.apple.com/us/album/i-do-i-do/272105075	https://is4-ssl.mzstatic.com/image/thumb/Music/5b/af/3c/mzi.aeqwywhw.jpg/1000x1000bb.jpgs
 179	I Love My Wife	Michael Stewart	Michael Stewart	A musical that takes place in Trenton, N.J.? Yes-- and a delightfully funny one too. It's about a would be menage a quatre-- two couples who want to plunge into liberated mutual sexuality but only manage to get their toes wet. The masculine pair of the foursome are Wally, a public relations man; and his friend Alvin, who's in the furniture moving business. Their respective wives in this escapade are Monica and Cleo. What is truly innovative about the show is putting the musicians on the stage-- not merely to play their instruments. Actually they are welded into the play, they sing, dress up in fancy clothes and keep commenting on the action.	https://music.apple.com/us/album/i-love-my-wife/1496217554	https://is5-ssl.mzstatic.com/image/thumb/Music113/v4/63/e5/06/63e50681-5f59-ed5a-a02b-d3b387f4d3a1/dj.ndiepggt.jpg/1000x1000bb.jpeg
 180	I Love You, You're Perfect, Now Change	Jimmy Roberts	Joe DiPietro	This celebration of the mating game takes on the truths and myths behind that contemporary conundrum know as 'the relationship.' Act I explores the journey from dating and waiting to love and marriage, while Act II reveals the agonies and triumphs of in-laws and newborns, trips in the family car and pick-up techniques of the geriatric set. This hilarious revue pays tribute to those who have loved and lost, to those who have fallen on their face at the portal of romance, to those who have dared to ask, 'Say, what are you doing Saturday night?'For the 2018 updated version of I Love You, You're Perfect, Now Change,Click Here	https://music.apple.com/us/album/i-love-you-youre-perfect-now-change-hilarious-new-musical/1440786486	https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/65/af/5f/65af5fad-730b-1963-742f-258121e8bb30/00030206577129.rgb.jpg/1000x1000bb.jpeg
 196	Jesus Christ Superstar	Andrew Lloyd Webber	Tim Rice	A rock opera based on the last week of Jesus’ life.	https://music.apple.com/us/album/jesus-christ-superstar-remastered-2005/1440895002	https://is3-ssl.mzstatic.com/image/thumb/Music128/v4/f2/05/b7/f205b729-fe8f-84c1-2396-a09728f35844/00602557594225.rgb.jpg/1000x1000bb.jpeg
@@ -4241,7 +4138,6 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 321	SHOUT! The Mod Musical	Various	Various	With its irresistible blend of hip-swiveling hits, eye-popping fashions and outrageous dance moves, SHOUT! The Mod Musical takes audiences back to the music, style and freedom of the 1960s. Created by Phillip George and David Lowenstein, SHOUT! features terrific new arrangements of such classic tunes as "To Sir with Love," "Downtown," "Son of a Preacher Man" and "Goldfinger." The review follows five groovy gals as they come of age during those glorious days that made England swing. Traveling in time from 1960 to 1970, SHOUT! chronicles the dawning liberation of women, from the rise of Dusty Springfield, Petula Clark and Cilla Black as independent women with major careers, to their American counterparts, redefining themselves in the face of changing attitudes about gender. With a shimmy and shake, the songs are tied together by hilarious sound bites from the period – from '60s advertisements to letters answered by an advice columnist who thinks that every problem can be solved with a "fetching new hair style and a new shade of lipstick." The songs in this delightful musical resonate with a timeless quality that appeals to every generation. A wonderful choice to showcase strong, female talent at any community theatre, high school or college.	https://music.apple.com/us/album/shout-original-cast-recording-the-mod-musical-soundtrack/202964056	https://is4-ssl.mzstatic.com/image/thumb/Music/30/f6/e5/mzi.imcscnxk.jpg/1000x1000bb.jpeg
 322	Show Boat	Jerome Kern	Oscar Hammerstein II	Spanning the years from 1880 to 1927, this lyrical masterpiece concerns the lives, loves and heartbreaks of three generations of show folk on the Mississippi, in Chicago and on Broadway (and their lifelong friends). The primary plot follows Magnolia, the naive daughter of the show boat captain, as she marries a gambler and moves with him to Chicago. His gambling continues as his debts compound, and soon he deserts her and their young daughter. A subplot concerns the potential arrest of Magnolia's selfless best friend on charges of miscegenation when it's discovered that she is of mixed race, and her subsequent downward spiral into despair. The passing of time reunites Magnolia and her now-grown daughter with her family on the show boat as well as with her husband, who eventually returns offering a hopeful second chance at familial fulfillment.	https://music.apple.com/us/album/showboat-original-cast-rsc-opera-north-production-first/204084992	https://is3-ssl.mzstatic.com/image/thumb/Music/2e/d3/03/mzi.olgwfrvz.tif/1000x1000bb.jpeg
 323	Shrek The Musical	Jeanine Tesori	David Lindsay-Abaire	Based on the Oscar-winning DreamWorks Animation film, Shrek The Musical is a Tony Award-winning fairy tale adventure, featuring all new songs from Jeanine Tesori (Thoroughly Modern Millie; Caroline, or Change) and a sidesplitting book by David Lindsay-Abaire. Shrek brings all the beloved characters you know from the film to life on stage and proves there's more to the story than meets the ears. "Once upon a time, there was a little ogre named Shrek...." And thus begins the tale of an unlikely hero who finds himself on a life-changing journey alongside a wisecracking Donkey and a feisty princess who resists her rescue. Throw in a short-tempered bad guy, a cookie with an attitude and over a dozen other fairy tale misfits, and you've got the kind of mess that calls for a real hero. Luckily, there's one on hand... and his name is Shrek. Shrek presents a treasure trove of creative opportunities, including costumes, sets, puppets (there is a fire-breathing dragon after all) and more! Irreverently fun for the whole family, Shrek proves that beauty is truly in the eye of the ogre.	https://music.apple.com/us/album/shrek-the-musical-original-cast-recording/1444088140	https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/9c/99/46/9c9946d2-bfe5-3e4f-afb3-c3b57c31b6e8/00602517970618.rgb.jpg/1000x1000bb.jpeg
-324	Side by Side by Sondheim	Jule Styne	Stephen Sondheim	Get ready to laugh, cry and fall in love with lyrics that are heartbreakingly true and music that captures the soaring emotions of a new generation with Side by Side by Sondheim. Simple and unpretentious, this Tony Award-winning musical is a perfect introduction to the work of this contemporary master and a must for diehard fans. Stephen Sondheim has been the leading composer of musical theatre for the past fifty years. His work is timeless. From the streets of ancient Rome, through nineteenth-century Japan and turn-of-the-century Sweden, to the high-rise apartments of 1970 Manhattan, his songs represent a definitive time and place, and yet move beyond their particular settings to speak to us all. Now, with this award-winning revue of his earlier work, some of the most lush, unforgettable songs from this musical theatre master are presented in one magical evening. Featuring music from Company, Follies, A Little Night Music, A Funny Thing Happened on the Way to the Forum, Anyone Can Whistle and Pacific Overtures, not to mention the classics written with musical theatre giants, Leonard Bernstein, Jule Styne and Richard Rodgers, this dazzling array of some of Sondheim's best-known songs demonstrates his masterful craft and astounding creativity. Minimal sets and costumes, a small cast and two pianos allow the brilliant songs to shine. The proceedings are run by a charming, pithy narrator whose virtually nonexistent musical requirements are ideal for a nonsinging, local celebrity with limited rehearsal time.	https://music.apple.com/us/album/west-side-story-new-broadway-cast-recording-2009/316530985	https://is2-ssl.mzstatic.com/image/thumb/Features/v4/b9/c5/2a/b9c52ab2-5343-97d5-4bb9-f6679b6c0f01/V4HttpAssetRepositoryClient-ticket.ldmsizdb.jpg-7201712960429847873.jpg/1000x1000bb.jpeg
 325	Side Show	Henry Krieger	Bill Russell	Based on the true story of conjoined twins Violet and Daisy Hilton, who became stars during the Depression, Side Show is a moving portrait of two women joined at the hip whose extraordinary bondage brings them fame but denies them love. Told almost entirely in song, the show follows Violet and Daisy's progression from England to America, around the vaudeville circuit, and to Hollywood on the eve of their appearance in the 1932 movie Freaks.	https://music.apple.com/us/album/side-show-original-cast-recording/262934635	https://is4-ssl.mzstatic.com/image/thumb/Music/5f/e0/33/mzi.almxpyte.jpg/1000x1000bb.jpeg
 326	Silk Stockings	Cole Porter	Cole Porter	The tense relations between Soviet Russia and the West are lovingly satirized in Silk Stockings, where agents of all kinds cross paths in Paris, far away from both Moscow and Hollywood.Silk Stockings opened on Broadway at the Imperial Theatre on February 24, 1955, starring Hildegarde Neff, Don Ameche and Gretchen Wyler. The show played for 478 performances.	https://music.apple.com/us/album/silk-stockings-original-broadway-cast-recording/796551270	https://is1-ssl.mzstatic.com/image/thumb/Music4/v4/82/06/21/82062133-d2c5-d5c7-ef64-0fd9a60670bf/886444415132.jpg/1000x1000bb.jpeg
 327	Singin' in the Rain	Arthur Freed, Nacio Herb Brown	Arthur Freed, Nacio Herb Brown	The "Greatest Movie Musical of All Time" is faithfully and lovingly adapted by Broadway legends, Betty Comden and Adolph Green, from their original award-winning screenplay in Singin' in the Rain. Each unforgettable scene, song and dance is accounted for, including the show-stopping title number, complete with an onstage rainstorm! Hilarious situations, snappy dialogue and a hit-parade score of Hollywood standards make Singin' in the Rain the perfect entertainment for any fan of the golden age of movie musicals. Singin' in the Rain has all the makings of a Tinseltown tabloid headline – the starlet, the leading man and a love affair that could change lives and make or break careers! In silent movies, Don Lockwood and Lina Lamont are a hot item but, behind the scenes, things aren't always as they appear on the big screen! Meanwhile, Lina's squeaky voice might be the end of her career in "talking pictures" without the help of a talented young actress to do the talking and singing for her. Filled with every memorable moment from the film and a downpour of unforgettable songs, Singin' in the Rain is a guaranteed hit for any theatre. The technical elements can be challenging but well worth the effort when the audience is left leaping to their feet. Three extrodinary roles for dancers and a tour de force comedic turn make this a perfect choice for any theatre with an abundance of talent ready to shine.	https://music.apple.com/us/album/singin-in-the-rain-original-cast-recording/539458302	https://is3-ssl.mzstatic.com/image/thumb/Music/v4/bf/8c/96/bf8c9641-9b2f-df37-f07b-b356868c7456/Cover.jpg/1000x1000bb.jpeg
@@ -4384,6 +4280,9 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 463	Your Own Thing	Hal Hester and Danny Apolinar	Hal Hester and Danny Apolinar	Your Own Thing is a rock musical loosely based on William Shakespeare’s Twelfth Night. Set in the late 1960s in the land of Illyria (which looks very much like New York City), it is a tale of separated twins, mistaken identities, love triangles and “doing your own thing.”Your Own Thing opened off-Broadway at the Orpheum Theatre on January 13, 1968 and played for 933 performances. The original cast included Leland Palmer, Marcia Rodd, Marian Mercer, Rusty (Russ) Thacker, Tom Ligon, John Kuhner, Michael Valenti, Igors Gavin, Imogene Bliss and Danny Apolinar.	https://music.apple.com/us/album/your-own-thing-original-off-broadway-cast-recording/332595114	https://is2-ssl.mzstatic.com/image/thumb/Features/03/8b/9c/dj.spbiojwy.jpg/1000x1000bb.jpeg
 464	Zombie Prom	Dana P. Rowe	John Dempsey	ZOMBIE PROM was produced at The Red Barn Theatre in Key West, Florida in February, 1993.  Joy Hawkins, director; Dana P. Rowe, musical director.	https://music.apple.com/us/album/zombie-prom-original-off-broadway-cast-recording/539771528	https://is1-ssl.mzstatic.com/image/thumb/Music/v4/f8/b3/17/f8b31799-9697-c7a2-57d9-9dc0fe42e4e5/Cover.jpg/1000x1000bb.jpeg
 78	Carmen Jones	Oscar Hammerstein II, Georges Bizet	Oscar Hammerstein II, Georges Bizet	In a Southern town during World War II, an army corporal named Joe is stationed near a parachute factory where Carmen Jones is employed. Fickle and flirtatious, Carmen manages to steal Joe away from his fiancée, and the army as well, and they run off to Chicago together. But Carmen loses interest in Joe when she meets and successfully woos Husky Miller, a prize fighter on his way to the top. Mad with jealousy, Joe waits for Carmen outside the stadium the night of Husky's big fight to make a last desperate plea for her love. When she denies him resolutely, he stabs her to death in a rage of passion, to the eerie accompaniment of the crowd inside the stadium cheering Husky's victory.Carmen Jones opened at the Brodway Theatre on December 2, 1943, starrring Muriel Smith as Carmen. The production ran for 503 performances. Otto Preminger directed a film adaptation of the musical in 1954, starring Dorothy Dandridge, Harry Belafonte and Pearl Bailey. In 2018, the Classic Stage Company revived Carmen Jones, under the direction of John Doyle, with Anika Noni Rose in the title role.	https://music.apple.com/us/album/carmen-jones-1943-original-broadway-cast-recording/1452590021	https://is3-ssl.mzstatic.com/image/thumb/Music114/v4/43/91/8f/43918f89-cda9-2c33-18dc-c81de37eb869/00044006678023.rgb.jpg/1000x1000bb.jpeg
+178	I Do! I Do!	Harvey Schmidt	Tom Jones	The story of a marriage is at the center of I Do! I Do!, an intimate and nostalgic work by Harvey Schmidt and Tom Jones (The Fantasticks). Written as a star vehicle for theatre legends, Mary Martin and Robert Preston, the original Broadway production received seven Tony Award nominations. The show begins with Michael and Agnes on their wedding day. Their vows behind them, they look forward to spending the rest of their lives together. We watch as they go through their wedding night jitters, raise a family and negotiate midlife crises. Michael eventually admits to his infidelity, and, although Agnes is angered by his actions, she forgives him and the couple reconciles. They rediscover how much they really need each other. Then, after 50 years of marriage, the couple leaves their house to the next pair of newlyweds. This touching story of two soul mates navigating the perils of life is set to a tuneful, charming score. With minimal set and costume requirements, I Do! I Do! is ideal for regional theatre companies with smaller troupes on a limited budget.	https://music.apple.com/us/album/i-do-i-do/272105075	https://is4-ssl.mzstatic.com/image/thumb/Music/5b/af/3c/mzi.aeqwywhw.jpg/1000x1000bb.jpg
+324	Side by Side by Sondheim	Jule Styne	Stephen Sondheim	Get ready to laugh, cry and fall in love with lyrics that are heartbreakingly true and music that captures the soaring emotions of a new generation with Side by Side by Sondheim. Simple and unpretentious, this Tony Award-winning musical is a perfect introduction to the work of this contemporary master and a must for diehard fans. Stephen Sondheim has been the leading composer of musical theatre for the past fifty years. His work is timeless. From the streets of ancient Rome, through nineteenth-century Japan and turn-of-the-century Sweden, to the high-rise apartments of 1970 Manhattan, his songs represent a definitive time and place, and yet move beyond their particular settings to speak to us all. Now, with this award-winning revue of his earlier work, some of the most lush, unforgettable songs from this musical theatre master are presented in one magical evening. Featuring music from Company, Follies, A Little Night Music, A Funny Thing Happened on the Way to the Forum, Anyone Can Whistle and Pacific Overtures, not to mention the classics written with musical theatre giants, Leonard Bernstein, Jule Styne and Richard Rodgers, this dazzling array of some of Sondheim's best-known songs demonstrates his masterful craft and astounding creativity. Minimal sets and costumes, a small cast and two pianos allow the brilliant songs to shine. The proceedings are run by a charming, pithy narrator whose virtually nonexistent musical requirements are ideal for a nonsinging, local celebrity with limited rehearsal time.	https://music.apple.com/us/album/side-by-side-by-sondheim-original-london-cast-recording/272102185	https://is3-ssl.mzstatic.com/image/thumb/Features/66/7f/0b/dj.pjznvywv.jpg/1000x1000bb-60.jpg
+122	Fanny	Harold Rome	Harold Rome	Based on Marcel Pagnol’s stage and film trilogy Marius, Fanny and César, Fanny is a romantic tale of love, secrets and passion set in the seaport milieu of old Marseille.Fanny opened on Broadway at the Majestic Theatre on November 4, 1954, starring Ezio Pinza, Walter Slezak, Florence Henderson and William Tabbert. The show later moved to the Belasco Theatre, playing a total of 888 performances.	https://music.apple.com/us/album/fanny-original-broadway-cast-recording/332568448	https://is1-ssl.mzstatic.com/image/thumb/Features/13/ef/a0/dj.nntvigdw.jpg/500x500bb-60.jpg
 \.
 
 
@@ -4396,6 +4295,8 @@ COPY public.suggestions ("suggestionId", title, composer, notes) FROM stdin;
 2	Six: The Musical	Lucy Moss, Toby Marlow	definite pop/rock feel, like a rock concert
 3	Moulin Rouge	Various	80-00s pop songs
 4	Jersey Boys	Four Seasons	jukebox musical with Four Seasons songs
+5	Passion	Stephen Sondeim	Super dramatic, classic or opera sounding?
+6	Emma	Paul Gordon	very little women-y sounding
 \.
 
 
@@ -4458,13 +4359,7 @@ COPY public.tags ("tagId", name) FROM stdin;
 
 COPY public.users ("userId", username) FROM stdin;
 1	sierra
-2	testuser
-3	anothertestuser
-4	bob
 5	sam
-12	testing
-15	new
-16	sutton
 \.
 
 
@@ -4472,7 +4367,7 @@ COPY public.users ("userId", username) FROM stdin;
 -- Name: collections_collectionId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."collections_collectionId_seq"', 16, true);
+SELECT pg_catalog.setval('public."collections_collectionId_seq"', 18, true);
 
 
 --
@@ -4500,7 +4395,7 @@ SELECT pg_catalog.setval('public."musicals_musicalId_seq"', 1, false);
 -- Name: suggestions_suggestionId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."suggestions_suggestionId_seq"', 4, true);
+SELECT pg_catalog.setval('public."suggestions_suggestionId_seq"', 6, true);
 
 
 --
@@ -4514,7 +4409,7 @@ SELECT pg_catalog.setval('public."tags_tagId_seq"', 1, false);
 -- Name: users_userId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."users_userId_seq"', 16, true);
+SELECT pg_catalog.setval('public."users_userId_seq"', 30, true);
 
 
 --
