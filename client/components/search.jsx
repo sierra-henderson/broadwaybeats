@@ -87,7 +87,7 @@ export default class Search extends React.Component {
         );
       } else {
         return (
-          <div>
+          <div className="search">
             <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
             <div className="search-and-filter">
               <input className="input-rounded" type="text" name="" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />

@@ -4,6 +4,40 @@
   margin: 0;
 }
 
+::-webkit-scrollbar {
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f3f3f3;
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #d6d6d6;
+}
+
+.page-toggles i,
+.card,
+.sign-up,
+.filter-button,
+.musical-questionaire-card,
+.unboxed,
+.add-collection,
+.fas.fa-heart,
+.play-music,
+#filterButton,
+.bottom-nav i,
+.collection-card-container,
+.update-delete-modal-button,
+.update-delete-modal-choice {
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-0.25rem);
+}
+
 .logo {
   font-family: 'Signika';
   margin-bottom: 0.8rem;
@@ -127,7 +161,8 @@
 }
 
 .inner-questionaire {
-  margin: 1rem;
+  margin: 1rem auto;
+  max-width: 1200px;
 }
 
 .inner-questionaire h1 {
@@ -223,10 +258,6 @@
   color: #9A949E;
 }
 
-.faded-text:hover {
-  color: black;
-}
-
 #filterButton {
   width: 100px;
   height: 2rem;
@@ -257,9 +288,18 @@
 
 .card {
   flex-basis: 44%;
-  max-width: 400px;
+  max-width: 300px;
   box-shadow: 0 0 5px 0 #C4C4C4;
   margin: 0.5rem;
+}
+
+.search {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search .card {
+  max-width: 200px;
 }
 
 .card-image {
@@ -410,6 +450,11 @@ iframe {
   margin-bottom: 0.75rem;
 }
 
+.add-collection:hover,
+.icon-group i:hover {
+  color: #77717a;
+}
+
 .add-collection h5 {
   font-size: 0.9rem;
   margin-left: 0.5rem;
@@ -448,6 +493,10 @@ iframe {
   margin-top: 1rem;
 }
 
+.play-music:hover {
+  background-color: #281d30;
+}
+
 .music-button-container {
   text-align: center;
   display: flex;
@@ -457,6 +506,7 @@ iframe {
 
 .sign-up {
   width: 40vw;
+  max-width: 200px;
 }
 
 .card-box {
