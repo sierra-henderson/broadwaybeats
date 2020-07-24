@@ -1,12 +1,10 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
 export default class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
-      redirected: this.props.signinRedirect
+      value: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,12 +46,6 @@ export default class SignIn extends React.Component {
             <button className="filter-button submit sign-up" type="submit">Start</button>
           </form>
         </div>
-        {this.state.signinRedirect === 'questionnaire'
-          ? <Redirect to="/questionnaire"/>
-          : this.state.signinRedirect === 'home'
-            ? <Redirect to="/" />
-            : null
-        }
       </div>
     );
   }

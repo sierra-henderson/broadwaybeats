@@ -62,7 +62,7 @@ export default class App extends React.Component {
         if (data.error) {
           this.setState({
             user: user.username,
-            signinRedirect: 'questionnarire'
+            signinRedirect: 'questionnaire'
           });
         } else {
           this.setState({
@@ -160,26 +160,10 @@ export default class App extends React.Component {
             {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <CollectionItem />}
           </Route>
           <Route path="/signin">
-            <SignIn loginUser={this.loginUser} signinRedirect={this.state.signinRedirect} />
+            {this.state.signinRedirect === 'questionnaire' ? <Redirect to="/questionnaire" /> : <SignIn loginUser={this.loginUser} />}
           </Route>
         </Switch>
       </Router>
     );
-    // const appView = this.state.view === 'signin'
-    //   ?
-    //   : this.state.view === 'questionaire'
-    //     ? <Questionaire setView={this.setView} user={this.state.user} getAllRecommendations={this.getAllRecommendations}/>
-    //     : this.state.view === 'home'
-    //       ? <Home setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended}/>
-    //       : this.state.view === 'search'
-    //         ? <Search setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections}/>
-    //         : this.state.view === 'collections'
-    //           ? <Collections collections={this.state.collections} setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />
-    //           : this.state.view === 'details'
-    //             ? <MusicalDetails collections={this.state.collections} setView={this.setView} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections}/>
-    //             : this.state.view === 'suggestion'
-    //               ? <Suggestion setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />
-    //               : <h1>TBD</h1>;
-    // return (appView);
   }
 }
