@@ -8,6 +8,7 @@ export default class Collections extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      collections: [],
       collectionOpen: false,
       activeCollection: [],
       activeCollectionName: '',
@@ -22,6 +23,14 @@ export default class Collections extends React.Component {
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    fetch('/api/collections')
+      .then(res => res.json())
+      .then(data => this.setState({
+        collections: data
+      }));
   }
 
   openCollection(collection) {
@@ -126,7 +135,7 @@ export default class Collections extends React.Component {
       if (this.state.activeCollection.length > 0) {
         return (
           <div>
-            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <TopNav />
             <div className="collections-container">
               <h1>{this.state.activeCollectionName}</h1>
               {
@@ -135,7 +144,7 @@ export default class Collections extends React.Component {
                 })
               }
               <button className="filter-button submit" onClick={this.backToCollections}><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
-              <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+              <BottomNav />
             </div>
           </div>
 
@@ -143,40 +152,40 @@ export default class Collections extends React.Component {
       } else {
         return (
           <div>
-            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <TopNav />
             <div className="collections-container">
               <h1>{this.state.activeCollectionName}</h1>
               <p className="no-items">You don&apos;t have any musicals in here yet!</p>
               <button className="filter-button submit" onClick={this.backToCollections}><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
-              <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+              <BottomNav />
             </div>
           </div>
         );
       }
     } else {
-      if (this.props.collections.length === 0) {
+      if (this.state.collections.length === 0) {
         return (
           <div>
-            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <TopNav />
             <div className="collections-container">
               <h1>My Collections</h1>
               <h3>You currently have no collections!</h3>
-              <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+              <BottomNav />
             </div>
           </div>
         );
       } else if (this.state.buttonModal.open && this.state.buttonModal.mode === 'update') {
         return (
           <div>
-            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <TopNav />
             <div className="collections-container">
               <h1>My Collections</h1>
               {
-                this.props.collections.map(collection => {
+                this.state.collections.map(collection => {
                   return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} openButtonModal={this.openButtonModal} viewModal={true}/>;
                 })
               }
-              <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+              <BottomNav />
               <div className={'modal-overlay button-modal'}>
                 <div className="button-modal-content">
                   <h2>Update Collection</h2>
@@ -195,15 +204,15 @@ export default class Collections extends React.Component {
       } else if (this.state.buttonModal.open && this.state.buttonModal.mode === 'delete') {
         return (
           <div>
-            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <TopNav />
             <div className="collections-container">
               <h1>My Collections</h1>
               {
-                this.props.collections.map(collection => {
+                this.state.collections.map(collection => {
                   return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} viewModal={true}/>;
                 })
               }
-              <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+              <BottomNav />
               <div className={'modal-overlay button-modal'}>
                 <div className="button-modal-content">
                   <h2>Are you sure you want to delete?</h2>
@@ -219,15 +228,15 @@ export default class Collections extends React.Component {
       } else {
         return (
           <div>
-            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <TopNav />
             <div className="collections-container">
               <h1>My Collections</h1>
               {
-                this.props.collections.map(collection => {
+                this.state.collections.map(collection => {
                   return <CollectionCard key={collection.collectionId} renderModal={this.renderModal} collection={collection} callback={this.openCollection} openButtonModal={this.openButtonModal} viewModal={true} />;
                 })
               }
-              <BottomNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+              <BottomNav />
             </div>
           </div>
         );
