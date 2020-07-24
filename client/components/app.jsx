@@ -29,7 +29,7 @@ export default class App extends React.Component {
     this.loginUser = this.loginUser.bind(this);
     this.addLike = this.addLike.bind(this);
     this.deleteLike = this.deleteLike.bind(this);
-    this.getAllRecommendations = this.getAllRecommendations.bind(this);
+    // this.getAllRecommendations = this.getAllRecommendations.bind(this);
     this.getAllCollections = this.getAllCollections.bind(this);
   }
 
@@ -66,8 +66,9 @@ export default class App extends React.Component {
           });
         } else {
           this.setState({
-            user: user.username
-          }, this.getAllRecommendations);
+            user: user.username,
+            signinRedirect: 'home'
+          });
         }
       });
   }
@@ -106,11 +107,11 @@ export default class App extends React.Component {
     }
   }
 
-  getAllRecommendations() {
-    fetch('/api/home')
-      .then(res => res.json())
-      .then(data => this.setView('home', {}, data));
-  }
+  // getAllRecommendations() {
+  //   fetch('/api/home')
+  //     .then(res => res.json())
+  //     .then(data => this.setView('home', {}, data));
+  // }
 
   getAllCollections(boolean) {
     if (boolean) {
@@ -160,7 +161,7 @@ export default class App extends React.Component {
             {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <CollectionItem />}
           </Route>
           <Route path="/signin">
-            {this.state.signinRedirect === 'questionnaire' ? <Redirect to="/questionnaire" /> : <SignIn loginUser={this.loginUser} />}
+            {this.state.signinRedirect === 'questionnaire' ? <Redirect to="/questionnaire" /> : this.state.signinRedirect === 'home' ? <Redirect to="/" /> : <SignIn loginUser={this.loginUser} />}
           </Route>
         </Switch>
       </Router>

@@ -34,6 +34,11 @@
   cursor: pointer;
 }
 
+.top-nav a {
+  text-decoration: none;
+  color: black;
+}
+
 .card:hover {
   transform: translateY(-0.25rem);
 }

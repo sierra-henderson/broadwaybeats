@@ -1,6 +1,7 @@
 import React from 'react';
 import QuestionaireCard from './questionaire-card';
 import QuestionaireMusicalCard from './questionaire-musical-card';
+import { Link } from 'react-router-dom';
 
 export default class Questionaire extends React.Component {
   constructor(props) {
@@ -251,7 +252,9 @@ export default class Questionaire extends React.Component {
             <div className="questionaire-initial">
               <h1 className="medium">Done!</h1>
               <i className="big-check fas fa-check-circle"></i>
-              <button className="reset filter-button" onClick={this.props.getAllRecommendations}>Get my musicals!</button>
+              <Link to="/">
+                <button className="reset filter-button">Get my musicals!</button>
+              </Link>
             </div>
           </div>
         );
