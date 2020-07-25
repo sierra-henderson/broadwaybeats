@@ -3,6 +3,7 @@ import BottomNav from './bottomNav';
 import TopNav from './topNav';
 import CollectionCard from './collection-card';
 import CollectionItem from './collectionItem';
+import { Link } from 'react-router-dom';
 
 export default class Collections extends React.Component {
   constructor(props) {
@@ -140,7 +141,11 @@ export default class Collections extends React.Component {
               <h1>{this.state.activeCollectionName}</h1>
               {
                 this.state.activeCollection.map(item => {
-                  return <CollectionItem key={item.musicalId} item={item} setView={this.props.setView} deleteMusicalFromCollection={this.deleteMusicalFromCollection} />;
+                  return (
+                    <Link to={`/musicals/${item.musicalId}`} key={item.musicalId}>
+                      <CollectionItem item={item} setView={this.props.setView} deleteMusicalFromCollection={this.deleteMusicalFromCollection} />
+                    </Link>
+                  );
                 })
               }
               <button className="filter-button submit" onClick={this.backToCollections}><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>

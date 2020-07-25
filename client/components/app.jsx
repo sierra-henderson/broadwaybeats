@@ -151,9 +151,7 @@ export default class App extends React.Component {
           <Route exact path="/collections">
             {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Collections collections={this.state.collections} setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />}
           </Route>
-          <Route path="/musicals/:musicalId">
-            {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <MusicalDetails collections={this.state.collections} setView={this.setView} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
-          </Route>
+          <Route exact path="/musicals/:musicalId" component={MusicalDetails} />
           <Route path="/suggestion">
             {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Suggestion setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
           </Route>

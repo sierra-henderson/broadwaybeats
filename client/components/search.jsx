@@ -3,9 +3,10 @@ import BoxedCard from './boxed-card';
 import TopNav from './topNav';
 import BottomNav from './bottomNav';
 import Filter from './filter';
+import { Link } from 'react-router-dom';
 
 export default class Search extends React.Component {
-  constructor(props) {
+  constructor(props, match) {
     super(props);
     this.state = {
       musicals: null,
@@ -60,7 +61,7 @@ export default class Search extends React.Component {
       if (this.state.musicals === null) {
         return (
           <div>
-            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <TopNav />
             <div className="search-and-filter">
               <input type="text" name="" className="input-rounded" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
               <button id="filterButton" onClick={this.toggleFilter}>Filter</button>
@@ -68,13 +69,13 @@ export default class Search extends React.Component {
             <div className="search-results">
               <h3>Please search using the search bar or filter button.</h3>
             </div>
-            <BottomNav getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} setView={this.props.setView} />
+            <BottomNav />
           </div>
         );
       } else if (this.state.musicals.length === 0) {
         return (
           <div>
-            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <TopNav />
             <div className="search-and-filter">
               <input type="text" name="" className="input-rounded" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
               <button id="filterButton" onClick={this.toggleFilter}>Filter</button>
@@ -82,13 +83,13 @@ export default class Search extends React.Component {
             <div className="search-results">
               <h3>There are no musicals that match your query.</h3>
             </div>
-            <BottomNav getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} setView={this.props.setView}/>
+            <BottomNav />
           </div>
         );
       } else {
         return (
           <div className="search">
-            <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
+            <TopNav />
             <div className="search-and-filter">
               <input className="input-rounded" type="text" name="" placeholder="seach by title" value={this.state.value} onChange={this.handleChange} />
               <button id="filterButton" onClick={this.toggleFilter}>Filter</button>
@@ -96,11 +97,15 @@ export default class Search extends React.Component {
             <div className="boxed-cards-container">
               {
                 this.state.musicals.map(musical => {
-                  return <BoxedCard setView={this.props.setView} key={musical.musicalId} musical={musical} />;
+                  return (
+                    <Link to={`/musicals/${musical.musicalId}`} key={musical.musicalId} >
+                      <BoxedCard musical={musical} />
+                    </Link>
+                  );
                 })
               }
             </div>
-            <BottomNav getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} setView={this.props.setView}/>
+            <BottomNav />
           </div>
         );
       }
