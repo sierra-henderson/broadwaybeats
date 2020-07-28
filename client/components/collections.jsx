@@ -68,9 +68,15 @@ export default class Collections extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        this.setState({
+        this.setState(state => ({
+          collections: state.collections.map(el => {
+            if (el.collectionId === state.buttonModal.activeCollection.collectionId) {
+              el.name = obj.collectionName;
+            }
+            return el;
+          }),
           buttonModal: {}
-        }, this.props.getAllCollections);
+        }));
       });
   }
 
@@ -81,7 +87,7 @@ export default class Collections extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState(state => ({
-          collections: state.collections.filter(el => el.id !== state.buttonModal.activeCollection.collectionId),
+          collections: state.collections.filter(el => el.collectionId !== state.buttonModal.activeCollection.collectionId),
           buttonModal: {}
         }));
       });

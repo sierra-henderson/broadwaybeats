@@ -169,7 +169,7 @@ export default class App extends React.Component {
             {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Search getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
           </Route>
           <Route exact path="/collections">
-            {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Collections collections={this.state.collections} setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />}
+            {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Collections musicalList={this.state.recommended} />}
           </Route>
           <Route exact path="/musicals/:musicalId" render={props => <MusicalDetails getMusicalDetails={this.getMusicalDetails} getAllCollections={this.getAllCollections} collections={this.state.collections} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} {...props} />} />
           <Route path="/suggestion">

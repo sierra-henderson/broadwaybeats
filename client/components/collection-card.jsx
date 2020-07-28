@@ -32,31 +32,58 @@ export default class CollectionCard extends React.Component {
       : `${this.props.collection.numMusicals} albums`;
     const hiddenOrNot = !this.state.modalOpen ? 'hidden' : '';
     const updateDeleteAbility = !this.props.viewModal ? 'hidden' : '';
-    return (
-      <div className="flex-container">
-        <Link to={`/collections/${this.props.collection.collectionId}`}>
-          <div className="collection-card-container">
+    if (this.props.noLink) {
+      return (
+        <div className="flex-container">
+          <div className="collection-card-container" onClick={() => this.props.callback(this.props.collection)}>
             <img className="rounded-image collection-image" src={this.props.collection.imageUrl} alt="" />
             <div className="collection-card-text">
               <h3>{collectionName}</h3>
               <p className="faded-text">{numAlbums}</p>
             </div>
           </div>
-        </Link>
-        <div className={`update-delete-modal-button ${updateDeleteAbility}`}>
-          <i className="fas fa-ellipsis-v faded-text" onClick={this.toggleModal}></i>
-          <div className={`update-delete-modal ${hiddenOrNot}`}>
-            <div className="update-delete-modal-choice" onClick={() => this.handleModalClick('update')}>
-              <i className="fas fa-pen"></i>
-              <h5>Edit collection</h5>
-            </div>
-            <div className="update-delete-modal-choice" onClick={() => this.handleModalClick('delete')}>
-              <i className="fas fa-trash"></i>
-              <h5>Delete collection</h5>
+          <div className={`update-delete-modal-button ${updateDeleteAbility}`}>
+            <i className="fas fa-ellipsis-v faded-text" onClick={this.toggleModal}></i>
+            <div className={`update-delete-modal ${hiddenOrNot}`}>
+              <div className="update-delete-modal-choice" onClick={() => this.handleModalClick('update')}>
+                <i className="fas fa-pen"></i>
+                <h5>Edit collection</h5>
+              </div>
+              <div className="update-delete-modal-choice" onClick={() => this.handleModalClick('delete')}>
+                <i className="fas fa-trash"></i>
+                <h5>Delete collection</h5>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="flex-container">
+          <Link to={`/collections/${this.props.collection.collectionId}`}>
+            <div className="collection-card-container">
+              <img className="rounded-image collection-image" src={this.props.collection.imageUrl} alt="" />
+              <div className="collection-card-text">
+                <h3>{collectionName}</h3>
+                <p className="faded-text">{numAlbums}</p>
+              </div>
+            </div>
+          </Link>
+          <div className={`update-delete-modal-button ${updateDeleteAbility}`}>
+            <i className="fas fa-ellipsis-v faded-text" onClick={this.toggleModal}></i>
+            <div className={`update-delete-modal ${hiddenOrNot}`}>
+              <div className="update-delete-modal-choice" onClick={() => this.handleModalClick('update')}>
+                <i className="fas fa-pen"></i>
+                <h5>Edit collection</h5>
+              </div>
+              <div className="update-delete-modal-choice" onClick={() => this.handleModalClick('delete')}>
+                <i className="fas fa-trash"></i>
+                <h5>Delete collection</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 }

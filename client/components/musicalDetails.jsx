@@ -156,7 +156,7 @@ export default class MusicalDetails extends React.Component {
                   </div>
                   {
                     this.props.collections.map(collection => {
-                      return <CollectionCard callback={this.handleCollectionClick} key={collection.collectionId} collection={collection} viewModal={false} />;
+                      return <CollectionCard noLink={true} callback={this.handleCollectionClick} key={collection.collectionId} collection={collection} viewModal={false} />;
                     })
                   }
                 </div>
@@ -277,7 +277,7 @@ export default class MusicalDetails extends React.Component {
                 </div>
                 {
                   this.props.collections.map(collection => {
-                    return <CollectionCard callback={this.handleCollectionClick} key={collection.collectionId} collection={collection} />;
+                    return <CollectionCard noLink={true} callback={this.handleCollectionClick} key={collection.collectionId} collection={collection} />;
                   })
                 }
               </div>
