@@ -98,7 +98,7 @@ export default class Search extends React.Component {
               {
                 this.state.musicals.map(musical => {
                   return (
-                    <Link to={`/musicals/${musical.musicalId}`} key={musical.musicalId} >
+                    <Link to={`/musicals/${musical.musicalId}`} key={musical.musicalId} onClick={() => this.props.getMusicalDetails(musical.musicalId)}>
                       <BoxedCard musical={musical} />
                     </Link>
                   );

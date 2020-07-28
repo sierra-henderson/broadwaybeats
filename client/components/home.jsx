@@ -23,15 +23,15 @@ export default class Home extends React.Component {
         <div>
           <TopNav setView={this.props.setView} getAllRecommendations={this.props.getAllRecommendations} getAllCollections={this.props.getAllCollections} />
           <div className="home-container">
-            <ScrollingBar setView={this.props.setView} list={this.state.musicals.recommendations} header="Your Recommendations" />
+            <ScrollingBar getMusicalDetails={this.props.getMusicalDetails} list={this.state.musicals.recommendations} header="Your Recommendations" />
             {
               this.state.musicals.categories.map((el, i) => {
-                return <ScrollingBar key={i} setView={this.props.setView} list={el} header={`${el[0].name} Musicals`} />;
+                return <ScrollingBar key={i} getMusicalDetails={this.props.getMusicalDetails} list={el} header={`${el[0].name} Musicals`} />;
               })
             }
             {
               this.state.musicals.related.map((el, i) => {
-                return <ScrollingBar key={i + 2} setView={this.props.setView} list={el} header={`Because you liked ${el[0].relatedTo}`} />;
+                return <ScrollingBar key={i + 2} getMusicalDetails={this.props.getMusicalDetails} list={el} header={`Because you liked ${el[0].relatedTo}`} />;
               })
             }
           </div>

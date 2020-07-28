@@ -12,9 +12,7 @@ export default class MusicalDetails extends React.Component {
       readMoreOpen: false,
       addCollectionOpen: false,
       newCollectionButton: false,
-      musicVisible: false,
-      musical: [],
-      related: []
+      musicVisible: false
     };
     this.changePlotView = this.changePlotView.bind(this);
     this.handleLike = this.handleLike.bind(this);
@@ -29,26 +27,6 @@ export default class MusicalDetails extends React.Component {
     this.viewMusic = this.viewMusic.bind(this);
   }
 
-  componentDidMount() {
-    fetch(`/api/musicals/${this.props.match.params.musicalId}`)
-      .then(res => res.json())
-      .then(data => {
-        return fetch(`/api/musicals/${this.props.match.params.musicalId}/like`)
-          .then(res => res.json())
-          .then(likeInfo => {
-            data.like = likeInfo.like;
-            return fetch(`/api/musicals/${this.props.match.params.musicalId}/related`)
-              .then(res => res.json())
-              .then(related => {
-                this.setState({
-                  musical: data,
-                  related: related
-                });
-              });
-          });
-      });
-  }
-
   changePlotView() {
     this.setState(state => ({
       readMoreOpen: !state.readMoreOpen
@@ -56,10 +34,10 @@ export default class MusicalDetails extends React.Component {
   }
 
   handleLike() {
-    if (this.state.musical.like) {
-      this.props.deleteLike(this.state.musical.musicalId);
-    } else if (this.state.musical.like === null) {
-      this.props.addLike(this.state.musical.musicalId);
+    if (this.props.musical.like) {
+      this.props.deleteLike(this.props.musical.musicalId);
+    } else if (this.props.musical.like === null) {
+      this.props.addLike(this.props.musical.musicalId);
     }
   }
 
@@ -115,11 +93,11 @@ export default class MusicalDetails extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.addToCollection(this.state.musical.musicalId, this.state.value, 'n/a');
+    this.addToCollection(this.props.musical.musicalId, this.state.value, 'n/a');
   }
 
   handleCollectionClick(collection) {
-    this.addToCollection(this.state.musical.musicalId, collection.name, collection.numMusicals);
+    this.addToCollection(this.props.musical.musicalId, collection.name, collection.numMusicals);
   }
 
   viewMusic() {
@@ -129,16 +107,16 @@ export default class MusicalDetails extends React.Component {
   }
 
   render() {
-    if (this.state.musical.title) {
-      const plot = this.state.readMoreOpen ? this.state.musical.plot
-        : `${this.state.musical.plot.substring(0, 100)}...`;
-      const musicAndLyrics = this.state.musical.lyricsBy === this.state.musical.musicBy || this.state.musical.lyricsBy.includes(this.state.musical.musicBy)
-        ? this.state.musical.lyricsBy
-        : this.state.musical.musicBy.includes(this.state.musical.lyricsBy)
-          ? this.state.musical.musicBy
-          : this.state.musical.musicBy + ', ' + this.state.musical.lyricsBy;
-      const likeClass = this.state.musical.like ? 'like' : '';
-      const musicUrl = this.state.musical.musicUrl.replace('https://music.apple.com/', 'https://embed.music.apple.com/');
+    if (this.props.musical.title) {
+      const plot = this.state.readMoreOpen ? this.props.musical.plot
+        : `${this.props.musical.plot.substring(0, 100)}...`;
+      const musicAndLyrics = this.props.musical.lyricsBy === this.props.musical.musicBy || this.props.musical.lyricsBy.includes(this.props.musical.musicBy)
+        ? this.props.musical.lyricsBy
+        : this.props.musical.musicBy.includes(this.props.musical.lyricsBy)
+          ? this.props.musical.musicBy
+          : this.props.musical.musicBy + ', ' + this.props.musical.lyricsBy;
+      const likeClass = this.props.musical.like ? 'like' : '';
+      const musicUrl = this.props.musical.musicUrl.replace('https://music.apple.com/', 'https://embed.music.apple.com/');
       const newCollectionVisible = !this.state.newCollectionButton ? 'hidden' : '';
       const musicVisible = !this.state.musicVisible ? 'hidden' : '';
       if (this.state.readMoreOpen && this.state.addCollectionOpen) {
@@ -147,9 +125,9 @@ export default class MusicalDetails extends React.Component {
             <TopNav />
             <div className="musical-details-container">
               <div className="info-container">
-                <img className="details-image" src={this.state.musical.imageUrl} alt="" />
+                <img className="details-image" src={this.props.musical.imageUrl} alt="" />
                 <div className="details-text">
-                  <h2>{this.state.musical.title}</h2>
+                  <h2>{this.props.musical.title}</h2>
                   <h5>{musicAndLyrics}</h5>
                   <div className="icon-group">
                     <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
@@ -167,7 +145,7 @@ export default class MusicalDetails extends React.Component {
                   sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
                   src={musicUrl}></iframe>
               </div>
-              <ScrollingBar setView={this.props.setView} list={this.state.related} header="Related" />
+              <ScrollingBar getMusicalDetails={this.props.getMusicalDetails} list={this.props.related} header="Related" />
               <BottomNav />
               <div className="modal-overlay">
                 <div className="modal-background">
@@ -204,9 +182,9 @@ export default class MusicalDetails extends React.Component {
             <TopNav />
             <div className="musical-details-container">
               <div className="info-container">
-                <img className="details-image" src={this.state.musical.imageUrl} alt="" />
+                <img className="details-image" src={this.props.musical.imageUrl} alt="" />
                 <div className="details-text">
-                  <h2>{this.state.musical.title}</h2>
+                  <h2>{this.props.musical.title}</h2>
                   <h5>{musicAndLyrics}</h5>
                   <div className="icon-group">
                     <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
@@ -224,7 +202,7 @@ export default class MusicalDetails extends React.Component {
                   sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
                   src={musicUrl}></iframe>
               </div>
-              <ScrollingBar setView={this.props.setView} list={this.state.related} header="Related" />
+              <ScrollingBar getMusicalDetails={this.props.getMusicalDetails} list={this.props.related} header="Related" />
               <BottomNav />
             </div>
           </div>
@@ -235,9 +213,9 @@ export default class MusicalDetails extends React.Component {
             <TopNav />
             <div className="musical-details-container">
               <div className="info-container">
-                <img className="details-image" src={this.state.musical.imageUrl} alt="" />
+                <img className="details-image" src={this.props.musical.imageUrl} alt="" />
                 <div className="details-text">
-                  <h2>{this.state.musical.title}</h2>
+                  <h2>{this.props.musical.title}</h2>
                   <h5>{musicAndLyrics}</h5>
                   <div className="icon-group">
                     <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
@@ -255,7 +233,7 @@ export default class MusicalDetails extends React.Component {
                   sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
                   src={musicUrl}></iframe>
               </div>
-              <ScrollingBar setView={this.props.setView} list={this.state.related} header="Related" />
+              <ScrollingBar getMusicalDetails={this.props.getMusicalDetails} list={this.props.related} header="Related" />
             </div>
             <BottomNav />
           </div>
@@ -266,9 +244,9 @@ export default class MusicalDetails extends React.Component {
             <TopNav />
             <div className="musical-details-container">
               <div className="info-container">
-                <img className="details-image" src={this.state.musical.imageUrl} alt="" />
+                <img className="details-image" src={this.props.musical.imageUrl} alt="" />
                 <div className="details-text">
-                  <h2>{this.state.musical.title}</h2>
+                  <h2>{this.props.musical.title}</h2>
                   <h5>{musicAndLyrics}</h5>
                   <div className="icon-group">
                     <i className={`fas fa-heart ${likeClass}`} onClick={this.handleLike}></i>
@@ -287,7 +265,7 @@ export default class MusicalDetails extends React.Component {
                   sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
                   src={musicUrl}></iframe>
               </div>
-              <ScrollingBar setView={this.props.setView} list={this.state.related} header="Related" />
+              <ScrollingBar getMusicalDetails={this.props.getMusicalDetails} list={this.props.related} header="Related" />
             </div>
             <BottomNav />
             <div className="modal-overlay">
