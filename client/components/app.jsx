@@ -29,7 +29,6 @@ export default class App extends React.Component {
     this.loginUser = this.loginUser.bind(this);
     this.addLike = this.addLike.bind(this);
     this.deleteLike = this.deleteLike.bind(this);
-    // this.getAllRecommendations = this.getAllRecommendations.bind(this);
     this.getAllCollections = this.getAllCollections.bind(this);
     this.getMusicalDetails = this.getMusicalDetails.bind(this);
   }
@@ -172,13 +171,11 @@ export default class App extends React.Component {
           <Route exact path="/collections">
             {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Collections collections={this.state.collections} setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />}
           </Route>
-          <Route exact path="/musicals/:musicalId" render={props => <MusicalDetails getMusicalDetails={this.getMusicalDetails} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} {...props} />} />
+          <Route exact path="/musicals/:musicalId" render={props => <MusicalDetails getMusicalDetails={this.getMusicalDetails} getAllCollections={this.getAllCollections} collections={this.state.collections} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} {...props} />} />
           <Route path="/suggestion">
             {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Suggestion setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
           </Route>
-          <Route path="/collections/:collectionId">
-            {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <CollectionItem />}
-          </Route>
+          <Route path="/collections/:collectionId" component={CollectionItem} />
           <Route path="/signin">
             {this.state.signinRedirect === 'questionnaire' ? <Redirect to="/questionnaire" /> : this.state.signinRedirect === 'home' ? <Redirect to="/" /> : <SignIn loginUser={this.loginUser} />}
           </Route>

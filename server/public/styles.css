@@ -34,7 +34,7 @@
   cursor: pointer;
 }
 
-.top-nav a {
+a {
   text-decoration: none;
   color: black;
 }
@@ -455,8 +455,7 @@ iframe {
   margin-bottom: 0.75rem;
 }
 
-.add-collection:hover,
-.icon-group i:hover {
+.add-collection:hover {
   color: #77717a;
 }
 
