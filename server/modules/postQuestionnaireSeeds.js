@@ -22,9 +22,30 @@ const postQuestionnaireSeeds = (req, res, next) => {
     db.query(sql, params)
       .then(result => {
         if (result.rows.length !== 0) {
-          next(new ClientError(`user with id ${params} already filled out the questionaire`, 400));
-        } else {
-          const sql = format(`
+          const sql = `
+            with "g" as (
+              delete from "genreSeeds"
+                where "userId" = $1
+              returning "userId"
+            ),
+            "ms" as (
+              delete from "musicalStyleSeeds"
+                where "userId" = $1
+              returning "userId"
+            )
+            select "g"."userId",
+                   "ms"."userId"
+              from "g"
+                left join "ms" on "g"."userId" = "ms"."userId"
+          `;
+          const params = [genreSeeds[0][0]];
+          db.query(sql, params)
+            .then(result => {
+              return (result.rows);
+            })
+            .catch(err => next(err));
+        }
+        const sql = format(`
           insert into "genreSeeds" ("userId", "genreId")
               values %L
               returning *;
@@ -32,16 +53,15 @@ const postQuestionnaireSeeds = (req, res, next) => {
               values %L
               returning *
           `, genreSeeds, musicalStyleSeeds);
-          const client = new pg.Client({
-            connectionString: process.env.DATABASE_URL
-          });
-          client.connect();
-          return client.query(sql)
-            .then(result => {
-              return [result[0].rows, result[1].rows];
-            })
-            .catch(err => next(err));
-        }
+        const client = new pg.Client({
+          connectionString: process.env.DATABASE_URL
+        });
+        client.connect();
+        return client.query(sql)
+          .then(result => {
+            return [result[0].rows, result[1].rows];
+          })
+          .catch(err => next(err));
       })
       .then(data => res.status(201).json(data))
       .catch(err => next(err));

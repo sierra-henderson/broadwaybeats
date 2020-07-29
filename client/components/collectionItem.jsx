@@ -48,9 +48,7 @@ export default class CollectionItem extends React.Component {
             {
               this.state.activeCollection.map(item => {
                 return (
-                  <Link to={`/musicals/${item.musicalId}`} key={item.musicalId}>
-                    <CollectionItemCard item={item} setView={this.props.setView} deleteMusicalFromCollection={this.deleteMusicalFromCollection} />
-                  </Link>
+                  <CollectionItemCard item={item} key={item.musicalId} setView={this.props.setView} deleteMusicalFromCollection={this.deleteMusicalFromCollection} />
                 );
               })
             }

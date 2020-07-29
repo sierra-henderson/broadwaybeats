@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class CollectionItemCard extends React.Component {
   constructor(props) {
@@ -26,7 +27,9 @@ export default class CollectionItemCard extends React.Component {
         : this.props.item.musicBy + ', ' + this.props.item.lyricsBy;
     return (
       <div className="collection-card-container">
-        <img src={this.props.item.imageUrl} alt="" className="rounded-image collection-item-image" onClick={this.getDetails}/>
+        <Link to={`/musicals/${this.props.item.musicalId}`}>
+          <img src={this.props.item.imageUrl} alt="" className="rounded-image collection-item-image" onClick={this.getDetails} />
+        </Link>
         <div className="collection-card-text">
           <h4>{this.props.item.title}</h4>
           <p className="collection-item-paragraph">{musicAndLyrics}</p>
