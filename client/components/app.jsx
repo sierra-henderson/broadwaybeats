@@ -5,25 +5,54 @@ import SignIn from './signin';
 import Questionaire from './questionaire';
 import Home from './home';
 import Collections from './collections';
+import CollectionItem from './collectionItem';
 import Suggestion from './suggestion';
+import PageNotFound from './pageNotFound';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'signin',
       params: {},
       related: [],
-      user: {},
+      user: null,
+      isAuthorizing: true,
       recommended: [],
-      collections: []
+      collections: [],
+      questionaireFilled: false,
+      signinRedirect: false
     };
     this.setView = this.setView.bind(this);
     this.loginUser = this.loginUser.bind(this);
     this.addLike = this.addLike.bind(this);
     this.deleteLike = this.deleteLike.bind(this);
-    this.getAllRecommendations = this.getAllRecommendations.bind(this);
     this.getAllCollections = this.getAllCollections.bind(this);
+    this.getMusicalDetails = this.getMusicalDetails.bind(this);
+  }
+
+  componentDidMount() {
+    fetch('/api/auth')
+      .then(res => res.json())
+      .then(data => {
+        if (data.numLiked) {
+          this.setState({
+            user: data.username,
+            questionaireFilled: true,
+            isAuthorizing: false
+          });
+        } else {
+          this.setState({
+            user: data.username,
+            isAuthorizing: false
+          });
+        }
+      });
   }
 
   setView(view, params, related) {
@@ -54,13 +83,14 @@ export default class App extends React.Component {
       .then(data => {
         if (data.error) {
           this.setState({
-            view: 'questionaire',
-            user: user.username
+            user: user.username,
+            signinRedirect: 'questionnaire'
           });
         } else {
           this.setState({
-            user: user.username
-          }, this.getAllRecommendations);
+            user: user.username,
+            signinRedirect: 'home'
+          });
         }
       });
   }
@@ -99,10 +129,24 @@ export default class App extends React.Component {
     }
   }
 
-  getAllRecommendations() {
-    fetch('/api/home')
+  getMusicalDetails(id) {
+    fetch(`/api/musicals/${id}`)
       .then(res => res.json())
-      .then(data => this.setView('home', {}, data));
+      .then(data => {
+        return fetch(`/api/musicals/${id}/like`)
+          .then(res => res.json())
+          .then(likeInfo => {
+            data.like = likeInfo.like;
+            return fetch(`/api/musicals/${id}/related`)
+              .then(res => res.json())
+              .then(related => {
+                this.setState({
+                  params: data,
+                  related: related
+                });
+              });
+          });
+      });
   }
 
   getAllCollections(boolean) {
@@ -119,30 +163,36 @@ export default class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    fetch('/api/health-check')
-      .then(res => res.json())
-      .then(data => this.setState({ message: data.message || data.error }))
-      .catch(err => this.setState({ message: err.message }))
-      .finally(() => this.setState({ isLoading: false }));
-  }
-
   render() {
-    const appView = this.state.view === 'signin'
-      ? <SignIn loginUser={this.loginUser}/>
-      : this.state.view === 'questionaire'
-        ? <Questionaire setView={this.setView} user={this.state.user} getAllRecommendations={this.getAllRecommendations}/>
-        : this.state.view === 'home'
-          ? <Home setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended}/>
-          : this.state.view === 'search'
-            ? <Search setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections}/>
-            : this.state.view === 'collections'
-              ? <Collections collections={this.state.collections} setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />
-              : this.state.view === 'details'
-                ? <MusicalDetails collections={this.state.collections} setView={this.setView} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections}/>
-                : this.state.view === 'suggestion'
-                  ? <Suggestion setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />
-                  : <h1>TBD</h1>;
-    return (appView);
+    if (this.state.isAuthorizing) return null;
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            {this.state.isAuthorizing ? <Redirect to="/signin" /> : <Home getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />}
+          </Route>
+          <Route path="/questionnaire">
+            {this.state.isAuthorizing ? <Redirect to="/signin" /> : this.state.questionaireFilled ? <Redirect to="/" /> : <Questionaire setView={this.setView} user={this.state.user} getAllRecommendations={this.getAllRecommendations} />}
+          </Route>
+          <Route path="/search">
+            {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Search getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
+          </Route>
+          <Route exact path="/collections">
+            {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Collections musicalList={this.state.recommended} />}
+          </Route>
+          <Route exact path="/musicals/:musicalId" render={props => <MusicalDetails getMusicalDetails={this.getMusicalDetails} getAllCollections={this.getAllCollections} collections={this.state.collections} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} {...props} />} />
+          <Route path="/suggestion">
+            {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Suggestion setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
+          </Route>
+          <Route path="/collections/:collectionId" component={CollectionItem} />
+          <Route path="/signin">
+            {this.state.signinRedirect === 'questionnaire' ? <Redirect to="/questionnaire" /> : this.state.signinRedirect === 'home' ? <Redirect to="/" /> : <SignIn loginUser={this.loginUser} />}
+          </Route>
+          <Route>
+            <PageNotFound />
+          </Route>
+        </Switch>
+      </Router>
+    );
   }
 }

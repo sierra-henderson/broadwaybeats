@@ -9,7 +9,7 @@ export default class ScrollingBar extends React.Component {
         <div className="scroll-bar">
           {
             this.props.list.map(musical => {
-              return <RegularCard setView={this.props.setView} key={musical.musicalId} musical={musical} />;
+              return <RegularCard getMusicalDetails={this.props.getMusicalDetails} key={musical.musicalId} musical={musical} />;
             })
           }
         </div>

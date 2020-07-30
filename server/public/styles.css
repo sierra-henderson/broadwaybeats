@@ -34,6 +34,11 @@
   cursor: pointer;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 .card:hover {
   transform: translateY(-0.25rem);
 }
@@ -450,8 +455,7 @@ iframe {
   margin-bottom: 0.75rem;
 }
 
-.add-collection:hover,
-.icon-group i:hover {
+.add-collection:hover {
   color: #77717a;
 }
 
@@ -745,6 +749,26 @@ iframe {
 
 .nav-options {
   margin-top: 0.3rem;
+}
+
+.error-message-container {
+  margin: 100px auto;
+  text-align: center;
+}
+
+.error-message-container h3 {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+.error-message-container p {
+  font-size: 1.25rem;
+}
+
+.error-message-container img {
+  max-width: 85vw;
+  max-height: 300px;
+  width: auto;
 }
 
 .hidden {

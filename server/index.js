@@ -6,6 +6,7 @@ const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
 
+const getAuth = require('./modules/getAuth');
 const getQuery = require('./modules/getQuery');
 const getFiltered = require('./modules/getFiltered');
 const getMusicalDetails = require('./modules/getMusicalDetails');
@@ -39,6 +40,8 @@ app.get('/api/health-check', (req, res, next) => {
     .then(result => res.json(result.rows[0]))
     .catch(err => next(err));
 });
+
+app.get('/api/auth', getAuth);
 
 app.get('/api/search/:query', getQuery);
 
