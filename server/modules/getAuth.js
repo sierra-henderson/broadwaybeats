@@ -9,13 +9,15 @@ const getAuth = (req, res, next) => {
     select "u"."username",
            "u"."userId",
            count("lm"."musicalId") as "numLiked"
-      from "users"
-      join "likedMusicals" as "lm" using ("musicalId")
+      from "users" as "u"
+      join "likedMusicals" as "lm" using ("userId")
       where "userId" = $1
+      group by "u"."username", "u"."userId"
   `;
   const params = [userId];
   db.query(sql, params)
     .then(result => {
+
       req.session.userId = result.rows[0].userId;
       res.json(result.rows[0]);
     })

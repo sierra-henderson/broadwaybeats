@@ -40,7 +40,7 @@ export default class App extends React.Component {
     fetch('/api/auth')
       .then(res => res.json())
       .then(data => {
-        if (data.numMusicals) {
+        if (data.numLiked) {
           this.setState({
             user: data.username,
             questionaireFilled: true,
@@ -172,7 +172,7 @@ export default class App extends React.Component {
             {this.state.isAuthorizing ? <Redirect to="/signin" /> : <Home getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />}
           </Route>
           <Route path="/questionnaire">
-            {this.state.isAuthorizing ? <Redirect to="/signin" /> : <Questionaire setView={this.setView} user={this.state.user} getAllRecommendations={this.getAllRecommendations} />}
+            {this.state.isAuthorizing ? <Redirect to="/signin" /> : this.state.questionaireFilled ? <Redirect to="/" /> : <Questionaire setView={this.setView} user={this.state.user} getAllRecommendations={this.getAllRecommendations} />}
           </Route>
           <Route path="/search">
             {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Search getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
