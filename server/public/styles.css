@@ -751,6 +751,26 @@ iframe {
   margin-top: 0.3rem;
 }
 
+.error-message-container {
+  margin: 100px auto;
+  text-align: center;
+}
+
+.error-message-container h3 {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+.error-message-container p {
+  font-size: 1.25rem;
+}
+
+.error-message-container img {
+  max-width: 85vw;
+  max-height: 300px;
+  width: auto;
+}
+
 .hidden {
   display: none;
 }

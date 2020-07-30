@@ -27,6 +27,12 @@ export default class MusicalDetails extends React.Component {
     this.viewMusic = this.viewMusic.bind(this);
   }
 
+  componentDidMount() {
+    if (!this.props.musical.musicalId) {
+      this.props.getMusicalDetails(this.props.match.params.musicalId);
+    }
+  }
+
   changePlotView() {
     this.setState(state => ({
       readMoreOpen: !state.readMoreOpen
