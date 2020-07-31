@@ -5,7 +5,9 @@ export default class BoxedCard extends React.Component {
     const musicalTitle = this.props.musical.title.length > 15 ? this.props.musical.title.substring(0, 14) + '...' : this.props.musical.title;
     return (
       <div className="card">
-        <img className="card-image" src={this.props.musical.imageUrl} alt=""/>
+        <div className="card-image">
+          <img src={this.props.musical.imageUrl} alt="" />
+        </div>
         <h4>{musicalTitle}</h4>
       </div>
     );

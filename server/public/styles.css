@@ -39,10 +39,6 @@ a {
   color: black;
 }
 
-.card:hover {
-  transform: translateY(-0.25rem);
-}
-
 .logo {
   font-family: 'Signika';
   margin-bottom: 0.8rem;
@@ -172,12 +168,13 @@ a {
 
 .inner-questionaire h1 {
   font-size: 1.75rem;
+  margin-left: 1rem;
 }
 
 .page-toggles {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  margin: 0 1rem 2rem 1rem;
 }
 
 .align-right {
@@ -305,11 +302,16 @@ a {
 
 .search .card {
   max-width: 200px;
+  padding-bottom: 0.25rem;
 }
 
 .card-image {
   width: 100%;
-  border-bottom: 1px solid #c4c4c4;
+  max-height: 205px;
+}
+
+.card-image img {
+  width: 100%;
 }
 
 iframe {

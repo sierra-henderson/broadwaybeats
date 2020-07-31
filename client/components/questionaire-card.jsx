@@ -14,7 +14,9 @@ export default class QuestionaireCard extends React.Component {
     } else {
       return (
         <div className="card" onClick={() => this.props.recordData(this.props.card.id, this.props.card.category, this.props.isChecked)}>
-          <img className="card-image" src={this.props.card.image} alt="" />
+          <div className="card-image">
+            <img src={this.props.card.image} alt="" />
+          </div>
           <h4>{this.props.card.name}</h4>
         </div>
       );

@@ -30,6 +30,7 @@ export default class App extends React.Component {
     };
     this.setView = this.setView.bind(this);
     this.loginUser = this.loginUser.bind(this);
+    this.submitQuestionnaire = this.submitQuestionnaire.bind(this);
     this.addLike = this.addLike.bind(this);
     this.deleteLike = this.deleteLike.bind(this);
     this.getAllCollections = this.getAllCollections.bind(this);
@@ -84,15 +85,23 @@ export default class App extends React.Component {
         if (data.error) {
           this.setState({
             user: user.username,
-            signinRedirect: 'questionnaire'
+            signinRedirect: 'questionnaire',
+            questionaireFilled: false
           });
         } else {
           this.setState({
             user: user.username,
-            signinRedirect: 'home'
+            signinRedirect: 'home',
+            questionaireFilled: true
           });
         }
       });
+  }
+
+  submitQuestionnaire() {
+    this.setState({
+      questionaireFilled: true
+    });
   }
 
   addLike(id) {
@@ -169,22 +178,22 @@ export default class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path="/">
-            {this.state.isAuthorizing ? <Redirect to="/signin" /> : <Home getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />}
+            {!this.state.user ? <Redirect to="/signin" /> : !this.state.questionaireFilled ? <Redirect to="/questionnaire" /> : <Home getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />}
           </Route>
           <Route path="/questionnaire">
             {this.state.isAuthorizing ? <Redirect to="/signin" /> : this.state.questionaireFilled ? <Redirect to="/" /> : <Questionaire setView={this.setView} user={this.state.user} getAllRecommendations={this.getAllRecommendations} />}
           </Route>
           <Route path="/search">
-            {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Search getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
+            {!this.state.user ? <Redirect to="/signin" /> : !this.state.questionaireFilled ? <Redirect to="/questionnaire" /> : <Search getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
           </Route>
           <Route exact path="/collections">
-            {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Collections musicalList={this.state.recommended} />}
+            {!this.state.user ? <Redirect to="/signin" /> : !this.state.questionaireFilled ? <Redirect to="/questionnaire" /> : <Collections musicalList={this.state.recommended} />}
           </Route>
-          <Route exact path="/musicals/:musicalId" render={props => <MusicalDetails getMusicalDetails={this.getMusicalDetails} getAllCollections={this.getAllCollections} collections={this.state.collections} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} {...props} />} />
+          <Route exact path="/musicals/:musicalId" render={props => !this.state.questionaireFilled ? <Redirect to="/questionnaire" /> : <MusicalDetails getMusicalDetails={this.getMusicalDetails} getAllCollections={this.getAllCollections} collections={this.state.collections} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} {...props} />} />
           <Route path="/suggestion">
-            {typeof this.state.user === 'object' ? <Redirect to="/signin" /> : <Suggestion setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
+            {!this.state.user ? <Redirect to="/signin" /> : !this.state.questionaireFilled ? <Redirect to="/questionnaire" /> : <Suggestion setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
           </Route>
-          <Route path="/collections/:collectionId" component={CollectionItem} />
+          <Route path="/collections/:collectionId" component={props => <CollectionItem user={this.state.user} {...props} />} />
           <Route path="/signin">
             {this.state.signinRedirect === 'questionnaire' ? <Redirect to="/questionnaire" /> : this.state.signinRedirect === 'home' ? <Redirect to="/" /> : <SignIn loginUser={this.loginUser} />}
           </Route>
