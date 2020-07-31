@@ -13,8 +13,10 @@ const getACollection = (req, res, next) => {
          "m"."title",
          "m"."musicBy",
          "m"."lyricsBy",
-         "m"."imageUrl"
-      from "collections" as "c"
+         "m"."imageUrl",
+         "u"."username"
+      from "users" as "u"
+      join "collections" as "c" using ("userId")
       join "collectionItems" using ("collectionId")
       join "musicals" as "m" using ("musicalId")
     where "c"."collectionId" = $1

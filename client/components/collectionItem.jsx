@@ -9,7 +9,8 @@ export default class CollectionItem extends React.Component {
     super(props);
     this.state = {
       activeCollection: [],
-      activeCollectionName: ''
+      activeCollectionName: '',
+      myCollection: null
     };
     this.deleteMusicalFromCollection = this.deleteMusicalFromCollection.bind(this);
   }
@@ -18,10 +19,18 @@ export default class CollectionItem extends React.Component {
     fetch(`/api/collections/${this.props.match.params.collectionId}`)
       .then(res => res.json())
       .then(data => {
-        this.setState({
-          activeCollection: data,
-          activeCollectionName: data[0].collectionName
-        });
+
+        if (this.props.user === data[0].username) {
+          this.setState({
+            activeCollection: data,
+            activeCollectionName: data[0].collectionName,
+            myCollection: true
+          });
+        } else {
+          this.setState({
+            myCollection: false
+          });
+        }
       });
   }
 
@@ -39,41 +48,59 @@ export default class CollectionItem extends React.Component {
   }
 
   render() {
-    if (this.state.activeCollection.length > 0) {
+    if (this.state.myCollection) {
+      if (this.state.activeCollection.length > 0) {
+        return (
+          <div>
+            <TopNav />
+            <div className="collections-container">
+              <h1>{this.state.activeCollectionName}</h1>
+              {
+                this.state.activeCollection.map(item => {
+                  return (
+                    <CollectionItemCard item={item} key={item.musicalId} setView={this.props.setView} deleteMusicalFromCollection={this.deleteMusicalFromCollection} />
+                  );
+                })
+              }
+              <Link to="/collections">
+                <button className="filter-button submit"><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
+              </Link>
+              <BottomNav />
+            </div>
+          </div>
+
+        );
+      } else {
+        return (
+          <div>
+            <TopNav />
+            <div className="collections-container">
+              <h1>{this.state.activeCollectionName}</h1>
+              <p className="no-items">You don&apos;t have any musicals in here yet!</p>
+              <Link to="/collections">
+                <button className="filter-button submit"><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
+              </Link>
+              <BottomNav />
+            </div>
+          </div>
+        );
+      }
+    } else if (this.state.myCollection === false) {
       return (
         <div>
           <TopNav />
-          <div className="collections-container">
-            <h1>{this.state.activeCollectionName}</h1>
-            {
-              this.state.activeCollection.map(item => {
-                return (
-                  <CollectionItemCard item={item} key={item.musicalId} setView={this.props.setView} deleteMusicalFromCollection={this.deleteMusicalFromCollection} />
-                );
-              })
-            }
+          <div className="error-message-container">
+            <img src="/images/no-access.svg" alt="" />
+            <p>Looks like your trying to access a collection that&apos;s not your own!</p>
             <Link to="/collections">
-              <button className="filter-button submit"><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
+              <button className="filter-button submit"><i className="fas fa-angle-left pointer-icon"></i>Back to My Collections</button>
             </Link>
-            <BottomNav />
           </div>
+          <BottomNav />
         </div>
-
       );
     } else {
-      return (
-        <div>
-          <TopNav />
-          <div className="collections-container">
-            <h1>{this.state.activeCollectionName}</h1>
-            <p className="no-items">You don&apos;t have any musicals in here yet!</p>
-            <Link to="/collections">
-              <button className="filter-button submit"><i className="fas fa-angle-left pointer-icon"></i>Back to Collections</button>
-            </Link>
-            <BottomNav />
-          </div>
-        </div>
-      );
+      return null;
     }
   }
 }

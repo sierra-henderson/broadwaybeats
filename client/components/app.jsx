@@ -189,11 +189,11 @@ export default class App extends React.Component {
           <Route exact path="/collections">
             {!this.state.user ? <Redirect to="/signin" /> : !this.state.questionaireFilled ? <Redirect to="/questionnaire" /> : <Collections musicalList={this.state.recommended} />}
           </Route>
-          <Route exact path="/musicals/:musicalId" render={props => <MusicalDetails getMusicalDetails={this.getMusicalDetails} getAllCollections={this.getAllCollections} collections={this.state.collections} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} {...props} />} />
+          <Route exact path="/musicals/:musicalId" render={props => !this.state.questionaireFilled ? <Redirect to="/questionnaire" /> : <MusicalDetails getMusicalDetails={this.getMusicalDetails} getAllCollections={this.getAllCollections} collections={this.state.collections} musical={this.state.params} related={this.state.related} addLike={this.addLike} deleteLike={this.deleteLike} {...props} />} />
           <Route path="/suggestion">
             {!this.state.user ? <Redirect to="/signin" /> : !this.state.questionaireFilled ? <Redirect to="/questionnaire" /> : <Suggestion setView={this.setView} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
           </Route>
-          <Route path="/collections/:collectionId" component={CollectionItem} />
+          <Route path="/collections/:collectionId" component={props => <CollectionItem user={this.state.user} {...props} />} />
           <Route path="/signin">
             {this.state.signinRedirect === 'questionnaire' ? <Redirect to="/questionnaire" /> : this.state.signinRedirect === 'home' ? <Redirect to="/" /> : <SignIn loginUser={this.loginUser} />}
           </Route>
