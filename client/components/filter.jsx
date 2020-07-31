@@ -11,7 +11,7 @@ export default class Filter extends React.Component {
       numResults: null
     };
     this.addFilter = this.addFilter.bind(this);
-    this.handleReset = this.handleReset.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -33,12 +33,8 @@ export default class Filter extends React.Component {
     }
   }
 
-  handleReset() {
-    this.setState({
-      genre: {},
-      musicalStyle: {},
-      tag: {}
-    });
+  handleCancel() {
+    this.props.toggleFilter();
   }
 
   handleSubmit() {
@@ -154,7 +150,7 @@ export default class Filter extends React.Component {
         </div>
         <h4 className="results-display">{resultsDisplay}</h4>
         <div className="button-group">
-          <button className="reset filter-button" onClick={this.handleReset}>Reset</button>
+          <button className="reset filter-button" onClick={this.handleCancel}>Cancel</button>
           <button className="submit filter-button" onClick={this.handleSubmit}>Search</button>
         </div>
       </div>

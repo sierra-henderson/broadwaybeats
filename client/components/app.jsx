@@ -30,6 +30,7 @@ export default class App extends React.Component {
     };
     this.setView = this.setView.bind(this);
     this.loginUser = this.loginUser.bind(this);
+    this.submitQuestionnaire = this.submitQuestionnaire.bind(this);
     this.addLike = this.addLike.bind(this);
     this.deleteLike = this.deleteLike.bind(this);
     this.getAllCollections = this.getAllCollections.bind(this);
@@ -93,6 +94,12 @@ export default class App extends React.Component {
           });
         }
       });
+  }
+
+  submitQuestionnaire() {
+    this.setState({
+      questionaireFilled: true
+    });
   }
 
   addLike(id) {
@@ -169,7 +176,7 @@ export default class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path="/">
-            {this.state.isAuthorizing ? <Redirect to="/signin" /> : <Home getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />}
+            {!this.state.user ? <Redirect to="/signin" /> : !this.state.questionaireFilled ? <Redirect to="/questionnaire" /> : <Home getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />}
           </Route>
           <Route path="/questionnaire">
             {this.state.isAuthorizing ? <Redirect to="/signin" /> : this.state.questionaireFilled ? <Redirect to="/" /> : <Questionaire setView={this.setView} user={this.state.user} getAllRecommendations={this.getAllRecommendations} />}

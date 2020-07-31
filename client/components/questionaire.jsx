@@ -252,7 +252,7 @@ export default class Questionaire extends React.Component {
             <div className="questionaire-initial">
               <h1 className="medium">Done!</h1>
               <i className="big-check fas fa-check-circle"></i>
-              <Link to="/">
+              <Link to="/" onClick={this.props.submitQuestionnaire}>
                 <button className="reset filter-button">Get my musicals!</button>
               </Link>
             </div>
