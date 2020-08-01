@@ -3,6 +3,7 @@ import TopNav from './topNav';
 import BottomNav from './bottomNav';
 import ScrollingBar from './scrollingBar';
 import CollectionCard from './collection-card';
+import PageNotFound from './pageNotFound';
 
 export default class MusicalDetails extends React.Component {
   constructor(props) {
@@ -303,6 +304,8 @@ export default class MusicalDetails extends React.Component {
           </div>
         );
       }
+    } else if (this.props.musical === false) {
+      return <PageNotFound />;
     } else {
       return null;
     }
