@@ -489,12 +489,6 @@ COPY public.collections ("collectionId", "userId", name, "imageUrl") FROM stdin;
 --
 
 COPY public."genreSeeds" ("userId", "genreId") FROM stdin;
-34	10
-35	3
-38	10
-39	3
-39	4
-39	18
 5	3
 5	4
 5	15
@@ -546,12 +540,8 @@ COPY public.genres ("genreId", name) FROM stdin;
 --
 
 COPY public."likedMusicals" ("userId", "musicalId", "like") FROM stdin;
-32	75	t
-32	171	t
-32	283	t
 5	114	t
 5	303	t
-32	335	t
 5	315	t
 5	139	t
 5	135	t
@@ -560,11 +550,7 @@ COPY public."likedMusicals" ("userId", "musicalId", "like") FROM stdin;
 5	253	t
 5	246	t
 5	52	t
-34	192	t
-34	222	t
 1	89	t
-35	35	t
-35	81	t
 5	55	t
 1	98	t
 1	159	t
@@ -578,19 +564,8 @@ COPY public."likedMusicals" ("userId", "musicalId", "like") FROM stdin;
 1	384	t
 1	63	t
 1	139	t
-35	137	t
 1	85	t
-35	303	t
-35	328	t
-39	66	t
 1	153	t
-39	81	t
-39	96	t
-39	135	t
-39	161	t
-39	167	t
-39	227	t
-39	315	t
 1	81	t
 1	52	t
 1	20	t
@@ -2682,10 +2657,6 @@ COPY public."musicalStyleSeeds" ("userId", "musicalStyleId") FROM stdin;
 1	7
 1	8
 1	12
-34	7
-35	7
-38	17
-39	17
 \.
 
 
@@ -4388,15 +4359,6 @@ COPY public.tags ("tagId", name) FROM stdin;
 COPY public.users ("userId", username) FROM stdin;
 1	sierra
 5	sam
-31	aperson
-32	anotheruser
-33	siera
-34	test
-35	red
-36	green
-37	blue
-38	white
-39	ref
 \.
 
 
