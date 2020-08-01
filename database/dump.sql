@@ -462,6 +462,11 @@ COPY public."collectionItems" ("collectionId", "musicalId") FROM stdin;
 11	81
 18	360
 7	161
+25	280
+26	192
+26	397
+26	222
+26	80
 \.
 
 
@@ -471,6 +476,8 @@ COPY public."collectionItems" ("collectionId", "musicalId") FROM stdin;
 
 COPY public.collections ("collectionId", "userId", name, "imageUrl") FROM stdin;
 7	5	Audition Song Ideas	https://is4-ssl.mzstatic.com/image/thumb/Features/77/7b/7d/dj.xdqznyyn.jpg/1000x1000bb.jpg
+25	1	What Kind of Musical is This?	https://is2-ssl.mzstatic.com/image/thumb/Features/27/a3/a1/dj.duzjrtyj.jpg/1000x1000bb.jpeg
+26	1	My Voice Likes This	https://is1-ssl.mzstatic.com/image/thumb/Music/9a/87/5d/mzi.oxyysdcn.jpg/1000x1000bb.jpeg
 11	5	Angsty Musicals	https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/26/22/46/262246c5-92a3-6c2d-c481-c0e516725dac/791558966039.jpg/1000x1000bb.jpg
 10	5	Considerations for 2021	/images/empty-collection.png
 18	1	Folk Musicals	https://is3-ssl.mzstatic.com/image/thumb/Music128/v4/27/b7/84/27b784a9-0611-dba8-ddc6-d1beca4d1046/00888072041752.rgb.jpg/1000x1000bb.jpeg
@@ -482,6 +489,12 @@ COPY public.collections ("collectionId", "userId", name, "imageUrl") FROM stdin;
 --
 
 COPY public."genreSeeds" ("userId", "genreId") FROM stdin;
+34	10
+35	3
+38	10
+39	3
+39	4
+39	18
 5	3
 5	4
 5	15
@@ -533,8 +546,12 @@ COPY public.genres ("genreId", name) FROM stdin;
 --
 
 COPY public."likedMusicals" ("userId", "musicalId", "like") FROM stdin;
+32	75	t
+32	171	t
+32	283	t
 5	114	t
 5	303	t
+32	335	t
 5	315	t
 5	139	t
 5	135	t
@@ -543,6 +560,11 @@ COPY public."likedMusicals" ("userId", "musicalId", "like") FROM stdin;
 5	253	t
 5	246	t
 5	52	t
+34	192	t
+34	222	t
+1	89	t
+35	35	t
+35	81	t
 5	55	t
 1	98	t
 1	159	t
@@ -556,9 +578,23 @@ COPY public."likedMusicals" ("userId", "musicalId", "like") FROM stdin;
 1	384	t
 1	63	t
 1	139	t
+35	137	t
 1	85	t
+35	303	t
+35	328	t
+39	66	t
 1	153	t
+39	81	t
+39	96	t
+39	135	t
+39	161	t
+39	167	t
+39	227	t
+39	315	t
 1	81	t
+1	52	t
+1	20	t
+1	246	t
 1	435	t
 \.
 
@@ -708,8 +744,6 @@ COPY public."musicalGenres" ("musicalId", "genreId") FROM stdin;
 56	7
 56	24
 57	10
-58	10
-58	20
 59	7
 59	1
 60	7
@@ -1905,9 +1939,6 @@ COPY public."musicalStyleCategories" ("musicalId", "musicalStyleId") FROM stdin;
 56	13
 57	6
 57	7
-58	8
-58	16
-58	19
 59	6
 59	11
 59	8
@@ -2651,6 +2682,10 @@ COPY public."musicalStyleSeeds" ("userId", "musicalStyleId") FROM stdin;
 1	7
 1	8
 1	12
+34	7
+35	7
+38	17
+39	17
 \.
 
 
@@ -2836,12 +2871,6 @@ COPY public."musicalTags" ("musicalId", "tagId") FROM stdin;
 55	14
 56	26
 57	26
-58	2
-58	27
-58	24
-58	31
-58	42
-58	3
 59	21
 59	8
 59	1
@@ -3876,7 +3905,6 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 55	Beetlejuice	Eddie Perfect	Eddie Perfect	The ghost-with-the-most comes to the stage in this edgy and irreverent musical comedy based on Tim Burton’s dearly beloved film. Beetlejuice tells the story of Lydia Deetz, a strange and unusual teenager obsessed with the whole “being dead thing.” Lucky for Lydia, her new house is haunted by a recently deceased couple and Beetlejuice, a delightful demon with a real zest for life. When Lydia calls on Beetlejuice to scare away anyone with a pulse, this double-crossing specter shows his true stripes, unleashing a (Nether)world of pandemonium, and the biggest sandworm Broadway has ever seen.	https://music.apple.com/us/album/beetlejuice-original-broadway-cast-recording/1466050440	https://is5-ssl.mzstatic.com/image/thumb/Music123/v4/3e/f7/ec/3ef7ec17-aa73-7e2a-6382-9959226d7038/791558459739.jpg/1000x1000bb.jpeg
 56	Bells Are Ringing	Jule Styne	Betty Comden and Adolph Green	This charming romantic comedy follows the exploits of Ella, a telephone answering service operator with a fascination for her client's private lives. At Susanswerphone, Ella uses a variety of voices and personae to keep herself entertained. As she follows the lives of her customers, Ella becomes inextricably involved with a handsome playwright, a fledgling record company, and a dangerous crime ring.	https://music.apple.com/us/album/bells-are-ringing-original-broadway-cast/192711376	https://is5-ssl.mzstatic.com/image/thumb/Features/9c/4d/f7/dj.nmwjbjgb.jpg/1000x1000bb.jpg
 57	Ben Franklin in Paris	Mark Sandrich, Jr.	Sidney Michaels	Robert Preston starred on Broadway as the nation's first elder statesman as he travels to France to win support for new colonial America, encountering a former flame in the person of Lady Diane who helps him win his cause.	https://music.apple.com/us/album/ben-franklin-in-paris/716418548	https://is4-ssl.mzstatic.com/image/thumb/Music/v4/5b/0c/b5/5b0cb50d-d98d-3fbe-70de-a854bdfab8e8/00724356513457.jpg/1000x1000bb.jpeg
-58	Bernarda Alba	Michael John LaChiusa	Michael John LaChiusa	Bernarda Alba tells the tales of a powerful matriarch, who imposes a strict rule on her household following her second husband's funeral: 'Not a breath of outside air is going to enter this house. It's going to feel like we've bricked up the doors and windows,' she proclaims. Bernarda's five daughters, however, struggle with her cold wishes. The girls' dreams and desires challenge their mother's harsh rules and the outside world begins to slowly permeate their isolated existence.A perfect show for a strong female cast, Bernarda Alba is a masterwork by Michael John LaChiusa, who has brought us such critically acclaimed hits as The Wild Party and Marie Christine.	https://music.apple.com/us/album/the-house-of-bernarda-alba-original-theater-soundtrack-ep/1498799110	https://is5-ssl.mzstatic.com/image/thumb/Music124/v4/0a/e8/dc/0ae8dcb3-6620-676d-fc56-d981f4da3c1b/artwork.jpg/1000x1000bb.jpeg
 59	Big River	Roger Miller	Roger Miller	Be swept away by the river with Huckleberry Finn as he helps his friend Jim escape to freedom.	https://music.apple.com/us/album/big-river-adventures-huckleberry-finn-1985-original/1440767533	https://is5-ssl.mzstatic.com/image/thumb/Music118/v4/9f/fd/f2/9ffdf26f-c415-9991-3739-834404ca5f43/00076732614723.rgb.jpg/1000x1000bb.jpeg
 60	Billy Elliot The Musical	Elton John	Lee Hall	Millions of fans... thousands of standing ovations... ten Tony Awards, including Best Musical.... This is  Billy Elliot The Musical, the spectacular show with the heart, humor and passion to be named TIME Magazine's "Best Musical of the Decade!" Based on the international smash-hit film, and featuring a score by music legend Elton John, Billy Elliot is an astonishing theatrical experience that will stay with you forever. Set in a northern English mining town against the background of the 1984 miners' strike, Billy Elliot is the inspirational story of a young boy's struggle against the odds to make his dream come true. Follow Billy's journey as he stumbles out of the boxing ring and into a ballet class, where he discovers a passion for dance that inspires his family and community... and changes his life forever. With a powerful storyline, rousing songs and opportunities for sensational choreography Billy Elliot is the perfect opportunity to blow audiences away. A large cast of children provides the perfect opportunity to feature dance programs in your area and let your young talent SHINE! Download the logo and full marketing guidelines here.	https://music.apple.com/us/album/billy-elliot-the-musical-original-cast-recording/1440745350	https://is2-ssl.mzstatic.com/image/thumb/Music118/v4/d8/3f/94/d83f9409-4c62-263e-ae9b-bae09b7b91ea/00602498752166.rgb.jpg/1000x1000bb.jpeg
 80	Carousel	Richard Rodgers	Oscar Hammerstein II	Billy Bigelow, a swaggering, carefree carnival barker, falls in love with and marries the sweet but naive Julie Jordan. A stunning tale of hope, redemption, and the power of love.	https://music.apple.com/us/album/rodgers-hammersteins-carousel-2018-broadway-cast-recording/1391405459	https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/1c/a1/eb/1ca1eb77-7a18-0ce8-46d0-13d002403e07/00888072066267.rgb.jpg/1000x1000bb.jpeg
@@ -4124,7 +4152,6 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 307	Robert and Elizabeth	Ron Grainer	Ronald Millar	The year 1845 finds the Moulton Barrett family of London tight in the grip of a tyrannical father. His invalid daughter Elizabeth is gaining a brilliant reputation as a writer. Her verses reach Robert Browning who falls in love with her before they have ever met. Browning sweeps into Elizabeth's life with the invigorating force of a sea breeze and her father senses that his absolute authority is in danger. Tension mounts as Edward Moulton Barrett and Robert Browning engage in a struggle for Elizabeth's life and happiness. A big hit in London's West End.	https://music.apple.com/us/album/robert-and-elizabeth/691255962	https://is1-ssl.mzstatic.com/image/thumb/Features/v4/39/4d/1b/394d1bf8-1e2e-0a25-3d09-1533a148988b/dj.iwurhnkx.jpg/1000x1000bb.jpeg
 308	Rock of Ages	Chris D'Arienzo	Chris D'Arienzo	Rock of Ages opened on Broadway at the Brooks Atkinson Theatre on April 7, 2009. As of August 31, 2014, it is the 30th longest running show with 2168 performances.	https://music.apple.com/us/album/rock-of-ages-original-broadway-cast-recording/317696075	https://is3-ssl.mzstatic.com/image/thumb/Music113/v4/02/66/5b/02665b21-03c6-6c3f-958f-0e79c267130b/794043915161.jpg/1000x1000bb.jpeg
 309	Rocky	Stephen Flaherty	Lynn Ahrens	Rocky  is a 2012 musical with music and lyrics by Tony® winners and Academy Award® nominees Stephen Flaherty and Lynn Ahrens, and a book by multiple Tony winner Thomas Meehan, adapted from the acclaimed Oscar®-nominated screenplay by Sylvester Stallone. The show had its world premiere in Hamburg in 2012 and opened on Broadway in 2014 at the Winter Garden Theatre. The musical follows the plot of the Academy Award-winning Best Picture classic, Rocky. Rocky  brings to life the story of Rocky Balboa, a small-time boxer from working-class Philadelphia, who is chosen to take on the reigning world heavyweight champion, Apollo Creed, when the undefeated fighter's scheduled opponent is injured. While training with former bantamweight contender Mickey, Rocky tentatively begins a relationship with Adrian, the wallflower sister of his meat-packer pal Paulie. They establish a touching rapport, especially in the scenes featuring Rocky's efforts to coax Adrian out of her own shell. Because Rocky really is a tender love story camouflaged under a burly exterior, Ahrens' and Flaherty's beautiful and energized score includes two moving duets for Rocky and Adrian, while the book explores the depths and complexity of their relationship.	https://music.apple.com/us/album/rocky-broadway-original-broadway-cast-recording/1443200296	https://is5-ssl.mzstatic.com/image/thumb/Music128/v4/8c/89/33/8c89335c-11a6-d7ab-df6b-32dd0eea70a2/00602537847099.rgb.jpg/1000x1000bb.jpeg
-310	Romance/Romance	Keith Herrmann	Barry Harman	Two one act musicals take varied looks at romance seekers. The first is a delightful romp through the sexual ennui of turn of the century Vienna based on Schnitzler's tale The Little Comedy. Act 2 is a modern look at affection and disaffection in a two couple summer house in the Hamptons based on the Jules Renard play Summer Share. An Off Off Broadway sensation that successfully moved to Broadway, Romance/Romance is a perfect change from the modern mega musical.	https://music.apple.com/us/album/weird-romance-original-off-broadway-cast-recording/403757623	https://is5-ssl.mzstatic.com/image/thumb/Music/45/48/ab/mzi.hoelfmkz.jpg/1000x1000bb.jpeg
 311	Rothschild & Sons	Jerry Bock	Sheldon Harnick	With a score by Tony Award winners Sheldon Harnick and Jerry Bock (Fiddler on the Roof, She Loves Me), Rothschild & Sons tells the tale of the Rothschild family, who built a business empire from nothing in the face of adversity and bigotry. But above all, Rothschild & Sons is a one-act epic about faith, persistance, and how family gives the greatest wealth of all. Shrewd, charismatic, resourceful and ambitious, Mayer Rothschild and his five sons struggle to overcome the prejudice of late-eighteenth-century European society, as they build a family banking business that takes them from the Jewish ghetto to the courts of the rich and powerful. On the way, they come to dominate European finance, help fund Napoleon's defeat and secure a Declaration of Rights for their people from the Crowned Heads of State. It is truly Europe's most famous rags-to-riches story. Powerful and informative in nature, Rothschild & Sons, much like Fiddler on the Roof, is an impactful, important, and must-see piece for all audiences. Requiring most actors to play multiple roles, it creates ample opportunities to feature an array of talented actor-singers who will love sinking their teeth into the ambitious and bold libretto/score.	https://music.apple.com/us/album/rothschild-sons-original-off-broadway-cast/1119181138	https://is5-ssl.mzstatic.com/image/thumb/Music18/v4/df/05/ff/df05ff4a-0993-900e-e21e-047bb8c0dbb4/Rothschild_Cover1.jpg/1000x1000bb.jpeg
 312	Sandy Wilson's The Boy Friend	Sandy Wilson	Sandy Wilson	The Jazz Age lives on in Sandy Wilson's The Boy Friend, a light romantic spoof of 1920s musical comedy. Written in the fifties as "a new musical of the twenties," this is still considered the most successful and witty of the send-up musicals. Set against the backdrop of the French Riviera, this romantic spoof of 1920s musical comedies tells the story of English heiress, Polly, who is longing for only one thing: a boy friend. Polly's father, convinced that any boy who isn't wealthy will court Polly strictly for her financial situation, forbids her to engage any potential suitors. Honoring his wishes, Polly explains to Tony, the messenger boy with whom she's fallen in love, that she is no rich girl. This is just the tip of the mistaken identity iceberg, as love proceeds to find its way charmingly through nearly every member of the cast and bring them all to a happy ending. The Boy Friend is an essential Golden Age musical. Filled to the brim with tongue-in-cheek moments that both parents and grandparents will love, The Boy Friend has a catchy score and opportunities for complex dance numbers. With a fair amount of featured actor/actress roles, it's also an unforgettable chance to showcase a comedic and cheery talent pool.	https://music.apple.com/us/album/the-boy-friend-original-broadway-cast-recording/272094221	https://is2-ssl.mzstatic.com/image/thumb/Features/3d/8e/8f/dj.kwnawobm.jpg/1000x1000bb.jpeg
 313	Saturday Night	Stephen Sondheim	Stephen Sondheim	In 1953, Saturday Night was to mark the Broadway debut of a young, new writer named Stephen Sondheim. Owing to the death of the original producer, Saturday Night's New York opening was delayed some 47 years! But now it's here, brimming with all of the charm and youthful vitality of a talent blossoming into greatness. Saturday Night tells the unassuming story of a group of Brooklyn boys, trying to make good in the stock market in 1929. Unfortunately, one of them, Gene, is so eager to climb the social ladder and impress his sweetheart that he invests his friends' money in a swank apartment near the Brooklyn Bridge, even going so far as to sell the gang's precious automobile! Based on a play by two brothers who were responsible for the classic film, Casablanca, Saturday Night features a fetching, tuneful Broadway-style score that hints at Sondheim's triumphs-to-come while staying firmly rooted in the Rodgers and Hammerstein tradition. Saturday Night is a nostalgic charmer that will appeal to every audience and is a must for Sondheim fans.	https://music.apple.com/us/album/saturday-night-original-cast-recording/98431408	https://is2-ssl.mzstatic.com/image/thumb/Music/0e/c1/fe/mzi.nyscxigv.jpg/1000x1000bb.jpg
@@ -4148,7 +4175,6 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 332	Snoopy!!!	Larry Grossman	Hal Hackady	Based on the beloved Peanuts comic strip by Charles Schulz, Snoopy!!! sparkles with wit and warmth as it depicts life as seen through the eyes of Schulz's unforgettable characters. Musical numbers include "Just One Person," "Poor Sweet Baby," "Don’t Be Anything Less (Than Everything You Can Be)," "Edgar Allen Poe" and "Daisy Hill."	https://music.apple.com/us/album/snoopy-the-musical-original-london-cast/201947969	https://is5-ssl.mzstatic.com/image/thumb/Music/cb/dc/43/mzi.bvkbtlit.tif/1000x1000bb.jpeg
 333	Something Rotten!	Karey Kirkpatrick	Karey Kirkpatrick	Welcome to the Renaissance and the outrageous, crowd-pleasing musical farce, Something Rotten.  Created by Grammy Award-winning songwriter Wayne Kirkpatrick, and successful screenwriters Karey Kirkpatrick and John O’Farrell, Something Rotten was lauded by audience members and critics alike, receiving several Best Musical nominations and hailed by Time Out New York as "the funniest musical comedy in at least 400 years". Set in the 1590s, brothers Nick and Nigel Bottom are desperate to write a hit play but are stuck in the shadow of that Renaissance rock star known as "The Bard." When a local soothsayer foretells that the future of theatre involves singing, dancing and acting at the same time, Nick and Nigel set out to write the world’s very first musical. But amidst the scandalous excitement of opening night, the Bottom Brothers realize that reaching the top means being true to thine own self, and all that jazz. Something Rotten features large song and dance numbers, and a wacky cast of over-the-top characters, each given his or her own special moment in the show to shine.  Throughout its Broadway run, the musical received a show-stopping standing ovation from audiences... in the beginning of the first act!  It’s become clear that “nothing’s as amazing as a musical,” so don’t miss your chance to bring this history-twisting tale to your stage. Read the perusal for free!	https://music.apple.com/us/album/something-rotten-original-broadway-cast-recording/1269635586	https://is5-ssl.mzstatic.com/image/thumb/Music118/v4/9b/4c/5a/9b4c5a0b-a0f0-6b0f-38ed-12c02ce0617d/791558959536.jpg/1000x1000bb.jpeg
 334	Something's Afoot	James Mc	James Mc	A zany, entertaining musical that takes a satirical poke at Agatha Christie mysteries and musical styles of the English music hall of the ’30s. Ten people are stranded in an isolated English country house during a raging thunderstorm. One by one they’re picked off by cleverly fiendish devices. As the bodies pile up in the library, the survivors frantically race to uncover the identity and motivation of the cunning culprit.	https://music.apple.com/us/album/somethings-afoot-world-premiere-studio-cast/1504884235	https://is2-ssl.mzstatic.com/image/thumb/Music113/v4/72/65/66/726566ec-7c6c-7567-d4aa-0e0029602398/Somethings_Afoot_Cover_Scan.jpg/1000x1000bb.jpeg
-335	Sondheim on Sondheim	Stephen Sondheim	Stephen Sondheim	Hailed as a "revelatory revue full of wonderful moments" and a "funny, affectionate and revealing tribute to musical theater's greatest living composer and lyricist," Sondheim on Sondheim is an intimate portrait of the famed songwriter in his own words... and music. Through the use of exclusive interview footage, audiences get an inside look at the personal life and artistic process of famed composer, Stephen Sondheim. His story. His inspiration. His genius. The tapestry of creativity that characterizes Stephen Sondheim remained largely undiscussed, especially by the man himself, until the creation of Sondheim on Sondheim. Ranging from the beloved to the obscure, the carefully selected two-dozen songs hang from a framework of in-depth video interviews, delving into Sondheim's personal life and artistic process. Far from the typical song cycle, Sondheim on Sondheim has massive theatrical potency, as well as inarguable staying power. The incomparable James Lapine brilliantly curated a collection of songs that have been masterfully arranged by David Loud. In addition, Sondheim on Sondheim's multimedia facets make it equally at home on a Broadway-sized stage as it would be in a black box space. Included in the rehearsal set for Sondheim on Sondheim is the video content required for the show. This video content is supplied on an external hard drive that includes a single-channel video playback system and all 100 required video segments. The rehearsal set also includes a video playback instruction guide and cue sheet. Please note the video playback system can ONLY be used on Macs. There is no Windows compatibility.	https://music.apple.com/us/album/funny-thing-happened-on-way-to-forum-original-broadway/463188376	https://is2-ssl.mzstatic.com/image/thumb/Music/5a/33/9c/mzi.mutxeuwt.jpg/1000x1000bb.jpg
 336	Song and Dance	Andrew Lloyd Webber	Don Black	Song & Dance is comprised of Tell Me on a Sunday, a one-woman song cycle Andrew Lloyd Webber penned with Don Black, and Variations, a musical piece the composer wrote for his brother Julian.\r\nThe Tony-nominated musical’s first act follows a young English girl living in New York, who begins to wonder whether—in fact—she’s been looking for love in all the wrong places. The second act is a dance concert, set to Lloyd Webber’s Variations. Based on Paganini’s “Caprice in A minor,” it can be adapted to a myriad of choreographic genres including tap, jazz and modern, commenting and complimenting the events portrayed in the Song portion of the show.	https://music.apple.com/us/album/song-dance-original-broadway-cast-recording/274481442	https://is1-ssl.mzstatic.com/image/thumb/Features/0e/e2/9d/dj.jbsrtfkp.jpg/1000x1000bb.jpeg
 337	Song of Norway	Edvard Grieg, Robert Wright, George Forrest, Milton Lazarus, Homer Curran, Edwin Lester	Edvard Grieg, Robert Wright, George Forrest, Milton Lazarus, Homer Curran, Edwin Lester	Song of Norway is a romantic operetta based loosely on the life of composer Edvard Grieg, whose best loved compositions are transformed into glorious vocal numbers.Song of Norway opened on Broadway at the Imperial Theatre on August 21, 1944, starring Irra Petina, Robert Shafer, and Lawrence Brooks as Edvard Grieg. The show later transferred to the Broadway Theatre, playing a total of 860 performances. Song of Norway was the first Broadway show to open in London after the Second World War. It played for 526 performances at the Palace Theatre in the West End.	https://music.apple.com/us/album/song-norway-original-studio-cast-complete-recording/219043234	https://is2-ssl.mzstatic.com/image/thumb/Music/d7/5b/60/mzi.nzyjqtfj.tif/1000x1000bb.jpeg
 338	Songs for a New World	Jason Robert Brown	Jason Robert Brown	It's about one moment. It's about hitting the wall and having to make a choice... or take a stand... or turn around and go back. These are the stories and characters of today, the Songs for a New World. The first musical from Tony Award winner, Jason Robert Brown (Parade, Bridges of Madison County), this moving collection of powerful songs examines life, love and the choices that we make. Brown transports his audience from the deck of a 1492 Spanish sailing ship to a ledge, 57 stories above Fifth Avenue, to meet a startling array of characters that range from a young man who has determined that basketball is his ticket out of the ghetto to a woman whose dream of marrying rich nabs her the man of her dreams... and a soulless marriage. With a small, powerhouse multi-ethnic cast and a driving, exquisitely crafted score that runs the gamut of today's popular music, Songs for a New World is a great way to bring the next generation into the theatre.	https://music.apple.com/us/album/songs-for-new-world-new-york-city-center-2018-encores/1446494281	https://is5-ssl.mzstatic.com/image/thumb/Music128/v4/a0/cc/12/a0cc1281-f483-faf1-d581-16faa5be5ab9/791558456134.jpg/1000x1000bb.jpeg
@@ -4283,6 +4309,8 @@ COPY public.musicals ("musicalId", title, "musicBy", "lyricsBy", plot, "musicUrl
 178	I Do! I Do!	Harvey Schmidt	Tom Jones	The story of a marriage is at the center of I Do! I Do!, an intimate and nostalgic work by Harvey Schmidt and Tom Jones (The Fantasticks). Written as a star vehicle for theatre legends, Mary Martin and Robert Preston, the original Broadway production received seven Tony Award nominations. The show begins with Michael and Agnes on their wedding day. Their vows behind them, they look forward to spending the rest of their lives together. We watch as they go through their wedding night jitters, raise a family and negotiate midlife crises. Michael eventually admits to his infidelity, and, although Agnes is angered by his actions, she forgives him and the couple reconciles. They rediscover how much they really need each other. Then, after 50 years of marriage, the couple leaves their house to the next pair of newlyweds. This touching story of two soul mates navigating the perils of life is set to a tuneful, charming score. With minimal set and costume requirements, I Do! I Do! is ideal for regional theatre companies with smaller troupes on a limited budget.	https://music.apple.com/us/album/i-do-i-do/272105075	https://is4-ssl.mzstatic.com/image/thumb/Music/5b/af/3c/mzi.aeqwywhw.jpg/1000x1000bb.jpg
 324	Side by Side by Sondheim	Jule Styne	Stephen Sondheim	Get ready to laugh, cry and fall in love with lyrics that are heartbreakingly true and music that captures the soaring emotions of a new generation with Side by Side by Sondheim. Simple and unpretentious, this Tony Award-winning musical is a perfect introduction to the work of this contemporary master and a must for diehard fans. Stephen Sondheim has been the leading composer of musical theatre for the past fifty years. His work is timeless. From the streets of ancient Rome, through nineteenth-century Japan and turn-of-the-century Sweden, to the high-rise apartments of 1970 Manhattan, his songs represent a definitive time and place, and yet move beyond their particular settings to speak to us all. Now, with this award-winning revue of his earlier work, some of the most lush, unforgettable songs from this musical theatre master are presented in one magical evening. Featuring music from Company, Follies, A Little Night Music, A Funny Thing Happened on the Way to the Forum, Anyone Can Whistle and Pacific Overtures, not to mention the classics written with musical theatre giants, Leonard Bernstein, Jule Styne and Richard Rodgers, this dazzling array of some of Sondheim's best-known songs demonstrates his masterful craft and astounding creativity. Minimal sets and costumes, a small cast and two pianos allow the brilliant songs to shine. The proceedings are run by a charming, pithy narrator whose virtually nonexistent musical requirements are ideal for a nonsinging, local celebrity with limited rehearsal time.	https://music.apple.com/us/album/side-by-side-by-sondheim-original-london-cast-recording/272102185	https://is3-ssl.mzstatic.com/image/thumb/Features/66/7f/0b/dj.pjznvywv.jpg/1000x1000bb-60.jpg
 122	Fanny	Harold Rome	Harold Rome	Based on Marcel Pagnol’s stage and film trilogy Marius, Fanny and César, Fanny is a romantic tale of love, secrets and passion set in the seaport milieu of old Marseille.Fanny opened on Broadway at the Majestic Theatre on November 4, 1954, starring Ezio Pinza, Walter Slezak, Florence Henderson and William Tabbert. The show later moved to the Belasco Theatre, playing a total of 888 performances.	https://music.apple.com/us/album/fanny-original-broadway-cast-recording/332568448	https://is1-ssl.mzstatic.com/image/thumb/Features/13/ef/a0/dj.nntvigdw.jpg/500x500bb-60.jpg
+335	Sondheim on Sondheim	Stephen Sondheim	Stephen Sondheim	Hailed as a "revelatory revue full of wonderful moments" and a "funny, affectionate and revealing tribute to musical theater's greatest living composer and lyricist," Sondheim on Sondheim is an intimate portrait of the famed songwriter in his own words... and music. Through the use of exclusive interview footage, audiences get an inside look at the personal life and artistic process of famed composer, Stephen Sondheim. His story. His inspiration. His genius. The tapestry of creativity that characterizes Stephen Sondheim remained largely undiscussed, especially by the man himself, until the creation of Sondheim on Sondheim. Ranging from the beloved to the obscure, the carefully selected two-dozen songs hang from a framework of in-depth video interviews, delving into Sondheim's personal life and artistic process. Far from the typical song cycle, Sondheim on Sondheim has massive theatrical potency, as well as inarguable staying power. The incomparable James Lapine brilliantly curated a collection of songs that have been masterfully arranged by David Loud. In addition, Sondheim on Sondheim's multimedia facets make it equally at home on a Broadway-sized stage as it would be in a black box space. Included in the rehearsal set for Sondheim on Sondheim is the video content required for the show. This video content is supplied on an external hard drive that includes a single-channel video playback system and all 100 required video segments. The rehearsal set also includes a video playback instruction guide and cue sheet. Please note the video playback system can ONLY be used on Macs. There is no Windows compatibility.	https://music.apple.com/us/album/sondheim-on-sondheim-original-broadway-cast-recording/780135884	https://is2-ssl.mzstatic.com/image/thumb/Music/v4/10/ab/77/10ab77aa-da7d-9235-6052-48f2a5256c14/1100152.tif/500x500bb-60.jpg
+310	Romance/Romance	Keith Herrmann	Barry Harman	Two one act musicals take varied looks at romance seekers. The first is a delightful romp through the sexual ennui of turn of the century Vienna based on Schnitzler's tale The Little Comedy. Act 2 is a modern look at affection and disaffection in a two couple summer house in the Hamptons based on the Jules Renard play Summer Share. An Off Off Broadway sensation that successfully moved to Broadway, Romance/Romance is a perfect change from the modern mega musical.	https://music.apple.com/tr/album/romance-romance-original-broadway-cast/209447161	https://is5-ssl.mzstatic.com/image/thumb/Music/cc/38/52/mzi.ieetmllo.tif/500x500bb-60.jpg
 \.
 
 
@@ -4360,6 +4388,15 @@ COPY public.tags ("tagId", name) FROM stdin;
 COPY public.users ("userId", username) FROM stdin;
 1	sierra
 5	sam
+31	aperson
+32	anotheruser
+33	siera
+34	test
+35	red
+36	green
+37	blue
+38	white
+39	ref
 \.
 
 
@@ -4367,7 +4404,7 @@ COPY public.users ("userId", username) FROM stdin;
 -- Name: collections_collectionId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."collections_collectionId_seq"', 18, true);
+SELECT pg_catalog.setval('public."collections_collectionId_seq"', 26, true);
 
 
 --
@@ -4409,7 +4446,7 @@ SELECT pg_catalog.setval('public."tags_tagId_seq"', 1, false);
 -- Name: users_userId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."users_userId_seq"', 30, true);
+SELECT pg_catalog.setval('public."users_userId_seq"', 39, true);
 
 
 --
