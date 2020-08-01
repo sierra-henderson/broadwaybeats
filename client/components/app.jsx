@@ -142,19 +142,25 @@ export default class App extends React.Component {
     fetch(`/api/musicals/${id}`)
       .then(res => res.json())
       .then(data => {
-        return fetch(`/api/musicals/${id}/like`)
-          .then(res => res.json())
-          .then(likeInfo => {
-            data.like = likeInfo.like;
-            return fetch(`/api/musicals/${id}/related`)
-              .then(res => res.json())
-              .then(related => {
-                this.setState({
-                  params: data,
-                  related: related
-                });
-              });
+        if (data.error) {
+          this.setState({
+            params: false
           });
+        } else {
+          return fetch(`/api/musicals/${id}/like`)
+            .then(res => res.json())
+            .then(likeInfo => {
+              data.like = likeInfo.like;
+              return fetch(`/api/musicals/${id}/related`)
+                .then(res => res.json())
+                .then(related => {
+                  this.setState({
+                    params: data,
+                    related: related
+                  });
+                });
+            });
+        }
       });
   }
 
