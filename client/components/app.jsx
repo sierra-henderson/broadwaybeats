@@ -181,7 +181,7 @@ export default class App extends React.Component {
             {!this.state.user ? <Redirect to="/signin" /> : !this.state.questionaireFilled ? <Redirect to="/questionnaire" /> : <Home getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} musicalList={this.state.recommended} />}
           </Route>
           <Route path="/questionnaire">
-            {this.state.isAuthorizing ? <Redirect to="/signin" /> : this.state.questionaireFilled ? <Redirect to="/" /> : <Questionaire setView={this.setView} user={this.state.user} getAllRecommendations={this.getAllRecommendations} />}
+            {this.state.isAuthorizing ? <Redirect to="/signin" /> : this.state.questionaireFilled ? <Redirect to="/" /> : <Questionaire setView={this.setView} user={this.state.user} getAllRecommendations={this.getAllRecommendations} submitQuestionnaire={this.submitQuestionnaire} />}
           </Route>
           <Route path="/search">
             {!this.state.user ? <Redirect to="/signin" /> : !this.state.questionaireFilled ? <Redirect to="/questionnaire" /> : <Search getMusicalDetails={this.getMusicalDetails} getAllRecommendations={this.getAllRecommendations} getAllCollections={this.getAllCollections} />}
