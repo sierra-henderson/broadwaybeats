@@ -301,13 +301,13 @@ a {
 }
 
 .search .card {
-  max-width: 200px;
+  width: 150px;
   padding-bottom: 0.25rem;
 }
 
 .card-image {
   width: 100%;
-  max-height: 205px;
+  height: 155px;
 }
 
 .card-image img {
@@ -819,6 +819,14 @@ iframe {
 
   .icon-group i {
     font-size: 2rem;
+  }
+
+  .search .card {
+    max-width: 200px;
+  }
+
+  .card-image {
+    max-height: 205px;
   }
 
   .error-message-container p {
