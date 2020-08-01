@@ -114,7 +114,7 @@ export default class Questionaire extends React.Component {
     const pageOne = [
       { cardId: 1, image: '/images/comedy.jpeg', name: 'Comedy', id: 7, category: 'genre' },
       { cardId: 2, image: '/images/drama.jpg', name: 'Drama', id: 10, category: 'genre' },
-      { cardId: 3, image: '/images/mystery.jpg', name: 'Mystery/Thriller', id: 18, category: 'genre' },
+      { cardId: 3, image: '/images/mystery.jpg', name: 'Mystery / Thriller', id: 18, category: 'genre' },
       { cardId: 4, image: '/images/romance.jpeg', name: 'Romance', id: 23, category: 'genre' },
       { cardId: 5, image: '/images/adventure.jpg', name: 'Adventure', id: 4, category: 'genre' },
       { cardId: 6, image: '/images/fantasy.jpg', name: 'Fantasy', id: 15, category: 'genre' }
@@ -122,7 +122,7 @@ export default class Questionaire extends React.Component {
     const pageTwo = [
       { cardId: 7, image: '/images/classic-broadway.jpeg', name: 'Classic Broadway', id: 6, category: 'musicalStyle' },
       { cardId: 8, image: '/images/contemporary.jpg', name: 'Contemporary Broadway', id: 8, category: 'musicalStyle' },
-      { cardId: 9, image: '/images/operetta.jpg', name: 'Classical/Operetta', id: 7, category: 'musicalStyle' },
+      { cardId: 9, image: '/images/operetta.jpg', name: 'Classical / Operetta', id: 7, category: 'musicalStyle' },
       { cardId: 10, image: '/images/pop-rock.jpg', name: 'Pop/Rock', id: 17, category: 'musicalStyle' },
       { cardId: 11, image: '/images/country.jpg', name: 'Country', id: 11, category: 'musicalStyle' },
       { cardId: 12, image: '/images/folk.jpg', name: 'Folk', id: 12, category: 'musicalStyle' },
@@ -130,9 +130,9 @@ export default class Questionaire extends React.Component {
       { cardId: 14, image: '/images/jazz.jpeg', name: 'Jazz/Blues', id: 15, category: 'musicalStyle' }
     ];
     const pageThree = [
-      { cardId: 15, image: '/images/historical.jpg', name: 'Period/Historical', id: 20, category: 'genre' },
+      { cardId: 15, image: '/images/historical.jpg', name: 'Period / Historical', id: 20, category: 'genre' },
       { cardId: 16, image: '/images/religious.jpg', name: 'Religious', id: 21, category: 'genre' },
-      { cardId: 17, image: '/images/christmas.jpg', name: 'Christmas/Holiday', id: 6, category: 'genre' },
+      { cardId: 17, image: '/images/christmas.jpg', name: 'Christmas / Holiday', id: 6, category: 'genre' },
       { cardId: 18, image: '/images/experimental.jpg', name: 'Experimental', id: 12, category: 'genre' },
       { cardId: 19, image: '/images/dark-comedy.jpeg', name: 'Dark Comedy', id: 8, category: 'genre' },
       { cardId: 20, image: '/images/revue.jpeg', name: 'Revue', id: 22, category: 'genre' },

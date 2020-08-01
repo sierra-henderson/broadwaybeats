@@ -19,17 +19,22 @@ export default class CollectionItem extends React.Component {
     fetch(`/api/collections/${this.props.match.params.collectionId}`)
       .then(res => res.json())
       .then(data => {
-
-        if (this.props.user === data[0].username) {
-          this.setState({
-            activeCollection: data,
-            activeCollectionName: data[0].collectionName,
-            myCollection: true
-          });
-        } else {
+        if (data.error) {
           this.setState({
             myCollection: false
           });
+        } else {
+          if (this.props.user === data[0].username) {
+            this.setState({
+              activeCollection: data,
+              activeCollectionName: data[0].collectionName,
+              myCollection: true
+            });
+          } else {
+            this.setState({
+              myCollection: false
+            });
+          }
         }
       });
   }
@@ -91,7 +96,7 @@ export default class CollectionItem extends React.Component {
           <TopNav />
           <div className="error-message-container">
             <img src="/images/no-access.svg" alt="" />
-            <p>Looks like your trying to access a collection that&apos;s not your own!</p>
+            <p>Looks like your trying to access a collection that does not exist or is not your own!</p>
             <Link to="/collections">
               <button className="filter-button submit"><i className="fas fa-angle-left pointer-icon"></i>Back to My Collections</button>
             </Link>

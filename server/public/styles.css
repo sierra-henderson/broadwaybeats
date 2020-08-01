@@ -328,6 +328,10 @@ iframe {
   border-bottom: none;
 }
 
+.unboxed h4 {
+  margin: 0.5rem 0 0 0.5rem;
+}
+
 .related {
   margin: 1.25rem 0 0 0.5rem;
 }
@@ -552,7 +556,7 @@ iframe {
 }
 
 .collection-card-text {
-  margin-left: 1rem;
+  margin: 0 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -754,8 +758,13 @@ iframe {
 }
 
 .error-message-container {
-  margin: 100px auto;
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  margin: 1rem;
 }
 
 .error-message-container h3 {
@@ -764,7 +773,8 @@ iframe {
 }
 
 .error-message-container p {
-  font-size: 1.25rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
 .error-message-container img {
@@ -809,6 +819,10 @@ iframe {
 
   .icon-group i {
     font-size: 2rem;
+  }
+
+  .error-message-container p {
+    font-size: 1.25rem;
   }
 
   h3.related {
