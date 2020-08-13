@@ -158,13 +158,15 @@ export default class Questionaire extends React.Component {
       case 1:
         return (
           <div className="questionaire-container">
-            <div className="percent-complete"></div>
-            <div className="complete-bar twenty"></div>
-            <div className="inner-questionaire">
+            <div className="sticky">
+              <div className="percent-complete"></div>
+              <div className="complete-bar twenty"></div>
               <div className="page-toggles">
                 <i className="fas fa-arrow-left fa-2x" onClick={() => this.changePage(0)}></i>
                 <i className="fas fa-check fa-2x" onClick={() => this.changePage(2)}></i>
               </div>
+            </div>
+            <div className="inner-questionaire">
               <h1>Do you have a preferred genre?</h1>
               <div className="boxed-cards-container">
                 {
@@ -179,13 +181,15 @@ export default class Questionaire extends React.Component {
       case 2:
         return (
           <div className="questionaire-container">
-            <div className="percent-complete"></div>
-            <div className="complete-bar forty"></div>
-            <div className="inner-questionaire">
+            <div className="sticky">
+              <div className="percent-complete"></div>
+              <div className="complete-bar forty"></div>
               <div className="page-toggles">
                 <i className="fas fa-arrow-left fa-2x" onClick={() => this.changePage(1)}></i>
                 <i className="fas fa-check fa-2x" onClick={() => this.changePage(3)}></i>
               </div>
+            </div>
+            <div className="inner-questionaire">
               <h1>What kind of musical style do you look for in a musical?</h1>
               <div className="boxed-cards-container">
                 {
@@ -200,13 +204,15 @@ export default class Questionaire extends React.Component {
       case 3:
         return (
           <div className="questionaire-container">
-            <div className="percent-complete"></div>
-            <div className="complete-bar sixty"></div>
-            <div className="inner-questionaire">
+            <div className="sticky">
+              <div className="percent-complete"></div>
+              <div className="complete-bar sixty"></div>
               <div className="page-toggles">
                 <i className="fas fa-arrow-left fa-2x" onClick={() => this.changePage(2)}></i>
                 <i className="fas fa-check fa-2x" onClick={this.submitSeeds}></i>
               </div>
+            </div>
+            <div className="inner-questionaire">
               <h1>Is there anything else you look for in a musical?</h1>
               <div className={`fail-message ${modalClassSeeds}`}>
                 <p>Please choose at least one genre and musical style.</p>
@@ -224,12 +230,14 @@ export default class Questionaire extends React.Component {
       case 4:
         return (
           <div className="questionaire-container">
-            <div className="percent-complete"></div>
-            <div className="complete-bar eighty"></div>
-            <div className="inner-questionaire">
+            <div className="sticky">
+              <div className="percent-complete"></div>
+              <div className="complete-bar eighty"></div>
               <div className="page-toggles align-right">
                 <i className="fas fa-check fa-2x" onClick={this.addLikedMusicals}></i>
               </div>
+            </div>
+            <div className="inner-questionaire">
               <h1>Almost done: pick any musicals you already love! (pick at least two)</h1>
               <div className={`fail-message ${modalClassLikes}`}>
                 <p>Please like at least two musicals before moving on.</p>
