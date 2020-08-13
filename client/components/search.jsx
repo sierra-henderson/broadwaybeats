@@ -21,18 +21,21 @@ export default class Search extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({
-      value: event.target.value
-    }, this.queryDatabase);
+    if (event.target.value !== '.' && event.target.value !== '\\' && event.target.value !== '/' && event.target.value !== '#') {
+      this.setState({
+        value: event.target.value
+      }, this.queryDatabase);
+    }
   }
 
   queryDatabase() {
-    if (this.state.value === '') {
+    if (this.state.value === '' || this.state.value === ' ' || this.state.value === '.' || this.state.value === '#' || this.state.value === '/' || this.state.value === '\\') {
       this.setState({
         musicals: null
       });
     } else {
-      fetch(`/api/search/${this.state.value}`)
+      const query = this.state.value.startsWith(' ') ? this.state.value.substring(1) : this.state.value;
+      fetch(`/api/search/${query}`)
         .then(res => res.json())
         .then(data => {
           this.setState({
